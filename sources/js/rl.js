@@ -29,7 +29,7 @@ class ReinforcementLearning {
      */
     calulate(iterations, discountRate) {
 
-        var possibleStates = [0, 1, 2];
+        var possibleStates = Object.keys(this.possibleActions);
 
         var Q = [
             [0.0, 0.0, 0.0],
