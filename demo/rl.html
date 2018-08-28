@@ -29,10 +29,17 @@
             [[NaN, NaN, NaN], [40.0, 0.0, 0.0], [NaN, NaN, NaN]]
         ];
 
+        /* default Q */
+        var Q = [
+            [0.0, 0.0, 0.0],
+            [0.0, -Infinity, 0.0],
+            [-Infinity, 0.0, -Infinity]
+        ];
+
         /* possible actions from state s and action a */
         var possibleActions = [[0, 1, 2], [0, 2], [1]];
 
-        var rl = new ReinforcementLearning(T, R, possibleActions);
+        var rl = new ReinforcementLearning(T, R, Q, possibleActions);
 
         rl.calulate(iterations, discountRate);
 
