@@ -7,18 +7,23 @@
 class ReinforcementLearning {
 
     /**
-     * Initialise this matrix
+     * The constructor of this class.
      *
-     * @param matrix
      */
-    calulate(iterations) {
+    constructor(T) {
+        this.name = 'ReinforcementLearning';
+        this.T = T;
+    }
 
-        /* T[s, a, s'] */
-        var T = [
-            [[0.7, 0.3, 0.0], [1.0, 0.0, 0.0], [0.8, 0.2, 0.0]],
-            [[0.0, 1.0, 0.0], [NaN, NaN, NaN], [0.0, 0.0, 1.0]],
-            [[NaN, NaN, NaN], [0.8, 0.1, 0.1], [NaN, NaN, NaN]]
-        ];
+    /**
+     * Do all calculations.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-28)
+     * @param iterations
+     * @param discountRate
+     */
+    calulate(iterations, discountRate) {
 
         /* R[s, a, s'] */
         var R = [
@@ -37,9 +42,6 @@ class ReinforcementLearning {
             [-Infinity, 0.0, -Infinity]
         ];
 
-        var discountRate = 0.95;
-        var iterations = 4;
-
         for (var iteration = 0; iteration < iterations; iteration++) {
             /* deep array copy */
             var Q_Prev = JSON.parse(JSON.stringify(Q));
@@ -54,8 +56,8 @@ class ReinforcementLearning {
 
                     var print = 'Q[' + s + '][' + a + '] = 0';
                     for (var sp in possibleStates) {
-                        print += ' + ' + T[s][a][sp] + ' * (' + R[s][a][sp] + ' + ' + discountRate + ' * ' + Math.max(...Q_Prev[sp]) + ')';
-                        Q[s][a] += T[s][a][sp] * (R[s][a][sp] + discountRate * Math.max(...Q_Prev[sp]));
+                        print += ' + ' + this.T[s][a][sp] + ' * (' + R[s][a][sp] + ' + ' + discountRate + ' * ' + Math.max(...Q_Prev[sp]) + ')';
+                        Q[s][a] += this.T[s][a][sp] * (R[s][a][sp] + discountRate * Math.max(...Q_Prev[sp]));
                     }
                     print += ' = ' + Q[s][a];
 

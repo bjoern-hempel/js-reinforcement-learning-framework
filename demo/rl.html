@@ -8,9 +8,21 @@
 <body>
     <script>
 
-        var rl = new ReinforcementLearning();
+        var discountRate = 0.95;
+        var iterations = 4;
 
-        rl.calulate(4);
+        /* Probability from state s and action a to next state s':
+         * T[s, a, s']
+         */
+        var T = [
+            [[0.7, 0.3, 0.0], [1.0, 0.0, 0.0], [0.8, 0.2, 0.0]],
+            [[0.0, 1.0, 0.0], [NaN, NaN, NaN], [0.0, 0.0, 1.0]],
+            [[NaN, NaN, NaN], [0.8, 0.1, 0.1], [NaN, NaN, NaN]]
+        ];
+
+        var rl = new ReinforcementLearning(T);
+
+        rl.calulate(iterations, discountRate);
 
     </script>
 </body>
