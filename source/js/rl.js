@@ -6,4 +6,65 @@
  */
 class ReinforcementLearning {
 
+    /**
+     * Initialise this matrix
+     *
+     * @param matrix
+     */
+    calulate(iterations) {
+
+        /* T[s, a, s'] */
+        var T = [
+            [[0.7, 0.3, 0.0], [1.0, 0.0, 0.0], [0.8, 0.2, 0.0]],
+            [[0.0, 1.0, 0.0], [NaN, NaN, NaN], [0.0, 0.0, 1.0]],
+            [[NaN, NaN, NaN], [0.8, 0.1, 0.1], [NaN, NaN, NaN]]
+        ];
+
+        /* R[s, a, s'] */
+        var R = [
+            [[10.0, 0.0, 0.0], [0.0, 0.0, 0.0], [0.0, 0.0, 0.0]],
+            [[10.0, 0.0, 0.0], [NaN, NaN, NaN], [0.0, 0.0, -50.0]],
+            [[NaN, NaN, NaN], [40.0, 0.0, 0.0], [NaN, NaN, NaN]]
+        ];
+
+        /* */
+        var possibleActions = [[0, 1, 2], [0, 2], [1]];
+        var possibleStates = [0, 1, 2];
+
+        var Q = [
+            [0.0, 0.0, 0.0],
+            [0.0, -Infinity, 0.0],
+            [-Infinity, 0.0, -Infinity]
+        ];
+
+        var discountRate = 0.95;
+        var iterations = 4;
+
+        for (var iteration = 0; iteration < iterations; iteration++) {
+            /* deep array copy */
+            var Q_Prev = JSON.parse(JSON.stringify(Q));
+
+            console.log(Q_Prev);
+            console.log([Math.max(...Q_Prev[0]), Math.max(...Q_Prev[1]), Math.max(...Q_Prev[2])]);
+            console.log([discountRate * Math.max(...Q_Prev[0]), discountRate * Math.max(...Q_Prev[1]), discountRate * Math.max(...Q_Prev[2])]);
+
+            for (var s in possibleStates) {
+                for (var a in possibleActions) {
+                    Q[s][a] = 0;
+
+                    var print = 'Q[' + s + '][' + a + '] = 0';
+                    for (var sp in possibleStates) {
+                        print += ' + ' + T[s][a][sp] + ' * (' + R[s][a][sp] + ' + ' + discountRate + ' * ' + Math.max(...Q_Prev[sp]) + ')';
+                        Q[s][a] += T[s][a][sp] * (R[s][a][sp] + discountRate * Math.max(...Q_Prev[sp]));
+                    }
+                    print += ' = ' + Q[s][a];
+
+                    console.log(print);
+                }
+            }
+        }
+
+        console.log('Q', Q);
+    }
+
 }
