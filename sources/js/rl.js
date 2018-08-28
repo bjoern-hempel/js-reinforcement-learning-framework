@@ -12,10 +12,11 @@ class ReinforcementLearning {
      * @param T
      * @param R
      */
-    constructor(T, R) {
+    constructor(T, R, possibleActions) {
         this.name = 'ReinforcementLearning';
         this.T = T;
         this.R = R;
+        this.possibleActions = possibleActions;
     }
 
     /**
@@ -28,8 +29,6 @@ class ReinforcementLearning {
      */
     calulate(iterations, discountRate) {
 
-        /* */
-        var possibleActions = [[0, 1, 2], [0, 2], [1]];
         var possibleStates = [0, 1, 2];
 
         var Q = [
@@ -47,7 +46,7 @@ class ReinforcementLearning {
             console.log([discountRate * Math.max(...Q_Prev[0]), discountRate * Math.max(...Q_Prev[1]), discountRate * Math.max(...Q_Prev[2])]);
 
             for (var s in possibleStates) {
-                for (var a in possibleActions) {
+                for (var a in this.possibleActions) {
                     Q[s][a] = 0;
 
                     var print = 'Q[' + s + '][' + a + '] = 0';
