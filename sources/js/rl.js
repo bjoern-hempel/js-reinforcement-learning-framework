@@ -2,15 +2,18 @@
  * A class to do some reinforcement learning stuff.
  *
  * @author  Björn Hempel <bjoern@hempel.li>
- * @version 1.0 (2018-08-22)
+ * @version 1.0 (2018-08-31)
  */
 class ReinforcementLearning {
 
     /**
      * The constructor of this class.
+     * Creates a new environment.
      *
      * @param T
      * @param R
+     * @param Q
+     * @param possibleActions
      */
     constructor(T, R, Q, possibleActions) {
         this.name = 'ReinforcementLearning';
@@ -18,6 +21,28 @@ class ReinforcementLearning {
         this.R = R;
         this.Q = Q;
         this.possibleActions = possibleActions;
+    }
+
+    /**
+     * Adds a new state to this environment.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-31)
+     */
+    addState() {
+
+    }
+
+    /**
+     * Adds a new action to this environment.
+     *
+     * @param stateFrom
+     * @param stateTo
+     * @param likelihood
+     * @param reward
+     */
+    addAction(stateFrom, stateTo, likelihood, reward) {
+
     }
 
     /**
