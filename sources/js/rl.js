@@ -6,6 +6,10 @@
  */
 class ReinforcementLearning {
 
+    static get SUCCESS_CALCULATE_Q() {
+        return [new JsTestException(201, 'Init matrix'), this];
+    }
+
     /**
      * The constructor of this class.
      * Creates a new environment.
