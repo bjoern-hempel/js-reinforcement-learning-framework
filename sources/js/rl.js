@@ -15,12 +15,9 @@ class ReinforcementLearning {
      * @param Q
      * @param possibleActions
      */
-    constructor(T, R, Q, possibleActions) {
+    constructor(statesActionsStatesTR) {
         this.name = 'ReinforcementLearning';
-        this.T = T;
-        this.R = R;
-        this.Q = Q;
-        this.possibleActions = possibleActions;
+        this.statesActionsStatesTR = statesActionsStatesTR;
     }
 
     /**
@@ -53,35 +50,35 @@ class ReinforcementLearning {
      * @param iterations
      * @param discountRate
      */
-    calulate(iterations, discountRate) {
+    calulateQ(iterations, discountRate) {
 
-        var possibleStates = Object.keys(this.possibleActions);
+        var Q = [
+            [0.0, 0.0, 0.0],
+            [0.0, 0.0],
+            [0.0]
+        ];
 
-        for (var iteration = 0; iteration < iterations; iteration++) {
-            /* deep array copy */
-            var Q_Prev = JSON.parse(JSON.stringify(this.Q));
+        for (var i = 0; i < iterations; i++) {
 
-            console.log(Q_Prev);
-            console.log([Math.max(...Q_Prev[0]), Math.max(...Q_Prev[1]), Math.max(...Q_Prev[2])]);
-            console.log([discountRate * Math.max(...Q_Prev[0]), discountRate * Math.max(...Q_Prev[1]), discountRate * Math.max(...Q_Prev[2])]);
+            var QPrev = JSON.parse(JSON.stringify(Q));
 
-            for (var s in possibleStates) {
-                for (var a in this.possibleActions) {
-                    this.Q[s][a] = 0;
+            for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+                var actionsStatesTR = this.statesActionsStatesTR[s];
 
-                    var print = 'Q[' + s + '][' + a + '] = 0';
-                    for (var sp in possibleStates) {
-                        print += ' + ' + this.T[s][a][sp] + ' * (' + this.R[s][a][sp] + ' + ' + discountRate + ' * ' + Math.max(...Q_Prev[sp]) + ')';
-                        this.Q[s][a] += this.T[s][a][sp] * (this.R[s][a][sp] + discountRate * Math.max(...Q_Prev[sp]));
+                for (var a = 0; a < actionsStatesTR.length; a++) {
+                    var statesTR = actionsStatesTR[a];
+                    Q[s][a] = 0;
+
+                    for (var sp in statesTR) {
+                        var T = statesTR[sp][0];
+                        var R = statesTR[sp][1];
+
+                        Q[s][a] += T * (R + discountRate * Math.max(...QPrev[sp]));
                     }
-                    print += ' = ' + this.Q[s][a];
-
-                    console.log(print);
                 }
             }
         }
 
-        console.log('Q', this.Q);
+        return Q;
     }
-
 }
