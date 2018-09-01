@@ -11,42 +11,6 @@
         var discountRate = 0.95;
         var iterations   = 100;
 
-        var statesActionsStatesTR = [
-            /* state 0 */
-            [
-                { /* action 0 */
-                    0: [0.7, 10], /* to state 0 */
-                    1: [0.3,  0]  /* to state 1 */
-                },
-                { /* action 1 */
-                    0: [1.0, 0]  /* to state 0 */
-                },
-                { /* action 2 */
-                    0: [0.8, 0], /* to state 0 */
-                    1: [0.2, 0]  /* to state 1 */
-                }
-            ],
-
-            /* state 1 */
-            [
-                { /* action 0 */
-                    1: [1.0, 0] /* to state 1 */
-                },
-                { /* action 1 */
-                    2: [1.0, -50] /* to state 2 */
-                }
-            ],
-
-            /* state 2 */
-            [
-                { /* action 0 */
-                    0: [0.8, 40], /* to state 0 */
-                    1: [0.1,  0], /* to state 1 */
-                    2: [0.1,  0]  /* to state 2 */
-                }
-            ]
-        ];
-
         var rl = new ReinforcementLearning();
 
         var s0 = rl.addState();
