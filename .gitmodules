@@ -1,0 +1,3 @@
+[submodule "vendor/js-testing-framework"]
+	path = vendor/js-testing-framework
+	url = https://github.com/bjoern-hempel/js-testing-framework.git
