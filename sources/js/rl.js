@@ -21,7 +21,8 @@ class ReinforcementLearning {
      */
     constructor(statesActionsStatesTR) {
         this.name = 'ReinforcementLearning';
-        this.statesActionsStatesTR = statesActionsStatesTR;
+
+        this.statesActionsStatesTR = [];
     }
 
     /**
@@ -31,19 +32,31 @@ class ReinforcementLearning {
      * @version 1.0 (2018-08-31)
      */
     addState() {
+        this.statesActionsStatesTR.push([]);
 
+        return this.statesActionsStatesTR.length - 1;
     }
 
     /**
      * Adds a new action to this environment.
      *
-     * @param stateFrom
-     * @param stateTo
+     * @param state
+     */
+    addAction(state) {
+        this.statesActionsStatesTR[state].push({});
+
+        return [state, this.statesActionsStatesTR[state].length - 1];
+    }
+
+    /**
+     * Adds a state change.
+     *
+     * @param action
      * @param likelihood
      * @param reward
      */
-    addAction(stateFrom, stateTo, likelihood, reward) {
-
+    addStateChange(action, toState, likelihood, reward) {
+        this.statesActionsStatesTR[action[0]][action[1]][toState] = [likelihood, reward];
     }
 
     /**

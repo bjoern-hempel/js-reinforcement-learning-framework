@@ -7,43 +7,29 @@ function startRLTest() {
             var discountRate = 0.95;
             var iterations   = 100;
 
-            var statesActionsStatesTR = [
-                /* state 0 */
-                [
-                    { /* action 0 */
-                        0: [0.7, 10], /* to state 0 */
-                        1: [0.3,  0]  /* to state 1 */
-                    },
-                    { /* action 1 */
-                        0: [1.0, 0]  /* to state 0 */
-                    },
-                    { /* action 2 */
-                        0: [0.8, 0], /* to state 0 */
-                        1: [0.2, 0]  /* to state 1 */
-                    }
-                ],
+            var rl = new ReinforcementLearning();
 
-                /* state 1 */
-                [
-                    { /* action 0 */
-                        1: [1.0, 0] /* to state 1 */
-                    },
-                    { /* action 1 */
-                        2: [1.0, -50] /* to state 2 */
-                    }
-                ],
+            var s0 = rl.addState();
+            var s1 = rl.addState();
+            var s2 = rl.addState();
 
-                /* state 2 */
-                [
-                    { /* action 0 */
-                        0: [0.8, 40], /* to state 0 */
-                        1: [0.1,  0], /* to state 1 */
-                        2: [0.1,  0]  /* to state 2 */
-                    }
-                ]
-            ];
+            var a0 = rl.addAction(s0);
+            var a1 = rl.addAction(s0);
+            var a2 = rl.addAction(s0);
+            var a3 = rl.addAction(s1);
+            var a4 = rl.addAction(s1);
+            var a5 = rl.addAction(s2);
 
-            var rl = new ReinforcementLearning(statesActionsStatesTR);
+            rl.addStateChange(a0, s0, 0.7,  10);
+            rl.addStateChange(a0, s1, 0.3,   0);
+            rl.addStateChange(a1, s0, 1.0,   0);
+            rl.addStateChange(a2, s0, 0.8,   0);
+            rl.addStateChange(a2, s1, 0.2,   0);
+            rl.addStateChange(a3, s1, 1.0,   0);
+            rl.addStateChange(a4, s2, 1.0, -50);
+            rl.addStateChange(a5, s0, 0.8,  40);
+            rl.addStateChange(a5, s1, 0.1,   0);
+            rl.addStateChange(a5, s2, 0.1,   0);
 
             var Q = rl.calulateQ(iterations, discountRate);
 
