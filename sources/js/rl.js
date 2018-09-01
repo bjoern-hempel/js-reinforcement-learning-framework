@@ -7,7 +7,7 @@
 class ReinforcementLearning {
 
     static get SUCCESS_CALCULATE_Q() {
-        return [new JsTestException(201, 'Init matrix'), this];
+        return [new JsTestException(201, 'Calculate Q test'), this];
     }
 
     /**
