@@ -47,6 +47,25 @@ class ReinforcementLearning {
     }
 
     /**
+     * Create the initial Q Array.
+     *
+     * @returns {Array}
+     */
+    getInitialQ() {
+        var Q = [];
+
+        for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+            Q.push([]);
+
+            for (var a = 0; a < this.statesActionsStatesTR[s].length; a++) {
+                Q[s].push(0);
+            }
+        }
+
+        return Q;
+    }
+
+    /**
      * Do all calculations.
      *
      * @author Björn Hempel <bjoern@hempel.li>
@@ -56,11 +75,7 @@ class ReinforcementLearning {
      */
     calulateQ(iterations, discountRate) {
 
-        var Q = [
-            [0.0, 0.0, 0.0],
-            [0.0, 0.0],
-            [0.0]
-        ];
+        var Q = this.getInitialQ();
 
         for (var i = 0; i < iterations; i++) {
 
