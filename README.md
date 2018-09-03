@@ -14,7 +14,11 @@ Coming soon..
 
 ## 3. Usage
 
-### 3.1 Basic example
+### 3.1 Super basic example
+
+![super basic example](/images/SuperBasic.png)
+
+### 3.2 Basic example
 
 ```php
 var discountRate = 0.95;
@@ -49,7 +53,7 @@ var Q = rl.calulateQ(iterations, discountRate);
 console.log(Q);
 ```
 
-### 3.2 Basic example (shortcut from the previous example)
+### 3.3 Basic example (shortcut from the previous example)
 
 ```php
 var discountRate = 0.95;
