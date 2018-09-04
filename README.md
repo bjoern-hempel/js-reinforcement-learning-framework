@@ -16,7 +16,7 @@ Coming soon..
 
 ### 3.1 Super basic example
 
-![super basic example](/images/SuperBasic.png)
+<img src="/images/SuperBasic.png" width="320" alt="super basic example">
 
 ### 3.2 Basic example
 
