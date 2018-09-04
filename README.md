@@ -20,6 +20,10 @@ Coming soon..
 
 ### 3.2 Basic example
 
+<img src="/images/Basic.png" width="512" alt="super basic example">
+
+### 3.3 Basic example
+
 ```php
 var discountRate = 0.95;
 var iterations   = 100;
@@ -53,7 +57,7 @@ var Q = rl.calulateQ(iterations, discountRate);
 console.log(Q);
 ```
 
-### 3.3 Basic example (shortcut from the previous example)
+### 3.4 Basic example (shortcut from the previous example)
 
 ```php
 var discountRate = 0.95;
