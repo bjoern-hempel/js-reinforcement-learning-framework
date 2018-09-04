@@ -22,7 +22,11 @@ Coming soon..
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
 
-### 3.3 Basic example
+### 3.3 Complex example
+
+<img src="/images/Complex.png" width="960" alt="super basic example">
+
+### 3.4 Basic example
 
 ```php
 var discountRate = 0.95;
@@ -57,7 +61,7 @@ var Q = rl.calulateQ(iterations, discountRate);
 console.log(Q);
 ```
 
-### 3.4 Basic example (shortcut from the previous example)
+### 3.5 Basic example (shortcut from the previous example)
 
 ```php
 var discountRate = 0.95;
