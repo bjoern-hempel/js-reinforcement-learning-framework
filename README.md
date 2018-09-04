@@ -4,7 +4,7 @@ This is a javascript reinforcement learning framework.
 
 ## 1. Introduction
 
-Coming soon..
+Coming soon.. 
 
 ## 2. Theory
 
