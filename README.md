@@ -51,6 +51,8 @@ Returns:
 [[9.999999999999995,7.999999999999995,8.999999999999995]]
 ```
 
+As we suspected above: a<sub>0</sub> is the winner.
+
 ### 3.2 Basic example
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
