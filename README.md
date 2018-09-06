@@ -51,7 +51,7 @@ Returns:
 [[9.999999999999995,7.999999999999995,8.999999999999995]]
 ```
 
-As we suspected above: a<sub>0</sub> is the winner.
+As we suspected above: a<sub>0</sub> is the winner (Q<sub>0,0</sub>).
 
 ### 3.2 Basic example
 
