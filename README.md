@@ -18,7 +18,7 @@ Coming soon..
 
 <img src="/images/SuperBasic.png" width="480" alt="super basic example">
 
-As one can logically see, <img src="https://latex.ixno.de/?r=300&p=0pt&c=1&f=a_0" width="27" alt="a_0"> is the best option and leads to maximum reward. a1 teaches us punishment and is the most unfavorable variant, while a2 is the neutral version without any reward. Let's calculate that:
+As one can logically see, a<sub>0</sub> is the best option and leads to maximum reward. a1 teaches us punishment and is the most unfavorable variant, while a2 is the neutral version without any reward. Let's calculate that:
 
 #### 3.1.1 Code
 
