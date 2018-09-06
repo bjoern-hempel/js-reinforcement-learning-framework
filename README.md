@@ -16,6 +16,8 @@ Coming soon..
 
 ### 3.1 Super basic example
 
+Let's look at a state s<sub>0</sub> which contains 3 actions which point back to the state s<sub>0</sub>. Okay, it doesn't make much sense, but it should show the procedure in more detail. One action leads to reward (a<sub>0</sub>), one action to punishment (a<sub>1</sub>) and one is neutral (a<sub>2</sub>):
+
 <img src="/images/SuperBasic.png" width="480" alt="super basic example">
 
 As one can logically see, a<sub>0</sub> is the best option and leads to maximum reward. a<sub>1</sub> teaches us punishment and is the most unfavorable variant, while a<sub>2</sub> is the neutral version without any reward. Let's calculate that:
