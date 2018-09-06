@@ -16,7 +16,7 @@ Coming soon..
 
 ### 3.1 Super basic example
 
-Let's look at a state s<sub>0</sub> which contains 3 actions which point back to the state s<sub>0</sub>. Okay, it doesn't make much sense, but it should show the procedure in more detail. One action leads to reward (a<sub>0</sub>), one action to punishment (a<sub>1</sub>) and one is neutral (a<sub>2</sub>):
+Let's look at a state s<sub>0</sub> which contains 3 actions which point back to the state s<sub>0</sub>. Okay, it doesn't make much sense, but it should show the procedure in more detail:
 
 <img src="/images/SuperBasic.png" width="480" alt="super basic example">
 
