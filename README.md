@@ -18,6 +18,37 @@ Coming soon..
 
 <img src="/images/SuperBasic.png" width="480" alt="super basic example">
 
+#### 3.1.1 Code
+
+```javascript
+var discountRate = 0.9;
+var iterations   = 1000;
+
+var rl = new ReinforcementLearning();
+
+/* s0 */
+var s0 = rl.addState();
+
+/* a0 */
+rl.addAction(s0, new StateChange(s0, 1.0,  1));
+
+/* a1 */
+rl.addAction(s0, new StateChange(s0, 1.0, -1));
+
+/* a2 */
+rl.addAction(s0, new StateChange(s0, 1.0,  0));
+
+var Q = rl.calulateQ(iterations, discountRate);
+
+console.log(JSON.stringify(Q));
+```
+
+Returns:
+
+```json
+[[9.999999999999995,7.999999999999995,8.999999999999995]]
+```
+
 ### 3.2 Basic example
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
