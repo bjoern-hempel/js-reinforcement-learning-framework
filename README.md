@@ -26,7 +26,7 @@ As one can logically see, a<sub>0</sub> is the best option and leads to maximum 
 
 ```javascript
 var discountRate = 0.9;
-var iterations   = 1000;
+var iterations   = 1;
 
 var rl = new ReinforcementLearning();
 
@@ -50,10 +50,10 @@ console.log(JSON.stringify(Q));
 Returns:
 
 ```json
-[[9.999999999999995,7.999999999999995,8.999999999999995]]
+[[1,-1,0]]
 ```
 
-As we suspected above: a<sub>0</sub> is the winner (Q<sub>0,0</sub>).
+As we suspected above: a<sub>0</sub> is the winner (Q<sub>0,0</sub>). The variable discountRate is uninteresting in this case, since we only consider one iteration step. If we increase the iteration step to a number higher than 1, the discountRate determines the importance of future rewards: A factor of 0 makes the agent "short-sighted" by considering only the current rewards, while a factor of close to 1 makes him strive for a high long-term reward.
 
 ### 3.2 Basic example
 
