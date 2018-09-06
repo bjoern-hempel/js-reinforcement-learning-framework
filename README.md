@@ -55,7 +55,7 @@ Returns:
 
 As we suspected above: a<sub>0</sub> is the winner and with the maximum value of Q (Q<sub>s=0,a=0</sub> = 1). The variable discountRate is uninteresting in this case, since we only consider one iteration step. If we increase the iteration step to a number higher than 1, the discountRate determines the importance of future rewards: A factor of 0 makes the agent "short-sighted" by considering only the current rewards, while a factor of close to 1 makes him strive for a high long-term reward.
 
-The situation does not change if we look at the current state more far-sightedly:
+The situation does not change if we look at the current state more long-sighted:
 
 ```javascript
 var discountRate = 0.9;
