@@ -6,15 +6,15 @@ This is a javascript reinforcement learning framework.
 
 Coming soon.. 
 
-## 2. Theory
+## 2. Markov decision process
 
-### 2.1 Markov decision process
+### 2.1 Theory
 
 <img src="https://latex.ixno.de/?r=300&f=V%5E%2A%28s%29%20%3D%20%5Csubstack%7B%5Ctextbf%7Bmax%7D%5C%5C%20%7B%5Ctiny%20a%7D%7D%5Csum_%7Bs%27%7D%5E%7B%7D%20T%28s%2C%20a%2C%20s%27%29%5BR%28s%2C%20a%2C%20s%27%29%20%2B%20%5Cgamma%20%5Ccdot%20V_k%28s%27%29%5D" width="453" alt="V^*(s) = \substack{\textbf{max}\\ {\tiny a}}\sum_{s'}^{} T(s, a, s')[R(s, a, s') + \gamma \cdot V_k(s')]">
 
-## 3. Usage
+### 2.2 Usage
 
-### 3.1 Super basic example
+#### 2.2.1 Super basic example
 
 Let's look at a state s<sub>0</sub> which contains 3 actions which point back to the state s<sub>0</sub>. Okay, it doesn't make much sense, but it should show the procedure in more detail:
 
@@ -22,7 +22,7 @@ Let's look at a state s<sub>0</sub> which contains 3 actions which point back to
 
 As one can logically see, a<sub>0</sub> is the best option and leads to maximum reward. a<sub>1</sub> teaches us punishment and is the most unfavorable variant, while a<sub>2</sub> is the neutral version without any reward. Let's calculate that:
 
-#### 3.1.1 Code
+#### 2.2.1.1 Code
 
 ```javascript
 var discountRate = 0.9;
@@ -55,15 +55,15 @@ Returns:
 
 As we suspected above: a<sub>0</sub> is the winner and with the maximum value of Q (Q<sub>s=0,a=0</sub> = 1). The variable discountRate is uninteresting in this case, since we only consider one iteration step. If we increase the iteration step to a number higher than 1, the discountRate determines the importance of future rewards: A factor of 0 makes the agent "short-sighted" by considering only the current rewards, while a factor of close to 1 makes him strive for a high long-term reward.
 
-### 3.2 Basic example
+#### 2.2.2 Basic example
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
 
-### 3.3 Complex example
+#### 2.2.3 Complex example
 
 <img src="/images/Complex.png" width="960" alt="super basic example">
 
-### 3.4 Basic example
+#### 2.2.4 Basic example
 
 ```php
 var discountRate = 0.95;
@@ -98,7 +98,7 @@ var Q = rl.calulateQ(iterations, discountRate);
 console.log(Q);
 ```
 
-### 3.5 Basic example (shortcut from the previous example)
+#### 2.2.5 Basic example (shortcut from the previous example)
 
 ```php
 var discountRate = 0.95;
