@@ -55,6 +55,21 @@ Returns:
 
 As we suspected above: a<sub>0</sub> is the winner and with the maximum value of Q (Q<sub>s=0,a=0</sub> = 1). The variable discountRate is uninteresting in this case, since we only consider one iteration step. If we increase the iteration step to a number higher than 1, the discountRate determines the importance of future rewards: A factor of 0 makes the agent "short-sighted" by considering only the current rewards, while a factor of close to 1 makes him strive for a high long-term reward.
 
+The situation does not change if we look at the current state more far-sightedly:
+
+```javascript
+var discountRate = 0.9;
+var iterations   = 1000;
+```
+
+Returns:
+
+```json
+[[9.999999999999995,7.999999999999995,8.999999999999995]]
+```
+
+Q<sub>s=0,a=0</sub> is still the winner with the maximum of Q: 9.999999999999995
+
 #### 2.2.2 Basic example
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
