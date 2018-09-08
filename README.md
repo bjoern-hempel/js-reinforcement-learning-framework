@@ -97,7 +97,11 @@ Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>:
 
 #### 2.2.2 Basic example
 
+Let's look at the following example:
+
 <img src="/images/Basic.png" width="512" alt="super basic example">
+
+If we look at this example in the short term, it is a good idea to go through a1. In the long run, it's better to go through a0.
 
 ##### 2.2.2.1 Code
 
