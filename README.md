@@ -24,7 +24,7 @@ As one can logically see, a<sub>0</sub> is the best option and leads to maximum 
 
 #### 2.2.1.1 Code
 
-##### 2.2.1.1.1 The written-out version
+**The written-out version:**
 
 ```javascript
 var discountRate = 0.9;
@@ -50,7 +50,7 @@ var Q = rl.calulateQ(iterations, discountRate);
 console.log(JSON.stringify(Q));
 ```
 
-##### 2.2.1.1.2 The short version
+**The short version:**
 
 ```javascript
 var discountRate = 0.9;
@@ -71,7 +71,7 @@ var Q = rl.calulateQ(iterations, discountRate);
 console.log(JSON.stringify(Q));
 ```
 
-##### 2.2.1.1.3 The result:
+Returns:
 
 ```json
 [[1,-1,0]]
