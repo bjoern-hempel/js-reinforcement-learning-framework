@@ -137,7 +137,6 @@ console.log(JSON.stringify(Q));
 
 ```javascript
 var discountRate =  0.9;
-var iterations   = 1000;
 
 var rl = new ReinforcementLearning();
 
@@ -157,7 +156,7 @@ rl.addAction(s1, new StateChange(s2, 1.0, -50));
 /* s2.a0 */
 rl.addAction(s2, new StateChange(s0, 0.8, 100), new StateChange(s1, 0.1, 0), new StateChange(s2, 0.1, 0));
 
-var Q = rl.calulateQ(iterations, discountRate);
+var Q = rl.calculateQ(discountRate);
 
 console.log(JSON.stringify(Q));
 ```
@@ -166,9 +165,9 @@ console.log(JSON.stringify(Q));
 
 ```json
 [
-    [61.76300578034683,67.51445086705203],
-    [76.26589595375724,84.73988439306359],
-    [149.71098265895955]
+    [61.75477734479686, 67.50622243150205],
+    [76.25766751820726, 84.73165595751362],
+    [149.70275422340958]
 ]
 ```
 
