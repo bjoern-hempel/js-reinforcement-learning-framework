@@ -71,7 +71,7 @@ var Q = rl.calulateQ(iterations, discountRate);
 console.log(JSON.stringify(Q));
 ```
 
-Returns:
+**It returns:**
 
 ```json
 [[1,-1,0]]
@@ -86,7 +86,7 @@ var discountRate = 0.9;
 var iterations   = 1000;
 ```
 
-Returns:
+**It returns:**
 
 ```json
 [[9.999999999999995,7.999999999999995,8.999999999999995]]
