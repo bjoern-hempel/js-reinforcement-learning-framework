@@ -27,8 +27,7 @@ As one can logically see, a<sub>0</sub> is the best option and leads to maximum 
 **The written-out version:**
 
 ```javascript
-var discountRate = 0.9;
-var iterations   = 1;
+var discountFactor = 0;
 
 var rl = new ReinforcementLearning();
 
@@ -45,7 +44,7 @@ rl.addStateChange(a0, s0, 1.0,  1);
 rl.addStateChange(a1, s0, 1.0, -1);
 rl.addStateChange(a2, s0, 1.0,  0);
 
-var Q = rl.calulateQ(iterations, discountRate);
+var Q = rl.calculateQ(discountFactor);
 
 console.log(JSON.stringify(Q));
 ```
@@ -53,8 +52,7 @@ console.log(JSON.stringify(Q));
 **The short version:**
 
 ```javascript
-var discountRate = 0.9;
-var iterations   = 1;
+var discountFactor = 0;
 
 var rl = new ReinforcementLearning();
 
@@ -66,7 +64,7 @@ rl.addAction(s0, new StateChange(s0, 1.0,  1));
 rl.addAction(s0, new StateChange(s0, 1.0, -1));
 rl.addAction(s0, new StateChange(s0, 1.0,  0));
 
-var Q = rl.calulateQ(iterations, discountRate);
+var Q = rl.calculateQ(discountFactor);
 
 console.log(JSON.stringify(Q));
 ```
