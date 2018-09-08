@@ -91,7 +91,7 @@ var discountFactor = 0.9;
 ]
 ```
 
-Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832. The algorithm is implemented until a certain threshold value is reached (default is the Q change difference of 0.001).
+Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832. The algorithm is implemented until a certain threshold value is reached and then stops repeating the above given formula (default is the Q change difference of 0.001).
 
 #### 2.2.2 Basic example
 
