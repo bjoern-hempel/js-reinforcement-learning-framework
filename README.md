@@ -35,14 +35,15 @@ var rl = new ReinforcementLearning();
 /* s0 */
 var s0 = rl.addState();
 
-/* a0 */
-rl.addAction(s0, new StateChange(s0, 1.0,  1));
+/* create a0, a1 and a2 */
+var a0 = rl.addAction(s0);
+var a1 = rl.addAction(s0);
+var a2 = rl.addAction(s0);
 
-/* a1 */
-rl.addAction(s0, new StateChange(s0, 1.0, -1));
-
-/* a2 */
-rl.addAction(s0, new StateChange(s0, 1.0,  0));
+/* add the action to state connections (state changes) */
+rl.addStateChange(a0, s0, 1.0,  1);
+rl.addStateChange(a1, s0, 1.0, -1);
+rl.addStateChange(a2, s0, 1.0,  0);
 
 var Q = rl.calulateQ(iterations, discountRate);
 
@@ -60,15 +61,10 @@ var rl = new ReinforcementLearning();
 /* s0 */
 var s0 = rl.addState();
 
-/* create a0, a1 and a2 */
-var a0 = rl.addAction(s0);
-var a1 = rl.addAction(s0);
-var a2 = rl.addAction(s0);
-
-/* add the action to state connections (state changes) */
-rl.addStateChange(a0, s0, 1.0,  1);
-rl.addStateChange(a1, s0, 1.0, -1);
-rl.addStateChange(a2, s0, 1.0,  0);
+/* a0, a1 and a2 */
+rl.addAction(s0, new StateChange(s0, 1.0,  1));
+rl.addAction(s0, new StateChange(s0, 1.0, -1));
+rl.addAction(s0, new StateChange(s0, 1.0,  0));
 
 var Q = rl.calulateQ(iterations, discountRate);
 
