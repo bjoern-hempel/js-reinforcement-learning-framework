@@ -75,22 +75,23 @@ console.log(JSON.stringify(Q));
 [[1,-1,0]]
 ```
 
-As we suspected above: a<sub>0</sub> is the winner and with the maximum value of Q<sub>(s=0)</sub> (Q<sub>(s=0,a=0)</sub> = 1). The variable discountRate is uninteresting in this case, since we only consider one iteration step. If we increase the iteration step to a number higher than 1, the discountRate determines the importance of future rewards: A factor of 0 makes the agent "short-sighted" by considering only the current rewards, while a factor of close to 1 makes him strive for a high long-sighted reward.
+As we suspected above: a<sub>0</sub> is the winner and with the maximum value of Q<sub>(s=0)</sub> (Q<sub>(s=0,a=0)</sub> = 1). The discountFactor is set to 0, because we only want to consider one iteration step. The discountFactor determines the importance of future rewards: A factor of 0 makes the agent "short-sighted" by considering only the current rewards, while a factor of close to 1 makes him strive for a high long-sighted reward. Because it is set to 0, only the next step is important and it shows the previously shown result.
 
-The situation does not change if we look at the current state more long-sighted:
+The situation doesn't change if we look a little bit more far-sighted:
 
 ```javascript
-var discountRate = 0.9;
-var iterations   = 1000;
+var discountFactor = 0.9;
 ```
 
 **It returns:**
 
 ```json
-[[9.999999999999995,7.999999999999995,8.999999999999995]]
+[
+    [9.991404955442832,7.991404955442832,8.991404955442832]
+]
 ```
 
-Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.999999999999995
+Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832
 
 #### 2.2.2 Basic example
 
