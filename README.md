@@ -100,8 +100,7 @@ Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>:
 ##### 2.2.2.1 Code
 
 ```javascript
-var discountRate =  0.9;
-var iterations   = 1000;
+var discountRate = 0.9;
 
 var rl = new ReinforcementLearning();
 
@@ -116,7 +115,7 @@ rl.addAction(s0, new StateChange(s0, 1.0,  2));
 /* s1.a0 */
 rl.addAction(s1, new StateChange(s0, 1.0, 10));
 
-var Q = rl.calulateQ(iterations, discountRate);
+var Q = rl.calculateQ(discountRate);
 
 console.log(JSON.stringify(Q));
 ```
@@ -125,8 +124,8 @@ console.log(JSON.stringify(Q));
 
 ```json
 [
-    [21.052631578947363,20.947368421052627],
-    [28.947368421052627]
+    [21.044799074176453, 20.93957918978874],
+    [28.93957918978874]
 ]
 ```
 
