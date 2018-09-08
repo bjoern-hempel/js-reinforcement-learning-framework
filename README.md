@@ -139,6 +139,8 @@ As we expected, the choice of Q<sub>(s=0,a=0)</sub> farsighted is the better cho
 
 #### 2.2.3 More complex example
 
+Let's look at the somewhat more complex example:
+
 <img src="/images/Complex.png" width="960" alt="super basic example">
 
 ##### 2.2.3.1 Code
