@@ -173,7 +173,7 @@ console.log(JSON.stringify(Q));
 ]
 ```
 
-##### 2.2.3.2 Comparison of variables
+##### 2.2.3.2 Comparison of the discountRate variable
 
 | discountRate | s<sub>0</sub> | s<sub>1</sub> | s<sub>2</sub> | s<sub>0</sub> (winner) | s<sub>1</sub> (winner) | s<sub>2</sub> (winner) |
 |-------------------------------------|----------------|----------------|----------|----------------|----------------|----------|
