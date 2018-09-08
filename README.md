@@ -98,7 +98,7 @@ Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>:
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
 
-#### 2.2.3 Complex example
+#### 2.2.3 More complex example
 
 <img src="/images/Complex.png" width="960" alt="super basic example">
 
