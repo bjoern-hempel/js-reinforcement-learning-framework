@@ -77,7 +77,7 @@ console.log(JSON.stringify(Q));
 
 As we suspected above: a<sub>0</sub> is the winner and with the maximum value of Q<sub>(s=0)</sub> (Q<sub>(s=0,a=0)</sub> = 1). The discountFactor is set to 0, because we only want to consider one iteration step. The discountFactor determines the importance of future rewards: A factor of 0 makes the agent "short-sighted" by considering only the current rewards, while a factor of close to 1 makes him strive for a high long-sighted reward. Because it is set to 0, only the next step is important and it shows the previously shown result.
 
-The situation doesn't change if we look a little bit more far-sighted:
+The situation doesn't change if we look a little bit more far-sighted and we set the discount factor close to 1:
 
 ```javascript
 var discountFactor = 0.9;
@@ -91,7 +91,7 @@ var discountFactor = 0.9;
 ]
 ```
 
-Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832
+Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832. The algorithm is implemented until a certain threshold value is reached (default is the difference of 0.001).
 
 #### 2.2.2 Basic example
 
