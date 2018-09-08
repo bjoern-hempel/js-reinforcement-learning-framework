@@ -174,6 +174,15 @@ console.log(JSON.stringify(Q));
 ]
 ```
 
+##### 2.2.3.2 Comparison of variables
+
+|  | s<sub>0</sub> | s<sub>1</sub> | s<sub>2</sub> |
+|-------------------------------------|----------------|----------------|----------|
+| discountRate = 0.9;<br>iterations = 1; | [1, -1] | [0, -50] | [80] |
+| discountRate = 0.9;<br>iterations = 1000; | [61.76, 67.51] | [76.27, 84.74] | [149.71] |
+| discountRate = 0.5;<br>iterations = 1000; | [2, -0.5] | [0, -7.47] | [85.05] |
+| discountRate = 0.1;<br>iterations = 1000; | [1.11, -0.94] | [0, -41.91] | [80.90] |
+
 ## A. Authors
 
 * Björn Hempel <bjoern@hempel.li> - _Initial work_ - [https://github.com/bjoern-hempel](https://github.com/bjoern-hempel)
