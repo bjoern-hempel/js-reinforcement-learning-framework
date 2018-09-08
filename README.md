@@ -177,10 +177,10 @@ console.log(JSON.stringify(Q));
 
 | discountRate | s<sub>0</sub> | s<sub>1</sub> | s<sub>2</sub> | s<sub>0</sub> (winner) | s<sub>1</sub> (winner) | s<sub>2</sub> (winner) |
 |-------------------------------------|----------------|----------------|----------|----------------|----------------|----------|
-| 0.0 | `[1, -1]` | `[0, -50]` | `[80]` | a<sub>0</sub> | a<sub>0</sub> | a<sub>0</sub> |
-| 0.1 | `[1.11, -0.94]` | `[0, -41.91]` | `[80.90]` | a<sub>0</sub> | a<sub>0</sub> | a<sub>0</sub> |
-| 0.5 | `[2, -0.5]` | `[0, -7.47]` | `[85.05]` | a<sub>0</sub> | a<sub>0</sub> | a<sub>0</sub> |
-| 0.9 | `[61.76, 67.51]` | `[76.27, 84.74]` | `[149.71]` | a<sub>1</sub> | a<sub>1</sub> | a<sub>0</sub> |
+| 0.0 (short-sighted) | `[1, -1]` | `[0, -50]` | `[80]` | a<sub>0</sub> | a<sub>0</sub> | a<sub>0</sub> |
+| 0.1 (short-sighted) | `[1.11, -0.94]` | `[0, -41.91]` | `[80.90]` | a<sub>0</sub> | a<sub>0</sub> | a<sub>0</sub> |
+| 0.5 (half short-sighted) | `[2, -0.5]` | `[0, -7.47]` | `[85.05]` | a<sub>0</sub> | a<sub>0</sub> | a<sub>0</sub> |
+| 0.9 (far-sighted) | `[61.76, 67.51]` | `[76.27, 84.74]` | `[149.71]` | a<sub>1</sub> | a<sub>1</sub> | a<sub>0</sub> |
 
 ## 3. Temporal Difference Learning and Q-Learning
 
