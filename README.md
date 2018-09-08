@@ -101,7 +101,7 @@ Let's look at the following example:
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
 
-If we look at this example in the short term, it is a good idea to go through a1 (discountRate = 0): Because we always get a reward of 2 and we don't want to receive any punishment of -5. In the long run, it's better to go through a0 (discountRate = 0.9), because in future we will receive a reward of 10 in addition to the punishment of -5. Let's calculate that:  
+If we look at this example in the short term, it is a good idea to go through a<sub>1</sub> (discountRate = 0): Because we always get a reward of 2 and we don't want to receive any punishment of -5. From a far-sighted point of view, it's better to go through a<sub>0</sub> (discountRate = 0.9), because in future we will receive a reward of 10 in addition to the punishment of -5. Let's calculate that:  
 
 ##### 2.2.2.1 Code
 
