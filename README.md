@@ -128,7 +128,7 @@ console.log(JSON.stringify(Q));
 
 **It returns:**
 
-As we expected, the choice of s<sub>0</sub>.a<sub>0</sub> farsighted is the better choice:
+As we expected, the choice of Q<sub>(s=0,a=0)</sub> farsighted is the better choice:
 
 ```json
 [
