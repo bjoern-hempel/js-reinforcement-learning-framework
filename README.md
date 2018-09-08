@@ -128,6 +128,8 @@ console.log(JSON.stringify(Q));
 
 **It returns:**
 
+As we expected (far-sighted), the choice of s<sub>0</sub>.a<sub>0</sub> farsighted is the better choice:
+
 ```json
 [
     [21.044799074176453, 20.93957918978874],
