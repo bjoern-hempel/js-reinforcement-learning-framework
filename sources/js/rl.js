@@ -209,10 +209,18 @@ class ReinforcementLearning {
      * @param Q
      * @param possibleActions
      */
-    constructor(statesActionsStatesTR) {
+    constructor() {
         this.name = 'ReinforcementLearning';
 
         this.statesActionsStatesTR = [];
+
+        /* add config */
+        this.config = {
+            iterations: 'auto',
+            iterationThreshold: 0.001,
+            iterationsMax: 100000,
+            discountFactor: 0.95
+        }
     }
 
     /**
@@ -303,38 +311,135 @@ class ReinforcementLearning {
     }
 
     /**
+     * Calculate the difference between the current Q and the last Q.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-28)
+     * @param Q
+     * @param Q_prev
+     * @returns {number}
+     */
+    calculateQDifferenceMax(Q, Q_prev) {
+        var Q_diffMax = 0;
+        var number    = 0;
+
+        for (var state = 0; state < Q.length; state++) {
+            for (var action = 0; action < Q[state].length; action++) {
+                var diff = Q[state][action] - Q_prev[state][action];
+                Q_diffMax = diff > Q_diffMax ? diff : Q_diffMax;
+            }
+        }
+
+        return Q_diffMax;
+    }
+
+    /**
+     * Adopt given config.
+     *
+     * @param config
+     */
+    adoptConfig(config) {
+        for (var name in config) {
+            this.config[name] = config[name];
+        }
+    }
+
+    /**
      * Do all calculations.
      *
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-08-28)
-     * @param iterations
-     * @param discountRate
      */
-    calulateQ(iterations, discountRate) {
+    calculateQ() {
+
+        /* analyse and adopt given arguments */
+        for (var i = 0; i < arguments.length; i++) {
+            switch (typeof(arguments[i])) {
+
+                /* object given */
+                case 'object':
+                    this.adoptConfig(arguments[i]);
+                    break;
+
+                /* number given -> discount factor */
+                case 'number':
+                    this.config.discountFactor = arguments[i];
+                    break;
+            }
+        }
 
         var Q = this.getInitialQ();
 
-        for (var i = 0; i < iterations; i++) {
+        var Q_prev = null;
 
-            var QPrev = JSON.parse(JSON.stringify(Q));
+        var counter = 0;
 
+        /* Iterate until a threshold or a iteration number is reached */
+        while (true) {
+
+            /* Calculate until threshold is reached */
+            if (this.config.iterations === 'auto') {
+
+                /* The maximum iterations are reached */
+                if (counter >= this.config.iterationsMax) {
+                    break;
+                }
+
+                if (Q_prev !== null) {
+                    var difference = this.calculateQDifferenceMax(Q, Q_prev);
+
+                    /* Cancel the calculation if the difference between Q and Q_prev is lower than iterationThreshold */
+                    if (difference < this.config.iterationThreshold) {
+                        break;
+                    }
+                }
+
+            /* Iteration number was given */
+            } else {
+
+                /* Wanted iterations reached */
+                if (counter >= this.config.iterations) {
+                    break;
+                }
+            }
+
+            /* Copy last Q values */
+            Q_prev = this.deepCopy(Q);
+
+            /* Iterate through all available states */
             for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
                 var actionsStatesTR = this.statesActionsStatesTR[s];
 
+                /* Iterate through all available actions */
                 for (var a = 0; a < actionsStatesTR.length; a++) {
                     var statesTR = actionsStatesTR[a];
                     Q[s][a] = 0;
 
+                    /* iterate through all target states */
                     for (var sp in statesTR) {
                         var T = statesTR[sp][0];
                         var R = statesTR[sp][1];
 
-                        Q[s][a] += T * (R + discountRate * Math.max(...QPrev[sp]));
+                        Q[s][a] += T * (R + this.config.discountFactor * Math.max(...Q_prev[sp]));
                     }
                 }
             }
+
+            /* Increase the counter. */
+            counter++;
         }
 
         return Q;
+    }
+
+    /**
+     * Deep copy (clone) of an object.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-28)
+     * @param object
+     */
+    deepCopy(object) {
+        return JSON.parse(JSON.stringify(object));
     }
 }

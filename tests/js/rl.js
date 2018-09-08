@@ -4,8 +4,8 @@ function startRLTest() {
     new JsSuccessTest(
         ReinforcementLearning.SUCCESS_CALCULATE_Q,
         new JsTestTestFunction(function () {
-            var discountRate = 0.95;
-            var iterations   = 100;
+            var discountFactor = 0.95;
+            var iterations     = 100;
 
             var rl = new ReinforcementLearning();
 
@@ -31,7 +31,7 @@ function startRLTest() {
             rl.addStateChange(a5, s1, 0.1,   0);
             rl.addStateChange(a5, s2, 0.1,   0);
 
-            var Q = rl.calulateQ(iterations, discountRate);
+            var Q = rl.calculateQ({iterations: iterations, discountFactor: discountFactor});
 
             var QExpected = [
                 [21.8864, 20.7914, 16.8548],
@@ -49,8 +49,8 @@ function startRLTest() {
     new JsSuccessTest(
         ReinforcementLearning.SUCCESS_CALCULATE_Q,
         new JsTestTestFunction(function () {
-            var discountRate = 0.95;
-            var iterations   = 100;
+            var discountFactor = 0.95;
+            var iterations     = 100;
 
             var rl = new ReinforcementLearning();
 
@@ -65,7 +65,7 @@ function startRLTest() {
             rl.addAction(s1, new StateChange(s2, 1.0, -50));
             rl.addAction(s2, new StateChange(s0, 0.8,  40), new StateChange(s1, 0.1, 0), new StateChange(s2, 0.1, 0));
 
-            var Q = rl.calulateQ(iterations, discountRate);
+            var Q = rl.calculateQ({iterations: iterations, discountFactor: discountFactor});
 
             var QExpected = [
                 [21.8864, 20.7914, 16.8548],
