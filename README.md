@@ -61,7 +61,7 @@ var rl = new ReinforcementLearning();
 /* s0 */
 var s0 = rl.addState();
 
-/* a0, a1 and a2 */
+/* s0.a0, s0.a1 and s0.a2 */
 rl.addAction(s0, new StateChange(s0, 1.0,  1));
 rl.addAction(s0, new StateChange(s0, 1.0, -1));
 rl.addAction(s0, new StateChange(s0, 1.0,  0));
@@ -113,6 +113,8 @@ var s1 = rl.addState();
 /* s0.a0, s0.a1 and s1.a0 */
 rl.addAction(s0, new StateChange(s1, 1.0, -5));
 rl.addAction(s0, new StateChange(s0, 1.0,  2));
+
+/* s1.a0 */
 rl.addAction(s1, new StateChange(s0, 1.0, 10));
 
 var Q = rl.calulateQ(iterations, discountRate);
@@ -133,63 +135,43 @@ console.log(JSON.stringify(Q));
 
 <img src="/images/Complex.png" width="960" alt="super basic example">
 
-#### 2.2.4 Basic example
+##### 2.2.3.1 Code
 
-```php
-var discountRate = 0.95;
-var iterations   = 100;
+```javascript
+var discountRate =  0.9;
+var iterations   = 1000;
 
 var rl = new ReinforcementLearning();
 
+/* s0, s1 and s2 */
 var s0 = rl.addState();
 var s1 = rl.addState();
 var s2 = rl.addState();
 
-var a0 = rl.addAction(s0);
-var a1 = rl.addAction(s0);
-var a2 = rl.addAction(s0);
-var a3 = rl.addAction(s1);
-var a4 = rl.addAction(s1);
-var a5 = rl.addAction(s2);
+/* s0.a0 and s0.a1 */
+rl.addAction(s0, new StateChange(s0, 1.0,   1));
+rl.addAction(s0, new StateChange(s0, 0.5,  -2), new StateChange(s1, 0.5, 0));
 
-rl.addStateChange(a0, s0, 0.7,  10);
-rl.addStateChange(a0, s1, 0.3,   0);
-rl.addStateChange(a1, s0, 1.0,   0);
-rl.addStateChange(a2, s0, 0.8,   0);
-rl.addStateChange(a2, s1, 0.2,   0);
-rl.addStateChange(a3, s1, 1.0,   0);
-rl.addStateChange(a4, s2, 1.0, -50);
-rl.addStateChange(a5, s0, 0.8,  40);
-rl.addStateChange(a5, s1, 0.1,   0);
-rl.addStateChange(a5, s2, 0.1,   0);
-
-var Q = rl.calulateQ(iterations, discountRate);
-
-console.log(Q);
-```
-
-#### 2.2.5 Basic example (shortcut from the previous example)
-
-```php
-var discountRate = 0.95;
-var iterations   = 100;
-
-var rl = new ReinforcementLearning();
-
-var s0 = rl.addState();
-var s1 = rl.addState();
-var s2 = rl.addState();
-
-rl.addAction(s0, new StateChange(s0, 0.7,  10), new StateChange(s1, 0.3, 0));
-rl.addAction(s0, new StateChange(s0, 1.0,   0));
-rl.addAction(s0, new StateChange(s0, 0.8,   0), new StateChange(s1, 0.2, 0));
+/* s1.a0 and s1.a1 */
 rl.addAction(s1, new StateChange(s1, 1.0,   0));
 rl.addAction(s1, new StateChange(s2, 1.0, -50));
-rl.addAction(s2, new StateChange(s0, 0.8,  40), new StateChange(s1, 0.1, 0), new StateChange(s2, 0.1, 0));
+
+/* s2.a0 */
+rl.addAction(s2, new StateChange(s0, 0.8, 100), new StateChange(s1, 0.1, 0), new StateChange(s2, 0.1, 0));
 
 var Q = rl.calulateQ(iterations, discountRate);
 
-console.log(Q);
+console.log(JSON.stringify(Q));
+```
+
+**It returns:**
+
+```json
+[
+    [61.76300578034683,67.51445086705203],
+    [76.26589595375724,84.73988439306359],
+    [149.71098265895955]
+]
 ```
 
 ## A. Authors
