@@ -4,7 +4,7 @@ This is a javascript reinforcement learning framework.
 
 ## 1. Introduction
 
-Coming soon.. 
+In progress.. 
 
 ## 2. Markov decision process
 
@@ -182,6 +182,10 @@ console.log(JSON.stringify(Q));
 | `discountRate = 0.9;`<br>`iterations = 1000;` | `[61.76, 67.51]` | `[76.27, 84.74]` | `[149.71]` |
 | `discountRate = 0.5;`<br>`iterations = 1000;` | `[2, -0.5]` | `[0, -7.47]` | `[85.05]` |
 | `discountRate = 0.1;`<br>`iterations = 1000;` | `[1.11, -0.94]` | `[0, -41.91]` | `[80.90]` |
+
+3. Temporal Difference Learning and Q-Learning
+
+In progress.. 
 
 ## A. Authors
 
