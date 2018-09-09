@@ -146,6 +146,10 @@ As we expected, the choice of Q<sub>(s=0,a=0)</sub> farsighted is the better cho
 | 0.5          | half short-sighted | `[1.00, 4.00]`   | `[12.00]`     | a<sub>1</sub>          | a<sub>0</sub>          |
 | 0.9          | far-sighted        | `[21.04, 20.94]` | `[28.94]`     | a<sub>0</sub>          | a<sub>0</sub>          |
 
+*Graphic:*
+
+<img src="/images/BasicResult.png" width="960" alt="basic example result">
+
 #### 2.2.3 More complex example
 
 Let's look at the somewhat more complex example:
