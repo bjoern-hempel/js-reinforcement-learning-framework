@@ -143,7 +143,7 @@ Let's look at the somewhat more complex example:
 
 <img src="/images/Complex.png" width="960" alt="super basic example">
 
-Short-sightedly it is a good idea to permanently go through a<sub>0</sub> and stay on state s<sub>0</sub>. But how is it farsighted? Let's calculate that:
+Short-sightedly it is a good idea to permanently go through a<sub>0</sub> and stay on state s<sub>0</sub>. But how is it farsighted? Is courage rewarded in this case? Let's calculate that:
 
 ##### 2.2.3.1 Code
 
