@@ -101,7 +101,7 @@ Let's look at the next following example:
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
 
-If we look at this example in the short term, it is a good idea to go through a<sub>1</sub> from s<sub>0</sub> (discountRate = 0): Because we always get a reward of 2 and we don't want to receive any punishment of -5. From a far-sighted point of view, it's better to go through a<sub>0</sub> (discountRate = 0.9), because in future we will receive a reward of 10 in addition to the punishment of -5 (it means the sum of 5 reward instead of only 2). Let's calculate that:  
+If we look at this example in the short term, it is a good idea to permanently go through a<sub>1</sub> from s<sub>0</sub> (discountRate = 0): Because we always get a reward of 2 and we don't want to receive any punishment of -5. From a far-sighted point of view, it's better to go through a<sub>0</sub> (discountRate = 0.9), because in future we will receive a reward of 10 in addition to the punishment of -5 (it means the sum of 5 reward instead of only 2). Let's calculate that:  
 
 ##### 2.2.2.1 Code
 
@@ -143,7 +143,7 @@ Let's look at the somewhat more complex example:
 
 <img src="/images/Complex.png" width="960" alt="super basic example">
 
-Short-sightedly it is a good idea to go through a0. But how is it farsighted? Let's calculate that:
+Short-sightedly it is a good idea to permanently go through a0. But how is it farsighted? Let's calculate that:
 
 ##### 2.2.3.1 Code
 
