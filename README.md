@@ -79,7 +79,7 @@ console.log(JSON.stringify(Q));
 
 As we suspected above: a<sub>0</sub> is the winner and with the maximum value of Q<sub>(s=0)</sub> (Q<sub>(s=0,a=0)</sub> = 1). The discountFactor is set to 0, because we only want to consider one iteration step. The discountFactor determines the importance of future rewards: A factor of 0 makes the agent "short-sighted" by considering only the current rewards, while a factor of close to 1 makes him strive for a high long-sighted reward. Because it is set to 0, only the next step is important and it shows the previously shown result.
 
-The situation doesn't change if we look a little bit more far-sighted and we set the discount factor close to 1:
+The situation doesn't change if we look a little bit more far-sighted and we set the discount factor close to 1 (e.g. 0,9):
 
 ```javascript
 var discountFactor = 0.9;
@@ -93,7 +93,7 @@ var discountFactor = 0.9;
 ]
 ```
 
-Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832. The algorithm is implemented until a certain threshold value is reached and then stops repeating the above given formula (default is the Q change difference of 0.001).
+Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832. The algorithm of the function `calculateQ` is implemented until a certain threshold value is reached and then stops repeating the above given formula (default is the Q change difference of 0.001).
 
 #### 2.2.2 Basic example
 
@@ -101,7 +101,7 @@ Let's look at the next following example:
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
 
-If we look at this example in the short term, it is a good idea to permanently go through a<sub>1</sub> from s<sub>0</sub> (discountRate = 0): Because we always get a reward of 2 and we don't want to receive any punishment of -5. From a far-sighted point of view, it's better to go through a<sub>0</sub> (discountRate = 0.9), because in future we will receive a reward of 10 in addition to the punishment of -5 (it means the sum of 5 reward instead of only 2). Let's calculate that:  
+If we look at this example in the short term, it is a good idea to permanently go through a<sub>1</sub> from s<sub>0</sub> (discountRate = 0) and stay on state s<sub>0</sub>: Because we always get a reward of 2 and we don't want to receive any punishment of -5. From a far-sighted point of view, it's better to go through a<sub>0</sub> (discountRate = 0.9), because in future we will receive a reward of 10 in addition to the punishment of -5 (it means the sum of 5 reward instead of only 2). Let's calculate that:  
 
 ##### 2.2.2.1 Code
 
@@ -136,6 +136,15 @@ As we expected, the choice of Q<sub>(s=0,a=0)</sub> farsighted is the better cho
     [28.93957918978874]
 ]
 ```
+
+##### 2.2.2.2 Comparison of different discount rates
+
+| discountRate | type               | s<sub>0</sub>    | s<sub>1</sub> | s<sub>0</sub> (winner) | s<sub>1</sub> (winner) |
+|--------------|--------------------|------------------|---------------|------------------------|------------------------|
+| 0.0          | short-sighted      | `[-5, 2]`        | `[10]`        | a<sub>1</sub>          | a<sub>0</sub>          |
+| 0.1          | short-sighted      | `[-3.98, 2.22]`  | `[10.22]`     | a<sub>1</sub>          | a<sub>0</sub>          |
+| 0.5          | half short-sighted | `[1.00, 4.00]`   | `[12.00]`     | a<sub>1</sub>          | a<sub>0</sub>          |
+| 0.9          | far-sighted        | `[21.04, 20.94]` | `[28.94]`     | a<sub>0</sub>          | a<sub>0</sub>          |
 
 #### 2.2.3 More complex example
 
@@ -183,7 +192,7 @@ console.log(JSON.stringify(Q));
 ]
 ```
 
-##### 2.2.3.2 Comparison of the discountRate variable
+##### 2.2.3.2 Comparison of different discount rates
 
 | discountRate | type | s<sub>0</sub> | s<sub>1</sub> | s<sub>2</sub> | s<sub>0</sub> (winner) | s<sub>1</sub> (winner) | s<sub>2</sub> (winner) |
 |---|-------------------------------------|----------------|----------------|----------|----------------|----------------|----------|
