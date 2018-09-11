@@ -211,7 +211,7 @@ In progress..
 
 ## A. Tools
 
-* All graphics were gratefully created with [Google Drive](https://www.google.com/drive/)
+* All flowcharts were gratefully created with [Google Drive](https://www.google.com/drive/)
 
 ## B. Authors
 
