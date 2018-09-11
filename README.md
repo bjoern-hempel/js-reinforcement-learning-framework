@@ -207,17 +207,21 @@ console.log(JSON.stringify(Q));
 
 ## 3. Temporal Difference Learning and Q-Learning
 
-In progress.. 
+In progress..
 
-## A. Authors
+## A. Tools
+
+* All graphics were gratefully created with [Google Drive](https://www.google.com/drive/)
+
+## B. Authors
 
 * Björn Hempel <bjoern@hempel.li> - _Initial work_ - [https://github.com/bjoern-hempel](https://github.com/bjoern-hempel)
 
-## B. Licence
+## C. Licence
 
 This tutorial is licensed under the MIT License - see the [LICENSE.md](/LICENSE.md) file for details
 
-## C. Closing words
+## D. Closing words
 
 Have fun! :)
 
