@@ -207,7 +207,7 @@ console.log(JSON.stringify(Q));
 
 **Graphic:**
 
-<img src="/images/ComplexResult.png" width="960" alt="more complex example result">
+<img src="/images/ComplexResult0.0.png" width="960" alt="more complex example result">
 
 ## 3. Temporal Difference Learning and Q-Learning
 
