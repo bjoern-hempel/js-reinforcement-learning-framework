@@ -205,6 +205,10 @@ console.log(JSON.stringify(Q));
 | 0.5 | half short-sighted | `[2, -0.5]` | `[0, -7.47]` | `[85.05]` | a<sub>0</sub> | a<sub>0</sub> | a<sub>0</sub> |
 | 0.9 | far-sighted | `[61.76, 67.51]` | `[76.27, 84.74]` | `[149.71]` | a<sub>1</sub> | a<sub>1</sub> | a<sub>0</sub> |
 
+**Graphic:**
+
+<img src="/images/ComplexResult.png" width="960" alt="more complex example result">
+
 ## 3. Temporal Difference Learning and Q-Learning
 
 In progress..
