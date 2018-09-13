@@ -441,6 +441,11 @@ class ReinforcementLearning {
      */
     printTable(Q) {
 
+        /* Nothing to to, if we do not have any states */
+        if (this.statesActionsStatesTR.length <= 0) {
+            return;
+        }
+
         var stateConfig  = [];
         var actionConfig = [];
 
@@ -469,40 +474,59 @@ class ReinforcementLearning {
         }
 
         var table = document.createElement('table');
+        table.setAttribute('border', 1);
+        table.setAttribute('cellspacing', 0);
+        table.setAttribute('cellpadding', 10);
+
+        /* add first tr element */
+        var tr = document.createElement('tr');
+        table.appendChild(tr);
 
         /* Iterate through all available states */
         for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
             var actionsStatesTR = this.statesActionsStatesTR[s];
 
-            var tr = document.createElement('tr');
-            table.appendChild(tr);
+            if (s > 0) {
+                tr = document.createElement('tr');
+                table.appendChild(tr);
+            }
 
             var td = document.createElement('td');
             tr.appendChild(td);
 
             td.innerHTML = 'S<sub>' + s + '</sub>';
+            td.setAttribute('rowspan', stateConfig[s].rows);
 
             /* Iterate through all available actions */
             for (var a = 0; a < actionsStatesTR.length; a++) {
                 var statesTR = actionsStatesTR[a];
 
-                var tr = document.createElement('tr');
-                table.appendChild(tr);
+                if (a > 0) {
+                    var tr = document.createElement('tr');
+                    table.appendChild(tr);
+                }
 
                 var td = document.createElement('td');
                 tr.appendChild(td);
 
                 td.innerHTML = 'a<sub>' + a + '</sub>';
+                td.setAttribute('rowspan', actionConfig[s][a].rows);
 
                 /* iterate through all target states */
+                var spCounter = 0;
                 for (var sp in statesTR) {
-                    var tr = document.createElement('tr');
-                    table.appendChild(tr);
+
+                    if (spCounter > 0) {
+                        var tr = document.createElement('tr');
+                        table.appendChild(tr);
+                    }
 
                     var td = document.createElement('td');
                     tr.appendChild(td);
 
                     td.innerHTML = 'S\'<sub>' + sp + '</sub>';
+
+                    spCounter++;
                 }
             }
         }
