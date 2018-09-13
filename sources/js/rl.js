@@ -433,6 +433,85 @@ class ReinforcementLearning {
     }
 
     /**
+     * Prints a table with all results.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     * @param object
+     */
+    printTable(Q) {
+
+        var stateConfig  = [];
+        var actionConfig = [];
+
+        /* Iterate through all available states */
+        for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+            var actionsStatesTR = this.statesActionsStatesTR[s];
+            var stateRows = 0;
+
+            actionConfig.push([]);
+
+            /* Iterate through all available actions */
+            for (var a = 0; a < actionsStatesTR.length; a++) {
+                var statesTR = actionsStatesTR[a];
+                var actionRows = 0;
+
+                /* iterate through all target states */
+                for (var sp in statesTR) {
+                    stateRows++;
+                    actionRows++;
+                }
+
+                actionConfig[actionConfig.length - 1].push({rows: actionRows});
+            }
+
+            stateConfig.push({rows: stateRows});
+        }
+
+        var table = document.createElement('table');
+
+        /* Iterate through all available states */
+        for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+            var actionsStatesTR = this.statesActionsStatesTR[s];
+
+            var tr = document.createElement('tr');
+            table.appendChild(tr);
+
+            var td = document.createElement('td');
+            tr.appendChild(td);
+
+            td.innerHTML = 'S<sub>' + s + '</sub>';
+
+            /* Iterate through all available actions */
+            for (var a = 0; a < actionsStatesTR.length; a++) {
+                var statesTR = actionsStatesTR[a];
+
+                var tr = document.createElement('tr');
+                table.appendChild(tr);
+
+                var td = document.createElement('td');
+                tr.appendChild(td);
+
+                td.innerHTML = 'a<sub>' + a + '</sub>';
+
+                /* iterate through all target states */
+                for (var sp in statesTR) {
+                    var tr = document.createElement('tr');
+                    table.appendChild(tr);
+
+                    var td = document.createElement('td');
+                    tr.appendChild(td);
+
+                    td.innerHTML = 'S\'<sub>' + sp + '</sub>';
+                }
+            }
+        }
+
+
+        document.body.appendChild(table);
+    }
+
+    /**
      * Deep copy (clone) of an object.
      *
      * @author Björn Hempel <bjoern@hempel.li>

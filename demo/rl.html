@@ -8,19 +8,24 @@
 <body>
     <script>
 
-        var discountFactor = 0;
+        var discountRate = 0.9;
 
         var rl = new ReinforcementLearning();
 
-        /* s0 */
+        /* s0 and s1 */
         var s0 = rl.addState();
+        var s1 = rl.addState();
 
-        /* s0.a0, s0.a1 and s0.a2 */
-        rl.addAction(s0, new StateChange(s0, 1.0,  1));
-        rl.addAction(s0, new StateChange(s0, 1.0, -1));
-        rl.addAction(s0, new StateChange(s0, 1.0,  0));
+        /* s0.a0, s0.a1 and s1.a0 */
+        rl.addAction(s0, new StateChange(s1, 1.0, -5));
+        rl.addAction(s0, new StateChange(s0, 1.0,  2));
 
-        var Q = rl.calculateQ(discountFactor);
+        /* s1.a0 */
+        rl.addAction(s1, new StateChange(s0, 1.0, 10));
+
+        var Q = rl.calculateQ(discountRate);
+
+        rl.printTable(Q);
 
         console.log(JSON.stringify(Q));
 
