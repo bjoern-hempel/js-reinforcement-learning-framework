@@ -449,6 +449,23 @@ class ReinforcementLearning {
         var config = this.calculateConfig();
         var table  = this.addTable(document.body, {border: 1, cellspacing: 0, cellpadding: 25});
 
+        var QMax = [];
+
+        for (var i = 0; i < Q.length; i++) {
+            var max = 0;
+            var index = 0;
+
+            for (var j = 0; j < Q[i].length; j++) {
+                if (max < Q[i][j]) {
+                    max = Q[i][j];
+
+                    index = j;
+                }
+            }
+
+            QMax[i] = index;
+        }
+
         /* add header */
         var tr = this.addTr(table, null, 'thead');
         this.addTdSet(tr, ['S', 'a', 'S\'', 'T', 'R', 'Q'], {style: 'font-weight: bold; text-align: center;'});
@@ -488,7 +505,10 @@ class ReinforcementLearning {
                         this.addTd(
                             tr,
                             String(Math.round(Q[s][a] * 1000) / 1000),
-                            {rowspan: config.action[s][a].rows}
+                            {
+                                rowspan: config.action[s][a].rows,
+                                style: 'background-color: ' + (QMax[s] === a ? 'green' : 'red') + ';'
+                            }
                         );
                     }
 
