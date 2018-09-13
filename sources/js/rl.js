@@ -446,6 +446,80 @@ class ReinforcementLearning {
             return;
         }
 
+        var config = this.calculateConfig();
+        var table  = this.addTable(document.body);
+
+        /* set table attributes */
+        table.setAttribute('border', 1);
+        table.setAttribute('cellspacing', 0);
+        table.setAttribute('cellpadding', 10);
+
+        /* add first tr element */
+        var tr = this.addTr(table);
+
+        /* Iterate through all available states */
+        for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+            var actionsStatesTR = this.statesActionsStatesTR[s];
+
+            if (s > 0) {
+                tr = this.addTr(table);
+            }
+
+            var td = this.addTd(tr);
+            td.innerHTML = 'S<sub>' + s + '</sub>';
+            td.setAttribute('rowspan', config.state[s].rows);
+
+            /* Iterate through all available actions */
+            for (var a = 0; a < actionsStatesTR.length; a++) {
+                var statesTR = actionsStatesTR[a];
+
+                if (a > 0) {
+                    tr = this.addTr(table);
+                }
+
+                var td = this.addTd(tr);
+                td.innerHTML = 'a<sub>' + a + '</sub>';
+                td.setAttribute('rowspan', config.action[s][a].rows);
+
+                var td = this.addTd(tr);
+                td.innerHTML = Q[s][a];
+                td.setAttribute('rowspan', config.action[s][a].rows);
+
+                /* iterate through all target states */
+                var spCounter = 0;
+                for (var sp in statesTR) {
+                    var T = statesTR[sp][0];
+                    var R = statesTR[sp][1];
+                    console.log(Q);
+
+                    if (spCounter > 0) {
+                        tr = this.addTr(table);
+                    }
+
+                    var td = this.addTd(tr);
+                    td.innerHTML = 'S\'<sub>' + sp + '</sub>';
+
+                    var td = this.addTd(tr);
+                    td.innerHTML = T;
+
+                    var td = this.addTd(tr);
+                    td.innerHTML = R;
+
+                    spCounter++;
+                }
+            }
+        }
+    }
+
+    /**
+     * Calculates the config according the given states and actions.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     * @returns {{state: Array, action: Array}}
+     */
+    calculateConfig() {
+
         var stateConfig  = [];
         var actionConfig = [];
 
@@ -473,66 +547,49 @@ class ReinforcementLearning {
             stateConfig.push({rows: stateRows});
         }
 
-        var table = document.createElement('table');
-        table.setAttribute('border', 1);
-        table.setAttribute('cellspacing', 0);
-        table.setAttribute('cellpadding', 10);
+        return {state: stateConfig, action: actionConfig};
+    }
 
-        /* add first tr element */
+    /**
+     * Adds a table element to given element.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     * @param table
+     * @returns {HTMLTableRowElement}
+     */
+    addTable(element) {
+        var table = document.createElement('table');
+        element.appendChild(table);
+        return table;
+    }
+
+    /**
+     * Adds a tr element to given table.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     * @param table
+     * @returns {HTMLTableRowElement}
+     */
+    addTr(table) {
         var tr = document.createElement('tr');
         table.appendChild(tr);
+        return tr;
+    }
 
-        /* Iterate through all available states */
-        for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
-            var actionsStatesTR = this.statesActionsStatesTR[s];
-
-            if (s > 0) {
-                tr = document.createElement('tr');
-                table.appendChild(tr);
-            }
-
-            var td = document.createElement('td');
-            tr.appendChild(td);
-
-            td.innerHTML = 'S<sub>' + s + '</sub>';
-            td.setAttribute('rowspan', stateConfig[s].rows);
-
-            /* Iterate through all available actions */
-            for (var a = 0; a < actionsStatesTR.length; a++) {
-                var statesTR = actionsStatesTR[a];
-
-                if (a > 0) {
-                    var tr = document.createElement('tr');
-                    table.appendChild(tr);
-                }
-
-                var td = document.createElement('td');
-                tr.appendChild(td);
-
-                td.innerHTML = 'a<sub>' + a + '</sub>';
-                td.setAttribute('rowspan', actionConfig[s][a].rows);
-
-                /* iterate through all target states */
-                var spCounter = 0;
-                for (var sp in statesTR) {
-
-                    if (spCounter > 0) {
-                        var tr = document.createElement('tr');
-                        table.appendChild(tr);
-                    }
-
-                    var td = document.createElement('td');
-                    tr.appendChild(td);
-
-                    td.innerHTML = 'S\'<sub>' + sp + '</sub>';
-
-                    spCounter++;
-                }
-            }
-        }
-
-
-        document.body.appendChild(table);
+    /**
+     * Adds a td element to given tr.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     * @param table
+     * @returns {HTMLTableRowElement}
+     */
+    addTd(tr) {
+        var td = document.createElement('td');
+        tr.appendChild(td);
+        return td;
     }
 
     /**
