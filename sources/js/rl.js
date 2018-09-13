@@ -452,7 +452,7 @@ class ReinforcementLearning {
         /* set table attributes */
         table.setAttribute('border', 1);
         table.setAttribute('cellspacing', 0);
-        table.setAttribute('cellpadding', 10);
+        table.setAttribute('cellpadding', 25);
 
         /* add first tr element */
         var tr = this.addTr(table);
@@ -465,8 +465,7 @@ class ReinforcementLearning {
                 tr = this.addTr(table);
             }
 
-            var td = this.addTd(tr);
-            td.innerHTML = 'S<sub>' + s + '</sub>';
+            var td = this.addTd(tr, 'S<sub>' + s + '</sub>');
             td.setAttribute('rowspan', config.state[s].rows);
 
             /* Iterate through all available actions */
@@ -477,12 +476,7 @@ class ReinforcementLearning {
                     tr = this.addTr(table);
                 }
 
-                var td = this.addTd(tr);
-                td.innerHTML = 'a<sub>' + a + '</sub>';
-                td.setAttribute('rowspan', config.action[s][a].rows);
-
-                var td = this.addTd(tr);
-                td.innerHTML = Q[s][a];
+                var td = this.addTd(tr, 'a<sub>' + a + '</sub>');
                 td.setAttribute('rowspan', config.action[s][a].rows);
 
                 /* iterate through all target states */
@@ -490,20 +484,19 @@ class ReinforcementLearning {
                 for (var sp in statesTR) {
                     var T = statesTR[sp][0];
                     var R = statesTR[sp][1];
-                    console.log(Q);
 
                     if (spCounter > 0) {
                         tr = this.addTr(table);
                     }
 
-                    var td = this.addTd(tr);
-                    td.innerHTML = 'S\'<sub>' + sp + '</sub>';
+                    var td = this.addTd(tr, 'S\'<sub>' + sp + '</sub>');
+                    var td = this.addTd(tr, String(T));
+                    var td = this.addTd(tr, String(R));
 
-                    var td = this.addTd(tr);
-                    td.innerHTML = T;
-
-                    var td = this.addTd(tr);
-                    td.innerHTML = R;
+                    if (spCounter === 0) {
+                        var td = this.addTd(tr, String(Math.round(Q[s][a] * 1000) / 1000));
+                        td.setAttribute('rowspan', config.action[s][a].rows);
+                    }
 
                     spCounter++;
                 }
@@ -586,9 +579,14 @@ class ReinforcementLearning {
      * @param table
      * @returns {HTMLTableRowElement}
      */
-    addTd(tr) {
+    addTd(tr, html) {
         var td = document.createElement('td');
         tr.appendChild(td);
+
+        if (html) {
+            td.innerHTML = html;
+        }
+
         return td;
     }
 
