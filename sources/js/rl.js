@@ -449,14 +449,9 @@ class ReinforcementLearning {
         var config = this.calculateConfig();
         var table  = this.addTable(document.body, {border: 1, cellspacing: 0, cellpadding: 25});
 
+        /* add header */
         var tr = this.addTr(table, null, 'thead');
-
-        this.addTd(tr, '<b>S</b>');
-        this.addTd(tr, '<b>a</b>');
-        this.addTd(tr, '<b>S\'</b>');
-        this.addTd(tr, '<b>T</b>');
-        this.addTd(tr, '<b>R</b>');
-        this.addTd(tr, '<b>Q</b>');
+        this.addTdSet(tr, ['S', 'a', 'S\'', 'T', 'R', 'Q'], {style: 'font-weight: bold; text-align: center;'});
 
         /* add first tr element */
         var tr = this.addTr(table);
@@ -627,6 +622,12 @@ class ReinforcementLearning {
         }
 
         return td;
+    }
+
+    addTdSet(tr, set, attributes) {
+        for (var i = 0; i < set.length; i++) {
+            this.addTd(tr, set[i], attributes);
+        }
     }
 
     /**
