@@ -447,12 +447,7 @@ class ReinforcementLearning {
         }
 
         var config = this.calculateConfig();
-        var table  = this.addTable(document.body);
-
-        /* set table attributes */
-        table.setAttribute('border', 1);
-        table.setAttribute('cellspacing', 0);
-        table.setAttribute('cellpadding', 25);
+        var table  = this.addTable(document.body, {border: 1, cellspacing: 0, cellpadding: 25});
 
         /* add first tr element */
         var tr = this.addTr(table);
@@ -465,8 +460,7 @@ class ReinforcementLearning {
                 tr = this.addTr(table);
             }
 
-            var td = this.addTd(tr, 'S<sub>' + s + '</sub>');
-            td.setAttribute('rowspan', config.state[s].rows);
+            var td = this.addTd(tr, 'S<sub>' + s + '</sub>', {rowspan: config.state[s].rows});
 
             /* Iterate through all available actions */
             for (var a = 0; a < actionsStatesTR.length; a++) {
@@ -476,8 +470,7 @@ class ReinforcementLearning {
                     tr = this.addTr(table);
                 }
 
-                var td = this.addTd(tr, 'a<sub>' + a + '</sub>');
-                td.setAttribute('rowspan', config.action[s][a].rows);
+                var td = this.addTd(tr, 'a<sub>' + a + '</sub>', {rowspan: config.action[s][a].rows});
 
                 /* iterate through all target states */
                 var spCounter = 0;
@@ -494,8 +487,11 @@ class ReinforcementLearning {
                     var td = this.addTd(tr, String(R));
 
                     if (spCounter === 0) {
-                        var td = this.addTd(tr, String(Math.round(Q[s][a] * 1000) / 1000));
-                        td.setAttribute('rowspan', config.action[s][a].rows);
+                        var td = this.addTd(
+                            tr,
+                            String(Math.round(Q[s][a] * 1000) / 1000),
+                            {rowspan: config.action[s][a].rows}
+                        );
                     }
 
                     spCounter++;
@@ -544,6 +540,20 @@ class ReinforcementLearning {
     }
 
     /**
+     * Applies attributes to given element.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     * @param element
+     * @param attributes
+     */
+    applyAttributes(element, attributes) {
+        for (name in attributes) {
+            element.setAttribute(name, attributes[name]);
+        }
+    }
+
+    /**
      * Adds a table element to given element.
      *
      * @author Björn Hempel <bjoern@hempel.li>
@@ -551,9 +561,14 @@ class ReinforcementLearning {
      * @param table
      * @returns {HTMLTableRowElement}
      */
-    addTable(element) {
+    addTable(element, attributes) {
         var table = document.createElement('table');
         element.appendChild(table);
+
+        if (attributes) {
+            this.applyAttributes(table, attributes);
+        }
+
         return table;
     }
 
@@ -563,11 +578,17 @@ class ReinforcementLearning {
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-09-13)
      * @param table
+     * @param attributes
      * @returns {HTMLTableRowElement}
      */
-    addTr(table) {
+    addTr(table, attributes) {
         var tr = document.createElement('tr');
         table.appendChild(tr);
+
+        if (attributes) {
+            this.applyAttributes(tr, attributes);
+        }
+
         return tr;
     }
 
@@ -576,15 +597,21 @@ class ReinforcementLearning {
      *
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-09-13)
-     * @param table
-     * @returns {HTMLTableRowElement}
+     * @param tr
+     * @param html
+     * @param attributes
+     * @returns {HTMLTableDataCellElement}
      */
-    addTd(tr, html) {
+    addTd(tr, html, attributes) {
         var td = document.createElement('td');
         tr.appendChild(td);
 
         if (html) {
             td.innerHTML = html;
+        }
+
+        if (attributes) {
+            this.applyAttributes(td, attributes);
         }
 
         return td;
