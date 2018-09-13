@@ -468,7 +468,13 @@ class ReinforcementLearning {
 
         /* add header */
         var tr = this.addTr(table, null, 'thead');
-        this.addTdSet(tr, ['S', 'a', 'S\'', 'T', 'R', 'Q'], {style: 'font-weight: bold; text-align: center;'});
+        this.addTdSet(
+            tr,
+            ['S', 'a', 'S\'', 'T', 'R', 'Q'],
+            {
+                style: 'font-weight: bold; text-align: center; background-color: #d0d0d0;'
+            }
+        );
 
         /* add first tr element */
         var tr = this.addTr(table);
@@ -487,7 +493,14 @@ class ReinforcementLearning {
 
                 tr = a > 0 ? this.addTr(table) : tr;
 
-                this.addTd(tr, 'a<sub>' + a + '</sub>', {rowspan: config.action[s][a].rows});
+                this.addTd(
+                    tr,
+                    'a<sub>' + a + '</sub>',
+                    {
+                        rowspan: config.action[s][a].rows,
+                        style: 'background-color: ' + (QMax[s] === a ? 'green' : 'red') + ';'
+                    }
+                );
 
                 /* iterate through all target states */
                 var spCounter = 0;
