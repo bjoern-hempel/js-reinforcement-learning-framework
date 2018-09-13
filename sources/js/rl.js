@@ -456,9 +456,7 @@ class ReinforcementLearning {
         for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
             var actionsStatesTR = this.statesActionsStatesTR[s];
 
-            if (s > 0) {
-                tr = this.addTr(table);
-            }
+            tr = s > 0 ? this.addTr(table) : tr;
 
             var td = this.addTd(tr, 'S<sub>' + s + '</sub>', {rowspan: config.state[s].rows});
 
@@ -466,9 +464,7 @@ class ReinforcementLearning {
             for (var a = 0; a < actionsStatesTR.length; a++) {
                 var statesTR = actionsStatesTR[a];
 
-                if (a > 0) {
-                    tr = this.addTr(table);
-                }
+                tr = a > 0 ? this.addTr(table) : tr;
 
                 var td = this.addTd(tr, 'a<sub>' + a + '</sub>', {rowspan: config.action[s][a].rows});
 
@@ -478,9 +474,7 @@ class ReinforcementLearning {
                     var T = statesTR[sp][0];
                     var R = statesTR[sp][1];
 
-                    if (spCounter > 0) {
-                        tr = this.addTr(table);
-                    }
+                    tr = spCounter > 0 ? this.addTr(table) : tr;
 
                     var td = this.addTd(tr, 'S\'<sub>' + sp + '</sub>');
                     var td = this.addTd(tr, String(T));
