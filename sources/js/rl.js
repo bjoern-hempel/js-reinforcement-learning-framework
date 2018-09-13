@@ -448,23 +448,7 @@ class ReinforcementLearning {
 
         var config = this.calculateConfig();
         var table  = this.addTable(document.body, {border: 1, cellspacing: 0, cellpadding: 25});
-
-        var QMax = [];
-
-        for (var i = 0; i < Q.length; i++) {
-            var max = 0;
-            var index = 0;
-
-            for (var j = 0; j < Q[i].length; j++) {
-                if (max < Q[i][j]) {
-                    max = Q[i][j];
-
-                    index = j;
-                }
-            }
-
-            QMax[i] = index;
-        }
+        var QMax   = this.calculateQMax(Q);
 
         /* add header */
         var tr = this.addTr(table, null, 'thead');
@@ -529,6 +513,33 @@ class ReinforcementLearning {
                 }
             }
         }
+    }
+
+    /**
+     * Calculate the QMax.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     */
+    calculateQMax(Q) {
+        var QMax = [];
+
+        for (var i = 0; i < Q.length; i++) {
+            var max = 0;
+            var index = 0;
+
+            for (var j = 0; j < Q[i].length; j++) {
+                if (max < Q[i][j]) {
+                    max = Q[i][j];
+
+                    index = j;
+                }
+            }
+
+            QMax[i] = index;
+        }
+
+        return QMax;
     }
 
     /**
