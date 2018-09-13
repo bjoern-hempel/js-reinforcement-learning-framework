@@ -449,14 +449,14 @@ class ReinforcementLearning {
         var config = this.calculateConfig();
         var table  = this.addTable(document.body, {border: 1, cellspacing: 0, cellpadding: 25});
 
-        var tr = this.addTr(table);
+        var tr = this.addTr(table, null, 'thead');
 
-        this.addTd(tr, '<b>S</b>', {style: 'text-align: center;'});
-        this.addTd(tr, '<b>a</b>', {style: 'text-align: center;'});
-        this.addTd(tr, '<b>S\'</b>', {style: 'text-align: center;'});
-        this.addTd(tr, '<b>T</b>', {style: 'text-align: center;'});
-        this.addTd(tr, '<b>R</b>', {style: 'text-align: center;'});
-        this.addTd(tr, '<b>Q</b>', {style: 'text-align: center;'});
+        this.addTd(tr, '<b>S</b>');
+        this.addTd(tr, '<b>a</b>');
+        this.addTd(tr, '<b>S\'</b>');
+        this.addTd(tr, '<b>T</b>');
+        this.addTd(tr, '<b>R</b>');
+        this.addTd(tr, '<b>Q</b>');
 
         /* add first tr element */
         var tr = this.addTr(table);
@@ -584,9 +584,18 @@ class ReinforcementLearning {
      * @param attributes
      * @returns {HTMLTableRowElement}
      */
-    addTr(table, attributes) {
+    addTr(table, attributes, group) {
+        var element = table;
+
+        if (group) {
+            var groupElement = document.createElement(group);
+            element.appendChild(groupElement);
+
+            element = groupElement;
+        }
+
         var tr = document.createElement('tr');
-        table.appendChild(tr);
+        element.appendChild(tr);
 
         if (attributes) {
             this.applyAttributes(tr, attributes);
