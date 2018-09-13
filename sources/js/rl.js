@@ -449,6 +449,15 @@ class ReinforcementLearning {
         var config = this.calculateConfig();
         var table  = this.addTable(document.body, {border: 1, cellspacing: 0, cellpadding: 25});
 
+        var tr = this.addTr(table);
+
+        this.addTd(tr, '<b>S</b>', {style: 'text-align: center;'});
+        this.addTd(tr, '<b>a</b>', {style: 'text-align: center;'});
+        this.addTd(tr, '<b>S\'</b>', {style: 'text-align: center;'});
+        this.addTd(tr, '<b>T</b>', {style: 'text-align: center;'});
+        this.addTd(tr, '<b>R</b>', {style: 'text-align: center;'});
+        this.addTd(tr, '<b>Q</b>', {style: 'text-align: center;'});
+
         /* add first tr element */
         var tr = this.addTr(table);
 
@@ -458,7 +467,7 @@ class ReinforcementLearning {
 
             tr = s > 0 ? this.addTr(table) : tr;
 
-            var td = this.addTd(tr, 'S<sub>' + s + '</sub>', {rowspan: config.state[s].rows});
+            this.addTd(tr, 'S<sub>' + s + '</sub>', {rowspan: config.state[s].rows});
 
             /* Iterate through all available actions */
             for (var a = 0; a < actionsStatesTR.length; a++) {
@@ -466,7 +475,7 @@ class ReinforcementLearning {
 
                 tr = a > 0 ? this.addTr(table) : tr;
 
-                var td = this.addTd(tr, 'a<sub>' + a + '</sub>', {rowspan: config.action[s][a].rows});
+                this.addTd(tr, 'a<sub>' + a + '</sub>', {rowspan: config.action[s][a].rows});
 
                 /* iterate through all target states */
                 var spCounter = 0;
@@ -476,12 +485,12 @@ class ReinforcementLearning {
 
                     tr = spCounter > 0 ? this.addTr(table) : tr;
 
-                    var td = this.addTd(tr, 'S\'<sub>' + sp + '</sub>');
-                    var td = this.addTd(tr, String(T));
-                    var td = this.addTd(tr, String(R));
+                    this.addTd(tr, 'S\'<sub>' + sp + '</sub>');
+                    this.addTd(tr, String(T));
+                    this.addTd(tr, String(R));
 
                     if (spCounter === 0) {
-                        var td = this.addTd(
+                        this.addTd(
                             tr,
                             String(Math.round(Q[s][a] * 1000) / 1000),
                             {rowspan: config.action[s][a].rows}
