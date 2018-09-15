@@ -455,15 +455,6 @@ class ReinforcementLearning {
         for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
             var actionsStatesTR = this.statesActionsStatesTR[s];
 
-            /* add header */
-            tr = this.addTr(table);
-            this.addTdSet(tr, ['S', '', 'a', '', 'S\'', 'T', 'R', '', 'Q'], {style: {
-                fontWeight: 'bold',
-                textAlign:  'center',
-                lineHeight: '50px',
-                fontSize:   '20px'
-            }});
-
             tr = this.addTr(table);
 
             this.addTd(
@@ -510,7 +501,7 @@ class ReinforcementLearning {
                             width: '50px',
                             height: '50px',
                             lineHeight: '50px',
-                            borderRadius: '15px',
+                            borderRadius: '10px',
                             backgroundColor: (QMax[s] === a ? '#80ff80' : '#ff8080'),
                             textAlign: 'center'
                         }
@@ -528,7 +519,7 @@ class ReinforcementLearning {
                     this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length), {style: {fontSize: '30px'}});
                     this.addTd(
                         tr,
-                        'S\'<sub>' + sp + '</sub>',
+                        'S<sub>' + sp + '</sub>\'',
                         {
                             style: {fontWeight: 'bold', fontSize: '14px'}
                         },
@@ -551,16 +542,25 @@ class ReinforcementLearning {
 
                     this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length, true), {style: {fontSize: '30px'}});
                     if (spCounter === 0) {
+                        var style = {
+                            color: QMax[s] === a ? 'green' : 'red',
+                            textAlign: 'left',
+                            padding: '0 15px'
+                        };
+
+                        if (QMax[s] === a) {
+                            style['textDecoration'] = 'underline';
+                            style['fontWeight'] = 'bold';
+                        } else {
+                            style['fontStyle'] = 'italic';
+                        }
+
                         this.addTd(
                             tr,
                             String('Q = %s').replace('%s', String(Math.round(Q[s][a] * 1000) / 1000)),
                             {
                                 rowspan: config.action[s][a].rows,
-                                style: {
-                                    color: QMax[s] === a ? 'green' : 'red',
-                                    textAlign: 'left',
-                                    padding: '0 15px'
-                                }
+                                style: style
                             }
                         );
                     }
@@ -570,7 +570,7 @@ class ReinforcementLearning {
             }
 
             tr = this.addTr(table);
-            this.addTd(tr, '&nbsp;');
+            this.addTd(tr, '&nbsp;', {style: {fontSize: '40px'}});
         }
     }
 
@@ -642,6 +642,8 @@ class ReinforcementLearning {
     /**
      * Returns a color according the given number.
      *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-16)
      * @param number
      * @returns {string}
      */
@@ -828,21 +830,6 @@ class ReinforcementLearning {
         }
 
         return td;
-    }
-
-    /**
-     * Like addTd but with a set of addTd's.
-     *
-     * @author Björn Hempel <bjoern@hempel.li>
-     * @version 1.0 (2018-09-13)
-     * @param tr
-     * @param set
-     * @param attributes
-     */
-    addTdSet(tr, set, attributes) {
-        for (var i = 0; i < set.length; i++) {
-            this.addTd(tr, set[i], attributes);
-        }
     }
 
     /**
