@@ -449,29 +449,20 @@ class ReinforcementLearning {
         var config = this.calculateConfig();
         var table  = this.addTable(document.body, {border: 0, cellspacing: 0, cellpadding: 25});
         var QMax   = this.calculateQMax(Q);
-
-        // /* add header */
-        // var tr = this.addTr(table, null, 'thead');
-        // this.addTdSet(
-        //     tr,
-        //     ['S', 'a', 'S\'', 'T', 'R', 'Q'],
-        //     {
-        //         style: {
-        //             'fontWeight': 'bold',
-        //             'textAlign': 'center',
-        //             'backgroundColor': '#d0d0d0'
-        //         }
-        //     }
-        // );
-
-        /* add first tr element */
-        var tr = this.addTr(table);
+        var tr     = null;
 
         /* Iterate through all available states */
         for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
             var actionsStatesTR = this.statesActionsStatesTR[s];
 
-            tr = s > 0 ? this.addTr(table) : tr;
+            /* add header */
+            tr = this.addTr(table);
+            this.addTdSet(tr, ['S', '', 'a', '', 'S\'', 'T', 'R', 'Q'], {style: {
+                'fontWeight': 'bold',
+                'textAlign': 'center'
+            }});
+
+            tr = this.addTr(table);
 
             this.addTd(
                 tr,
@@ -498,6 +489,8 @@ class ReinforcementLearning {
                 var statesTR = actionsStatesTR[a];
 
                 tr = a > 0 ? this.addTr(table) : tr;
+
+                this.addTd(tr, '→', {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
 
                 this.addTd(
                     tr,
@@ -526,6 +519,8 @@ class ReinforcementLearning {
                     var R = statesTR[sp][1];
 
                     tr = spCounter > 0 ? this.addTr(table) : tr;
+
+                    this.addTd(tr, '→', {style: {fontSize: '30px'}});
 
                     this.addTd(
                         tr,
