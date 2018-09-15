@@ -637,6 +637,8 @@ class ReinforcementLearning {
     /**
      * Returns a random color.
      *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-15)
      * @returns {string}
      */
     getRandomColor() {
