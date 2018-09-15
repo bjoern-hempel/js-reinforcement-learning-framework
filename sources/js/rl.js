@@ -447,7 +447,7 @@ class ReinforcementLearning {
         }
 
         var config = this.calculateConfig();
-        var table  = this.addTable(document.body, {border: 0, cellspacing: 0, cellpadding: 25});
+        var table  = this.addTable(document.body, {border: 0, cellspacing: 0, cellpadding: 0});
         var QMax   = this.calculateQMax(Q);
         var tr     = null;
 
@@ -458,8 +458,9 @@ class ReinforcementLearning {
             /* add header */
             tr = this.addTr(table);
             this.addTdSet(tr, ['S', '', 'a', '', 'S\'', 'T', 'R', 'Q'], {style: {
-                'fontWeight': 'bold',
-                'textAlign': 'center'
+                fontWeight: 'bold',
+                textAlign: 'center',
+                lineHeight: '40px'
             }});
 
             tr = this.addTr(table);
@@ -472,6 +473,7 @@ class ReinforcementLearning {
                 },
                 this.createHtmlElement('div', {
                     style: {
+                        margin: '5px',
                         border: '1px solid #000',
                         backgroundColor: '#fff',
                         width: '100px',
@@ -490,8 +492,7 @@ class ReinforcementLearning {
 
                 tr = a > 0 ? this.addTr(table) : tr;
 
-                this.addTd(tr, '→', {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
-
+                this.addTd(tr, this.getArrow(a, actionsStatesTR.length), {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
                 this.addTd(
                     tr,
                     String('a<sub>%s</sub>').replace(/%s/, a),
@@ -500,6 +501,7 @@ class ReinforcementLearning {
                     },
                     this.createHtmlElement('div', {
                         style: {
+                            margin: '5px',
                             border: '1px solid #000',
                             backgroundColor: '#fff',
                             width: '50px',
@@ -520,14 +522,14 @@ class ReinforcementLearning {
 
                     tr = spCounter > 0 ? this.addTr(table) : tr;
 
-                    this.addTd(tr, '→', {style: {fontSize: '30px'}});
-
+                    this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length), {style: {fontSize: '30px'}});
                     this.addTd(
                         tr,
                         'S\'<sub>' + sp + '</sub>',
                         {},
                         this.createHtmlElement('div', {
                             style: {
+                                margin: '5px',
                                 border: '1px solid #000',
                                 backgroundColor: '#fff',
                                 width: '50px',
@@ -539,8 +541,8 @@ class ReinforcementLearning {
                             }
                         })
                     );
-                    this.addTd(tr, String('T = %s').replace('%s', String(T)), {style: {textAlign: 'center'}});
-                    this.addTd(tr, String('R = %s').replace('%s', String(R)), {style: {textAlign: 'center'}});
+                    this.addTd(tr, String('T = %s').replace('%s', String(T)), {style: {textAlign: 'center', padding: '0 5px'}});
+                    this.addTd(tr, String('R = %s').replace('%s', String(R)), {style: {textAlign: 'center', padding: '0 5px'}});
 
                     if (spCounter === 0) {
                         this.addTd(
@@ -550,7 +552,8 @@ class ReinforcementLearning {
                                 rowspan: config.action[s][a].rows,
                                 style: {
                                     color: QMax[s] === a ? 'green' : 'red',
-                                    textAlign: 'center'
+                                    textAlign: 'center',
+                                    padding: '0 5px'
                                 }
                             }
                         );
@@ -793,6 +796,8 @@ class ReinforcementLearning {
     /**
      * Creates an html element.
      *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-15)
      * @param name
      * @param attributes
      * @returns {HTMLElement | HTMLSelectElement | HTMLLegendElement | HTMLTableCaptionElement | HTMLTextAreaElement | HTMLModElement | HTMLHRElement | HTMLOutputElement | HTMLPreElement | HTMLEmbedElement | HTMLCanvasElement | HTMLFrameSetElement | HTMLMarqueeElement | HTMLScriptElement | HTMLInputElement | HTMLUnknownElement | HTMLMetaElement | HTMLStyleElement | HTMLObjectElement | HTMLTemplateElement | HTMLBRElement | HTMLAudioElement | HTMLIFrameElement | HTMLMapElement | HTMLTableElement | HTMLAnchorElement | HTMLMenuElement | HTMLPictureElement | HTMLParagraphElement | HTMLTableDataCellElement | HTMLTableSectionElement | HTMLQuoteElement | HTMLTableHeaderCellElement | HTMLProgressElement | HTMLLIElement | HTMLTableRowElement | HTMLFontElement | HTMLSpanElement | HTMLTableColElement | HTMLOptGroupElement | HTMLDataElement | HTMLDListElement | HTMLFieldSetElement | HTMLSourceElement | HTMLBodyElement | HTMLDirectoryElement | HTMLDivElement | HTMLUListElement | HTMLHtmlElement | HTMLAreaElement | HTMLMeterElement | HTMLAppletElement | HTMLFrameElement | HTMLOptionElement | HTMLImageElement | HTMLLinkElement | HTMLHeadingElement | HTMLSlotElement | HTMLVideoElement | HTMLBaseFontElement | HTMLTitleElement | HTMLButtonElement | HTMLHeadElement | HTMLParamElement | HTMLTrackElement | HTMLOListElement | HTMLDataListElement | HTMLLabelElement | HTMLFormElement | HTMLTimeElement | HTMLBaseElement}
@@ -805,6 +810,28 @@ class ReinforcementLearning {
         }
 
         return htmlElement;
+    }
+
+    /**
+     * Creates an arrow according the position of given element.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-15)
+     * @param number
+     * @param elements
+     * @returns {string}
+     */
+    getArrow(number, elements) {
+        var template = '<div style="transform: rotate(%sdeg);">→</div>';
+
+        number *= 2;
+        elements -= 1;
+
+        if (number === elements) {
+            return template.replace(/%s/, 0);
+        }
+
+        return number > elements ? template.replace(/%s/, 15) : template.replace(/%s/, -15);
     }
 
     /**
