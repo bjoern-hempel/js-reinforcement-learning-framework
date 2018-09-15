@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reinforced Learning</title>
+    <script src="../sources/js/rl.js"></script>
+</head>
+<body>
+    <script>
+
+        var discountFactor = 0;
+
+        var rl = new ReinforcementLearning();
+
+        /* s0 */
+        var s0 = rl.addState();
+
+        /* s0.a0, s0.a1 and s0.a2 */
+        rl.addAction(s0, new StateChange(s0, 1.0,  1));
+        rl.addAction(s0, new StateChange(s0, 1.0, -1));
+        rl.addAction(s0, new StateChange(s0, 1.0,  0));
+
+        var Q = rl.calculateQ(discountFactor);
+
+        rl.printTable(Q);
+
+    </script>
+</body>
+</html>
