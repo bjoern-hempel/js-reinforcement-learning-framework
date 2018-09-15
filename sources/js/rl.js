@@ -459,8 +459,9 @@ class ReinforcementLearning {
             tr = this.addTr(table);
             this.addTdSet(tr, ['S', '', 'a', '', 'S\'', 'T', 'R', '', 'Q'], {style: {
                 fontWeight: 'bold',
-                textAlign: 'center',
-                lineHeight: '40px'
+                textAlign:  'center',
+                lineHeight: '50px',
+                fontSize:   '20px'
             }});
 
             tr = this.addTr(table);
@@ -469,7 +470,8 @@ class ReinforcementLearning {
                 tr,
                 String('S<sub>%s</sub>').replace(/%s/, s),
                 {
-                    rowspan: config.state[s].rows
+                    rowspan: config.state[s].rows,
+                    style: {fontWeight: 'bold', fontSize: '20px'}
                 },
                 this.createHtmlElement('div', {
                     style: {
@@ -497,7 +499,8 @@ class ReinforcementLearning {
                     tr,
                     String('a<sub>%s</sub>').replace(/%s/, a),
                     {
-                        rowspan: config.action[s][a].rows
+                        rowspan: config.action[s][a].rows,
+                        style: {fontWeight: 'bold', fontSize: '14px'}
                     },
                     this.createHtmlElement('div', {
                         style: {
@@ -508,7 +511,7 @@ class ReinforcementLearning {
                             height: '50px',
                             lineHeight: '50px',
                             borderRadius: '15px',
-                            backgroundColor: (QMax[s] === a ? 'green' : 'red'),
+                            backgroundColor: (QMax[s] === a ? '#80ff80' : '#ff8080'),
                             textAlign: 'center'
                         }
                     })
@@ -526,7 +529,9 @@ class ReinforcementLearning {
                     this.addTd(
                         tr,
                         'S\'<sub>' + sp + '</sub>',
-                        {},
+                        {
+                            style: {fontWeight: 'bold', fontSize: '14px'}
+                        },
                         this.createHtmlElement('div', {
                             style: {
                                 margin: '5px',
@@ -628,10 +633,37 @@ class ReinforcementLearning {
                 actionConfig[actionConfig.length - 1].push({rows: actionRows});
             }
 
-            stateConfig.push({rows: stateRows, color: this.getRandomColor()});
+            stateConfig.push({rows: stateRows, color: this.getColor(s)});
         }
 
         return {state: stateConfig, action: actionConfig};
+    }
+
+    /**
+     * Returns a color according the given number.
+     *
+     * @param number
+     * @returns {string}
+     */
+    getColor(number) {
+        var colors = [
+            '4f6d63',
+            '7a87ff',
+            'a4d29c',
+            '45bb49',
+            '7d90d4',
+            '5ea765',
+            '437afa',
+            'ee876b',
+            'accac1',
+            'd0c1f4'
+        ];
+
+        if (!Number.isInteger(number) || number > colors.length - 1) {
+            return this.getRandomColor();
+        }
+
+        return '#' + colors[number];
     }
 
     /**
