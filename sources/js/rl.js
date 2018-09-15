@@ -456,7 +456,11 @@ class ReinforcementLearning {
             tr,
             ['S', 'a', 'S\'', 'T', 'R', 'Q'],
             {
-                style: 'font-weight: bold; text-align: center; background-color: #d0d0d0;'
+                style: {
+                    'fontWeight': 'bold',
+                    'textAlign': 'center',
+                    'backgroundColor': '#d0d0d0'
+                }
             }
         );
 
@@ -469,7 +473,16 @@ class ReinforcementLearning {
 
             tr = s > 0 ? this.addTr(table) : tr;
 
-            this.addTd(tr, 'S<sub>' + s + '</sub>', {rowspan: config.state[s].rows});
+            this.addTd(
+                tr,
+                'S<sub>' + s + '</sub>',
+                {
+                    rowspan: config.state[s].rows,
+                    style: {
+                        'textAlign': 'center'
+                    }
+                }
+            );
 
             /* Iterate through all available actions */
             for (var a = 0; a < actionsStatesTR.length; a++) {
@@ -482,7 +495,10 @@ class ReinforcementLearning {
                     'a<sub>' + a + '</sub>',
                     {
                         rowspan: config.action[s][a].rows,
-                        style: 'background-color: ' + (QMax[s] === a ? 'green' : 'red') + ';'
+                        style: {
+                            'backgroundColor': (QMax[s] === a ? 'green' : 'red'),
+                            'textAlign': 'center'
+                        }
                     }
                 );
 
@@ -494,9 +510,9 @@ class ReinforcementLearning {
 
                     tr = spCounter > 0 ? this.addTr(table) : tr;
 
-                    this.addTd(tr, 'S\'<sub>' + sp + '</sub>');
-                    this.addTd(tr, String(T));
-                    this.addTd(tr, String(R));
+                    this.addTd(tr, 'S\'<sub>' + sp + '</sub>', {style: {textAlign: 'center'}});
+                    this.addTd(tr, String(T), {style: {textAlign: 'center'}});
+                    this.addTd(tr, String(R), {style: {textAlign: 'center'}});
 
                     if (spCounter === 0) {
                         this.addTd(
@@ -504,7 +520,10 @@ class ReinforcementLearning {
                             String(Math.round(Q[s][a] * 1000) / 1000),
                             {
                                 rowspan: config.action[s][a].rows,
-                                style: 'background-color: ' + (QMax[s] === a ? 'green' : 'red') + ';'
+                                style: {
+                                    backgroundColor: QMax[s] === a ? 'green' : 'red',
+                                    textAlign: 'center'
+                                }
                             }
                         );
                     }
@@ -591,8 +610,58 @@ class ReinforcementLearning {
      */
     applyAttributes(element, attributes) {
         for (name in attributes) {
-            element.setAttribute(name, attributes[name]);
+            switch (name) {
+                case 'style':
+                    this.applyStyle(element, attributes[name]);
+                    break;
+
+                default:
+                    element.setAttribute(name, attributes[name]);
+                    break;
+            }
         }
+    }
+
+    /**
+     * Applies all styles to element.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-15)
+     * @param element
+     * @param styles
+     */
+    applyStyle(element, styles) {
+        switch (typeof styles) {
+            case 'string':
+                element.setAttribute('style', styles);
+                break;
+
+            case 'object':
+                var style = '';
+                for (name in styles) {
+                    style += this.decamelize(name) + ': ' + styles[name] + '; ';
+                }
+                element.setAttribute('style', style);
+                break;
+        }
+    }
+
+    /**
+     * Decamelize the given string.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-15)
+     * @param str
+     * @param separator
+     * @returns {string}
+     */
+    decamelize(str, separator) {
+        separator = typeof separator === 'undefined' ? '-' : separator;
+
+        return str
+            .replace(/([a-z\d])([A-Z])/g, '$1' + separator + '$2')
+            .replace(/([A-Z]+)([A-Z][a-z\d]+)/g, '$1' + separator + '$2')
+            .toLowerCase();
     }
 
     /**
@@ -668,6 +737,15 @@ class ReinforcementLearning {
         return td;
     }
 
+    /**
+     * Like addTd but with a set of addTd.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     * @param tr
+     * @param set
+     * @param attributes
+     */
     addTdSet(tr, set, attributes) {
         for (var i = 0; i < set.length; i++) {
             this.addTd(tr, set[i], attributes);
