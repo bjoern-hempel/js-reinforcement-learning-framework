@@ -447,22 +447,22 @@ class ReinforcementLearning {
         }
 
         var config = this.calculateConfig();
-        var table  = this.addTable(document.body, {border: 1, cellspacing: 0, cellpadding: 25});
+        var table  = this.addTable(document.body, {border: 0, cellspacing: 0, cellpadding: 25});
         var QMax   = this.calculateQMax(Q);
 
-        /* add header */
-        var tr = this.addTr(table, null, 'thead');
-        this.addTdSet(
-            tr,
-            ['S', 'a', 'S\'', 'T', 'R', 'Q'],
-            {
-                style: {
-                    'fontWeight': 'bold',
-                    'textAlign': 'center',
-                    'backgroundColor': '#d0d0d0'
-                }
-            }
-        );
+        // /* add header */
+        // var tr = this.addTr(table, null, 'thead');
+        // this.addTdSet(
+        //     tr,
+        //     ['S', 'a', 'S\'', 'T', 'R', 'Q'],
+        //     {
+        //         style: {
+        //             'fontWeight': 'bold',
+        //             'textAlign': 'center',
+        //             'backgroundColor': '#d0d0d0'
+        //         }
+        //     }
+        // );
 
         /* add first tr element */
         var tr = this.addTr(table);
@@ -475,13 +475,22 @@ class ReinforcementLearning {
 
             this.addTd(
                 tr,
-                'S<sub>' + s + '</sub>',
+                String('S<sub>%s</sub>').replace(/%s/, s),
                 {
-                    rowspan: config.state[s].rows,
+                    rowspan: config.state[s].rows
+                },
+                this.createHtmlElement('div', {
                     style: {
-                        'textAlign': 'center'
+                        border: '1px solid #000',
+                        backgroundColor: '#fff',
+                        width: '100px',
+                        height: '100px',
+                        lineHeight: '100px',
+                        borderRadius: '50px',
+                        textAlign: 'center',
+                        backgroundColor: '#c0c0c0'
                     }
-                }
+                })
             );
 
             /* Iterate through all available actions */
@@ -492,14 +501,22 @@ class ReinforcementLearning {
 
                 this.addTd(
                     tr,
-                    'a<sub>' + a + '</sub>',
+                    String('a<sub>%s</sub>').replace(/%s/, a),
                     {
-                        rowspan: config.action[s][a].rows,
+                        rowspan: config.action[s][a].rows
+                    },
+                    this.createHtmlElement('div', {
                         style: {
-                            'backgroundColor': (QMax[s] === a ? 'green' : 'red'),
-                            'textAlign': 'center'
+                            border: '1px solid #000',
+                            backgroundColor: '#fff',
+                            width: '50px',
+                            height: '50px',
+                            lineHeight: '50px',
+                            borderRadius: '15px',
+                            backgroundColor: (QMax[s] === a ? 'green' : 'red'),
+                            textAlign: 'center'
                         }
-                    }
+                    })
                 );
 
                 /* iterate through all target states */
@@ -510,18 +527,34 @@ class ReinforcementLearning {
 
                     tr = spCounter > 0 ? this.addTr(table) : tr;
 
-                    this.addTd(tr, 'S\'<sub>' + sp + '</sub>', {style: {textAlign: 'center'}});
-                    this.addTd(tr, String(T), {style: {textAlign: 'center'}});
-                    this.addTd(tr, String(R), {style: {textAlign: 'center'}});
+                    this.addTd(
+                        tr,
+                        'S\'<sub>' + sp + '</sub>',
+                        {},
+                        this.createHtmlElement('div', {
+                            style: {
+                                border: '1px solid #000',
+                                backgroundColor: '#fff',
+                                width: '50px',
+                                height: '50px',
+                                lineHeight: '50px',
+                                borderRadius: '25px',
+                                backgroundColor: '#c0c0c0',
+                                textAlign: 'center'
+                            }
+                        })
+                    );
+                    this.addTd(tr, String('T = %s').replace('%s', String(T)), {style: {textAlign: 'center'}});
+                    this.addTd(tr, String('R = %s').replace('%s', String(R)), {style: {textAlign: 'center'}});
 
                     if (spCounter === 0) {
                         this.addTd(
                             tr,
-                            String(Math.round(Q[s][a] * 1000) / 1000),
+                            String('Q = %s').replace('%s', String(Math.round(Q[s][a] * 1000) / 1000)),
                             {
                                 rowspan: config.action[s][a].rows,
                                 style: {
-                                    backgroundColor: QMax[s] === a ? 'green' : 'red',
+                                    color: QMax[s] === a ? 'green' : 'red',
                                     textAlign: 'center'
                                 }
                             }
@@ -531,6 +564,9 @@ class ReinforcementLearning {
                     spCounter++;
                 }
             }
+
+            tr = this.addTr(table);
+            this.addTd(tr, '&nbsp;');
         }
     }
 
@@ -569,7 +605,6 @@ class ReinforcementLearning {
      * @returns {{state: Array, action: Array}}
      */
     calculateConfig() {
-
         var stateConfig  = [];
         var actionConfig = [];
 
@@ -722,12 +757,20 @@ class ReinforcementLearning {
      * @param attributes
      * @returns {HTMLTableDataCellElement}
      */
-    addTd(tr, html, attributes) {
+    addTd(tr, html, attributes, wrapper) {
         var td = document.createElement('td');
         tr.appendChild(td);
 
+        if (wrapper) {
+            td.appendChild(wrapper);
+        }
+
         if (html) {
-            td.innerHTML = html;
+            if (wrapper) {
+                wrapper.innerHTML = html;
+            } else {
+                td.innerHTML = html;
+            }
         }
 
         if (attributes) {
@@ -738,7 +781,7 @@ class ReinforcementLearning {
     }
 
     /**
-     * Like addTd but with a set of addTd.
+     * Like addTd but with a set of addTd's.
      *
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-09-13)
@@ -750,6 +793,23 @@ class ReinforcementLearning {
         for (var i = 0; i < set.length; i++) {
             this.addTd(tr, set[i], attributes);
         }
+    }
+
+    /**
+     * Creates an html element.
+     *
+     * @param name
+     * @param attributes
+     * @returns {HTMLElement | HTMLSelectElement | HTMLLegendElement | HTMLTableCaptionElement | HTMLTextAreaElement | HTMLModElement | HTMLHRElement | HTMLOutputElement | HTMLPreElement | HTMLEmbedElement | HTMLCanvasElement | HTMLFrameSetElement | HTMLMarqueeElement | HTMLScriptElement | HTMLInputElement | HTMLUnknownElement | HTMLMetaElement | HTMLStyleElement | HTMLObjectElement | HTMLTemplateElement | HTMLBRElement | HTMLAudioElement | HTMLIFrameElement | HTMLMapElement | HTMLTableElement | HTMLAnchorElement | HTMLMenuElement | HTMLPictureElement | HTMLParagraphElement | HTMLTableDataCellElement | HTMLTableSectionElement | HTMLQuoteElement | HTMLTableHeaderCellElement | HTMLProgressElement | HTMLLIElement | HTMLTableRowElement | HTMLFontElement | HTMLSpanElement | HTMLTableColElement | HTMLOptGroupElement | HTMLDataElement | HTMLDListElement | HTMLFieldSetElement | HTMLSourceElement | HTMLBodyElement | HTMLDirectoryElement | HTMLDivElement | HTMLUListElement | HTMLHtmlElement | HTMLAreaElement | HTMLMeterElement | HTMLAppletElement | HTMLFrameElement | HTMLOptionElement | HTMLImageElement | HTMLLinkElement | HTMLHeadingElement | HTMLSlotElement | HTMLVideoElement | HTMLBaseFontElement | HTMLTitleElement | HTMLButtonElement | HTMLHeadElement | HTMLParamElement | HTMLTrackElement | HTMLOListElement | HTMLDataListElement | HTMLLabelElement | HTMLFormElement | HTMLTimeElement | HTMLBaseElement}
+     */
+    createHtmlElement(name, attributes) {
+        var htmlElement = document.createElement(name);
+
+        if (attributes) {
+            this.applyAttributes(htmlElement, attributes);
+        }
+
+        return htmlElement;
     }
 
     /**
