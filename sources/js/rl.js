@@ -457,7 +457,7 @@ class ReinforcementLearning {
 
             /* add header */
             tr = this.addTr(table);
-            this.addTdSet(tr, ['S', '', 'a', '', 'S\'', 'T', 'R', 'Q'], {style: {
+            this.addTdSet(tr, ['S', '', 'a', '', 'S\'', 'T', 'R', '', 'Q'], {style: {
                 fontWeight: 'bold',
                 textAlign: 'center',
                 lineHeight: '40px'
@@ -481,7 +481,7 @@ class ReinforcementLearning {
                         lineHeight: '100px',
                         borderRadius: '50px',
                         textAlign: 'center',
-                        backgroundColor: '#c0c0c0'
+                        backgroundColor: config.state[s].color
                     }
                 })
             );
@@ -536,14 +536,15 @@ class ReinforcementLearning {
                                 height: '50px',
                                 lineHeight: '50px',
                                 borderRadius: '25px',
-                                backgroundColor: '#c0c0c0',
+                                backgroundColor: config.state[sp].color,
                                 textAlign: 'center'
                             }
                         })
                     );
-                    this.addTd(tr, String('T = %s').replace('%s', String(T)), {style: {textAlign: 'center', padding: '0 5px'}});
-                    this.addTd(tr, String('R = %s').replace('%s', String(R)), {style: {textAlign: 'center', padding: '0 5px'}});
+                    this.addTd(tr, String('T = %s').replace('%s', String(T)), {style: {textAlign: 'left', padding: '0 15px'}});
+                    this.addTd(tr, String('R = %s').replace('%s', String(R)), {style: {textAlign: 'left', padding: '0 15px'}});
 
+                    this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length, true), {style: {fontSize: '30px'}});
                     if (spCounter === 0) {
                         this.addTd(
                             tr,
@@ -552,8 +553,8 @@ class ReinforcementLearning {
                                 rowspan: config.action[s][a].rows,
                                 style: {
                                     color: QMax[s] === a ? 'green' : 'red',
-                                    textAlign: 'center',
-                                    padding: '0 5px'
+                                    textAlign: 'left',
+                                    padding: '0 15px'
                                 }
                             }
                         );
@@ -627,10 +628,27 @@ class ReinforcementLearning {
                 actionConfig[actionConfig.length - 1].push({rows: actionRows});
             }
 
-            stateConfig.push({rows: stateRows});
+            stateConfig.push({rows: stateRows, color: this.getRandomColor()});
         }
 
         return {state: stateConfig, action: actionConfig};
+    }
+
+    /**
+     * Returns a random color.
+     *
+     * @returns {string}
+     */
+    getRandomColor() {
+        var r = Math.round(Math.random() * 192);
+        var g = Math.round(Math.random() * 192);
+        var b = Math.round(Math.random() * 192);
+
+        r += 64;
+        g += 64;
+        b += 64;
+
+        return '#' + r.toString(16) + g.toString(16) + b.toString(16);
     }
 
     /**
@@ -821,8 +839,8 @@ class ReinforcementLearning {
      * @param elements
      * @returns {string}
      */
-    getArrow(number, elements) {
-        var template = '<div style="transform: rotate(%sdeg);">→</div>';
+    getArrow(number, elements, back) {
+        var template = '<div style="margin: 0 10px; transform: rotate(%sdeg);">→</div>';
 
         number *= 2;
         elements -= 1;
@@ -831,7 +849,7 @@ class ReinforcementLearning {
             return template.replace(/%s/, 0);
         }
 
-        return number > elements ? template.replace(/%s/, 15) : template.replace(/%s/, -15);
+        return number > elements ? template.replace(/%s/, back ? -15 : 15) : template.replace(/%s/, back ? 15 : -15);
     }
 
     /**
