@@ -143,7 +143,7 @@ As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> w
 
 ##### 2.2.2.2 Watch at the [demo](demo/rl-basic.html):
 
-<img src="/images/BasicDemo.png" width="780" alt="basic example">
+<img src="/images/BasicDemo.png" width="792" alt="basic example">
 
 ##### 2.2.2.3 Comparison of different discount rates
 
