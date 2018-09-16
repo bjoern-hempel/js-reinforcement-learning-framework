@@ -95,7 +95,7 @@ var discountFactor = 0.9;
 
 Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832. The algorithm of the `calculateQ` function stops the iteration of the above Markov formula until the Q change difference falls below a certain threshold: the default value of this threshold is 0.001.
 
-#### 2.2.1.2 Watch at the demo
+#### 2.2.1.2 Watch at the [demo](demo/rl-super-basic.html)
 
 <img src="/images/SuperBasicDemo.png" width="747" alt="super basic example">
 
