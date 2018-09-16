@@ -143,7 +143,7 @@ As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> w
 
 ##### 2.2.2.2 Watch at the [demo](demo/rl-basic.html):
 
-<img src="/images/BasicDemo.png" width="780" alt="basic example">
+<img src="/images/BasicDemo.png" width="792" alt="basic example">
 
 ##### 2.2.2.3 Comparison of different discount rates
 
@@ -204,7 +204,11 @@ console.log(JSON.stringify(Q));
 ]
 ```
 
-##### 2.2.3.2 Comparison of different discount rates
+##### 2.2.3.2 Watch at the [demo](demo/rl-more-complex.html):
+
+<img src="/images/MoreComplexDemo.png" width="822" alt="more complex example">
+
+##### 2.2.3.3 Comparison of different discount rates
 
 | discountRate | type | s<sub>0</sub> | s<sub>1</sub> | s<sub>2</sub> | s<sub>0</sub> (winner) | s<sub>1</sub> (winner) | s<sub>2</sub> (winner) |
 |---|-------------------------------------|----------------|----------------|----------|----------------|----------------|----------|
