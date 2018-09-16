@@ -156,7 +156,7 @@ As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> w
 
 **Graphic:**
 
-<img src="/images/BasicResult.png" width="960" alt="basic example result">
+<img src="/images/BasicResult.png" width="792" alt="basic example result">
 
 #### 2.2.3 More complex example
 
