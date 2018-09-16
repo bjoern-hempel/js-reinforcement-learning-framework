@@ -39,9 +39,9 @@
         rl.addAction(s5, new StateChange(s4, 1.0,   0));
         rl.addAction(s5, new StateChange(s5, 1.0, 100));
 
-        var Q = rl.calculateQLearning(discountRate);
+        var Q = rl.calculateQ(discountRate);
 
-        //rl.printTable(Q);
+        rl.printTable(Q);
 
     </script>
 </body>
