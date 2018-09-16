@@ -204,7 +204,11 @@ console.log(JSON.stringify(Q));
 ]
 ```
 
-##### 2.2.3.2 Comparison of different discount rates
+##### 2.2.3.2 Watch at the [demo](demo/rl-basic.html):
+
+<img src="/images/MoreComplexDemo.png" width="822" alt="more complex example">
+
+##### 2.2.3.3 Comparison of different discount rates
 
 | discountRate | type | s<sub>0</sub> | s<sub>1</sub> | s<sub>2</sub> | s<sub>0</sub> (winner) | s<sub>1</sub> (winner) | s<sub>2</sub> (winner) |
 |---|-------------------------------------|----------------|----------------|----------|----------------|----------------|----------|
