@@ -433,6 +433,75 @@ class ReinforcementLearning {
     }
 
     /**
+     * Q-Learning: Get the max Q from next state.
+     *
+     * @param Q
+     * @param sNext
+     * @returns {number}
+     */
+    getMaxQFromNextState(Q, sNext) {
+        var Q_all = [];
+
+        for (var s in this.statesActionsStatesTR[sNext]) {
+            Q_all.push(Q[sNext][s]);
+        }
+
+        return Math.max(...Q_all)
+    }
+
+    /**
+     * Q-Learning: Do all calculations.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-28)
+     */
+    calculateQLearning() {
+        var Q = [];
+
+        /* Convert the internal data structure to Q learning structure */
+        for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+            var actionsStatesTR = this.statesActionsStatesTR[s];
+
+            var temp = {};
+
+            Q.push({});
+
+            /* Iterate through all available actions */
+            for (var a = 0; a < actionsStatesTR.length; a++) {
+                var statesTR = actionsStatesTR[a];
+
+                /* iterate through all target states */
+                for (var sp in statesTR) {
+                    temp[sp] = [statesTR[sp][1]];
+
+                    Q[Q.length - 1][sp] = 0;
+                }
+            }
+
+            this.statesActionsStatesTR[s] = temp;
+        }
+
+        for (var i = 0; i < 1000; i++) {
+            var sCurrent = null;
+            var sNext = null;
+            var sKeys = null;
+
+            for (var j = 1; j <= 100; j++) {
+                sCurrent = sNext !== null ? sNext : Math.round((this.statesActionsStatesTR.length - 1) * Math.random());
+                sKeys = Object.keys(this.statesActionsStatesTR[sCurrent]);
+                sNext = parseInt(sKeys[Math.round((sKeys.length - 1) * Math.random())]);
+
+                var R = this.statesActionsStatesTR[sCurrent][sNext][0];
+                var QMax = this.getMaxQFromNextState(Q, sNext);
+
+                Q[sCurrent][sNext] = R + Math.pow(this.config.discountFactor, j) * QMax;
+            }
+        }
+
+        console.log('Q', Q);
+    }
+
+    /**
      * Prints a table with all results.
      *
      * @author Björn Hempel <bjoern@hempel.li>
