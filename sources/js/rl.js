@@ -565,8 +565,38 @@ class ReinforcementLearning {
                         );
                     }
 
+                    if (spCounter === 0) {
+                        this.addTd(tr, this.getArrow(a, actionsStatesTR.length, true), {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
+                    }
+
+                    /* optimal action */
+                    if (a === 0 && spCounter === 0) {
+                        this.addTd(
+                            tr,
+                            String('S<sub>%s</sub>.a<sub>%s</sub>').replace(/%s/, s).replace(/%s/, QMax[s]),
+                            {
+                                rowspan: config.state[s].rows,
+                                style: {fontWeight: 'bold', padding: '0 15px'}
+                            },
+                            this.createHtmlElement('div', {
+                                style: {
+                                    margin: '5px',
+                                    padding: '5px',
+                                    border: '1px solid #000',
+                                    backgroundColor: '#fff',
+                                    width: '50px',
+                                    height: '50px',
+                                    lineHeight: '50px',
+                                    backgroundColor: '#f0f0f0',
+                                    textAlign: 'center'
+                                }
+                            })
+                        );
+                    }
+
                     spCounter++;
                 }
+
             }
 
             tr = this.addTr(table);
