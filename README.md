@@ -204,7 +204,7 @@ console.log(JSON.stringify(Q));
 ]
 ```
 
-##### 2.2.3.2 Watch at the [demo](demo/rl-basic.html):
+##### 2.2.3.2 Watch at the [demo](demo/rl-more-complex.html):
 
 <img src="/images/MoreComplexDemo.png" width="822" alt="more complex example">
 
