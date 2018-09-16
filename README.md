@@ -22,7 +22,7 @@ Let's look at a state s<sub>0</sub> which contains 3 actions which point back to
 
 As one can logically see, a<sub>0</sub> is the best option and leads to maximum reward. a<sub>1</sub> teaches us punishment and is the most unfavorable variant, while a<sub>2</sub> is the neutral version without any reward. Let's calculate that:
 
-#### 2.2.1.1 Code
+##### 2.2.1.1 Code
 
 **The written-out version:**
 
@@ -95,7 +95,7 @@ var discountFactor = 0.9;
 
 Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832. The algorithm of the `calculateQ` function stops the iteration of the above Markov formula until the Q change difference falls below a certain threshold: the default value of this threshold is 0.001.
 
-#### 2.2.1.2 Watch at the [demo](demo/rl-super-basic.html)
+##### 2.2.1.2 Watch at the [demo](demo/rl-super-basic.html):
 
 <img src="/images/SuperBasicDemo.png" width="747" alt="super basic example">
 
@@ -141,7 +141,11 @@ As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> w
 ]
 ```
 
-##### 2.2.2.2 Comparison of different discount rates
+##### 2.2.2.2 Watch at the [demo](demo/rl-basic.html):
+
+<img src="/images/BasicDemo.png" width="780" alt="basic example">
+
+##### 2.2.2.3 Comparison of different discount rates
 
 | discountRate | type               | s<sub>0</sub>    | s<sub>1</sub> | s<sub>0</sub> (winner) | s<sub>1</sub> (winner) |
 |--------------|--------------------|------------------|---------------|------------------------|------------------------|
