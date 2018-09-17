@@ -536,12 +536,13 @@ class ReinforcementLearning {
                 this.createHtmlElement('div', {
                     style: {
                         margin: '5px',
-                        border: '1px solid #000',
+                        border: '2px solid #000',
                         backgroundColor: '#fff',
                         width: '100px',
                         height: '100px',
                         lineHeight: '100px',
-                        borderRadius: '50px',
+                        borderRadius: '52px',
+                        boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
                         textAlign: 'center',
                         backgroundColor: config.state[s].color
                     }
@@ -565,12 +566,13 @@ class ReinforcementLearning {
                     this.createHtmlElement('div', {
                         style: {
                             margin: '5px',
-                            border: '1px solid #000',
+                            border: '2px solid #000',
                             backgroundColor: '#fff',
                             width: '50px',
                             height: '50px',
                             lineHeight: '50px',
                             borderRadius: '10px',
+                            boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
                             backgroundColor: (QMax[s] === a ? '#80ff80' : '#ff8080'),
                             textAlign: 'center'
                         }
@@ -595,12 +597,13 @@ class ReinforcementLearning {
                         this.createHtmlElement('div', {
                             style: {
                                 margin: '5px',
-                                border: '1px solid #000',
+                                border: '2px solid #000',
                                 backgroundColor: '#fff',
                                 width: '50px',
                                 height: '50px',
                                 lineHeight: '50px',
-                                borderRadius: '25px',
+                                borderRadius: '27px',
+                                boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
                                 backgroundColor: config.state[sp].color,
                                 textAlign: 'center'
                             }
@@ -651,7 +654,8 @@ class ReinforcementLearning {
                                 style: {
                                     margin: '5px',
                                     padding: '5px',
-                                    border: '1px solid #000',
+                                    border: '2px solid #000',
+                                    boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
                                     backgroundColor: '#fff',
                                     width: '50px',
                                     height: '50px',
@@ -960,7 +964,7 @@ class ReinforcementLearning {
      * @returns {string}
      */
     getArrow(number, elements, back) {
-        var template = '<div style="margin: 0 10px; transform: rotate(%sdeg);">→</div>';
+        var template = '<div style="margin: 0 10px; transform: rotate(%sdeg); text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">→</div>';
 
         number *= 2;
         elements -= 1;
