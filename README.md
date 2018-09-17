@@ -6,7 +6,7 @@ This is a javascript reinforcement learning framework.
 
 In progress.. 
 
-## 2. Markov decision process
+## 2. Markov decision process (MDP)
 
 ### 2.1 Theory
 
