@@ -573,7 +573,7 @@ class ReinforcementLearning {
                             lineHeight: '50px',
                             borderRadius: '10px',
                             boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                            backgroundColor: (QMax[s] === a ? '#80ff80' : '#ff8080'),
+                            backgroundColor: (QMax[s].indexOf(a) !== -1 ? '#80ff80' : '#ff8080'),
                             textAlign: 'center'
                         }
                     })
@@ -657,9 +657,9 @@ class ReinforcementLearning {
                                     border: '2px solid #000',
                                     boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
                                     backgroundColor: '#fff',
-                                    width: '70px',
-                                    height: '70px',
-                                    lineHeight: '70px',
+                                    width: '80px',
+                                    height: '80px',
+                                    lineHeight: '80px',
                                     backgroundColor: '#f0f0f0',
                                     textAlign: 'center'
                                 }
