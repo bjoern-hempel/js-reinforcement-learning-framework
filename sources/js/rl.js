@@ -528,7 +528,7 @@ class ReinforcementLearning {
 
             this.addTd(
                 tr,
-                String('S<sub>%s</sub>').replace(/%s/, s),
+                String('S<sub>(%s)</sub>').replace(/%s/, s),
                 {
                     rowspan: config.state[s].rows,
                     style: {fontWeight: 'bold', fontSize: '20px'}
@@ -558,7 +558,7 @@ class ReinforcementLearning {
                 this.addTd(tr, this.getArrow(a, actionsStatesTR.length), {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
                 this.addTd(
                     tr,
-                    String('a<sub>%s</sub>').replace(/%s/, a),
+                    String('a<sub>(%s)</sub>').replace(/%s/, a),
                     {
                         rowspan: config.action[s][a].rows,
                         style: {fontWeight: 'bold', fontSize: '14px'}
@@ -590,7 +590,7 @@ class ReinforcementLearning {
                     this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length), {style: {fontSize: '30px'}});
                     this.addTd(
                         tr,
-                        'S<sub>' + sp + '</sub>\'',
+                        String('S<sub>(%s)</sub>').replace(/%s/, sp),
                         {
                             style: {fontWeight: 'bold', fontSize: '14px'}
                         },
@@ -615,12 +615,12 @@ class ReinforcementLearning {
                     this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length, true), {style: {fontSize: '30px'}});
                     if (spCounter === 0) {
                         var style = {
-                            color: QMax[s] === a ? 'green' : 'red',
+                            color: QMax[s].indexOf(a) !== -1 ? 'green' : 'red',
                             textAlign: 'left',
                             padding: '0 15px'
                         };
 
-                        if (QMax[s] === a) {
+                        if (QMax[s].indexOf(a) !== -1) {
                             style['textDecoration'] = 'underline';
                             style['fontWeight'] = 'bold';
                         } else {
@@ -645,7 +645,7 @@ class ReinforcementLearning {
                     if (a === 0 && spCounter === 0) {
                         this.addTd(
                             tr,
-                            String('S<sub>%s</sub>.a<sub>%s</sub>').replace(/%s/, s).replace(/%s/, QMax[s]),
+                            String('S<sub>(%s)</sub>.a<sub>(%s)</sub>').replace(/%s/, s).replace(/%s/, QMax[s].join(';')),
                             {
                                 rowspan: config.state[s].rows,
                                 style: {fontWeight: 'bold', padding: '0 15px'}
@@ -657,9 +657,9 @@ class ReinforcementLearning {
                                     border: '2px solid #000',
                                     boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
                                     backgroundColor: '#fff',
-                                    width: '50px',
-                                    height: '50px',
-                                    lineHeight: '50px',
+                                    width: '70px',
+                                    height: '70px',
+                                    lineHeight: '70px',
                                     backgroundColor: '#f0f0f0',
                                     textAlign: 'center'
                                 }
@@ -688,13 +688,15 @@ class ReinforcementLearning {
 
         for (var i = 0; i < Q.length; i++) {
             var max = 0;
-            var index = 0;
+            var index = [];
 
             for (var j = 0; j < Q[i].length; j++) {
-                if (max < Q[i][j]) {
+                if (Q[i][j] > max) {
                     max = Q[i][j];
 
-                    index = j;
+                    index = [j];
+                } else if (Q[i][j] === max) {
+                    index.push(j);
                 }
             }
 
