@@ -8,9 +8,15 @@ In progress..
 
 ## 2. Markov decision process (MDP)
 
-### 2.1 Theory (The bellman equation)
+### 2.1 Theory
+
+#### 2.1.1 The bellman equation
 
 <img src="https://latex.ixno.de/?r=300&p=1pt&c=1&f=V%5E%2A%28s%29%20%3D%20%5Csubstack%7B%5Ctextbf%7Bmax%7D%5C%5C%20%7B%5Ctiny%20a%7D%7D%5Csum_%7Bs%27%7D%5E%7B%7D%20T%28s%2C%20a%2C%20s%27%29%5BR%28s%2C%20a%2C%20s%27%29%20%2B%20%5Cgamma%20%5Ccdot%20V%5E%2A%28s%27%29%5D%20%5Cquad%20%5Cforall%20s" width="499" alt="V^*(s) = \substack{\textbf{max}\\ {\tiny a}}\sum_{s'}^{} T(s, a, s')[R(s, a, s') + \gamma \cdot V^*(s')] \quad \forall s">
+
+#### 2.1.2 The value iteration algorithm
+
+#### 2.1.3 The Q-value iteration algorithm
 
 ### 2.2 Usage
 
