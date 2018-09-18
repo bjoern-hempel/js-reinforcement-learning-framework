@@ -16,6 +16,8 @@ In progress..
 
 #### 2.1.2 The value iteration algorithm
 
+<img src="https://latex.ixno.de/?r=300&p=1pt&c=1&f=V_%7Bk%2B1%7D%28s%29%20%5Cleftarrow%20%5Csubstack%7B%5Ctextbf%7Bmax%7D%5C%5C%20%7B%5Ctiny%20a%7D%7D%5Csum_%7Bs%27%7D%5E%7B%7D%20T%28s%2C%20a%2C%20s%27%29%5BR%28s%2C%20a%2C%20s%27%29%20%2B%20%5Cgamma%20%5Ccdot%20V_k%28s%27%29%5D%20%5Cquad%20%5Cforall%20s" width="516" alt="V_{k+1}(s) \leftarrow \substack{\textbf{max}\\ {\tiny a}}\sum_{s'}^{} T(s, a, s')[R(s, a, s') + \gamma \cdot V_k(s')] \quad \forall s">
+
 #### 2.1.3 The Q-value iteration algorithm
 
 ### 2.2 Usage
