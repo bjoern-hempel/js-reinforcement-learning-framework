@@ -189,12 +189,12 @@ class StateChange {
 }
 
 /**
- * A class to do some reinforcement learning stuff.
+ * A class to do some reinforcement learning stuff (base class).
  *
  * @author  Björn Hempel <bjoern@hempel.li>
  * @version 1.0 (2018-08-31)
  */
-class ReinforcementLearning {
+class ReinforcementLearningBase {
 
     static get SUCCESS_CALCULATE_Q() {
         return [new JsTestException(201, 'Calculate Q test'), this];
@@ -345,94 +345,6 @@ class ReinforcementLearning {
     }
 
     /**
-     * Do all calculations.
-     *
-     * @author Björn Hempel <bjoern@hempel.li>
-     * @version 1.0 (2018-08-28)
-     */
-    calculateQ() {
-
-        /* analyse and adopt given arguments */
-        for (var i = 0; i < arguments.length; i++) {
-            switch (typeof(arguments[i])) {
-
-                /* object given */
-                case 'object':
-                    this.adoptConfig(arguments[i]);
-                    break;
-
-                /* number given -> discount factor */
-                case 'number':
-                    this.config.discountFactor = arguments[i];
-                    break;
-            }
-        }
-
-        var Q = this.getInitialQ();
-
-        var Q_prev = null;
-
-        var counter = 0;
-
-        /* Iterate until a threshold or a iteration number is reached */
-        while (true) {
-
-            /* Calculate until threshold is reached */
-            if (this.config.iterations === 'auto') {
-
-                /* The maximum iterations are reached */
-                if (counter >= this.config.iterationsMax) {
-                    break;
-                }
-
-                if (Q_prev !== null) {
-                    var difference = this.calculateQDifferenceMax(Q, Q_prev);
-
-                    /* Cancel the calculation if the difference between Q and Q_prev is lower than iterationThreshold */
-                    if (difference < this.config.iterationThreshold) {
-                        break;
-                    }
-                }
-
-            /* Iteration number was given */
-            } else {
-
-                /* Wanted iterations reached */
-                if (counter >= this.config.iterations) {
-                    break;
-                }
-            }
-
-            /* Copy last Q values */
-            Q_prev = this.deepCopy(Q);
-
-            /* Iterate through all available states */
-            for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
-                var actionsStatesTR = this.statesActionsStatesTR[s];
-
-                /* Iterate through all available actions */
-                for (var a = 0; a < actionsStatesTR.length; a++) {
-                    var statesTR = actionsStatesTR[a];
-                    Q[s][a] = 0;
-
-                    /* iterate through all target states */
-                    for (var sp in statesTR) {
-                        var T = statesTR[sp][0];
-                        var R = statesTR[sp][1];
-
-                        Q[s][a] += T * (R + this.config.discountFactor * Math.max(...Q_prev[sp]));
-                    }
-                }
-            }
-
-            /* Increase the counter. */
-            counter++;
-        }
-
-        return Q;
-    }
-
-    /**
      * Returns a random element of given array or object.
      *
      * @author Björn Hempel <bjoern@hempel.li>
@@ -471,41 +383,6 @@ class ReinforcementLearning {
         } else {
             return Array.isArray(element);
         }
-    }
-
-    /**
-     * Q-Learning: Do all calculations.
-     *
-     * @author Björn Hempel <bjoern@hempel.li>
-     * @version 1.0 (2018-08-28)
-     */
-    calculateQLearning() {
-        var Q = this.getInitialQ();
-
-        var learningRateStart = 0.05;
-        var learningRateDecay = 0.1;
-        var iterations = 20000;
-
-        var s = 0;
-
-        for (var iteration = 0; iteration < iterations; iteration++) {
-            var actionsStatesTR = this.statesActionsStatesTR[s];
-            var a = this.getRandomIndex(actionsStatesTR);
-
-            var statesTR = actionsStatesTR[a];
-            var sp = this.getRandomIndex(statesTR);
-
-            var TR = statesTR[sp];
-            var R = TR[1];
-
-            var learningRate = learningRateStart / (1 + iteration * learningRateDecay);
-
-            Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Math.max(...Q[sp]));
-
-            s = sp;
-        }
-
-        return Q;
     }
 
     /**
@@ -998,3 +875,176 @@ class ReinforcementLearning {
         return JSON.parse(JSON.stringify(object));
     }
 }
+
+/**
+ * Reinforcement Q Learning class.
+ *
+ * @author Björn Hempel <bjoern@hempel.li>
+ * @version 1.0 (2018-09-20)
+ */
+class ReinforcementLearningQLearning extends ReinforcementLearningBase {
+
+    /**
+     * Q-Learning: Do all calculations.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-28)
+     */
+    calculateQ() {
+
+        var Q = this.getInitialQ();
+
+        var learningRateStart = 0.05;
+        var learningRateDecay = 0.1;
+        var iterations = 20000;
+
+        var s = 0;
+
+        for (var iteration = 0; iteration < iterations; iteration++) {
+            var actionsStatesTR = this.statesActionsStatesTR[s];
+            var a = this.getRandomIndex(actionsStatesTR);
+
+            var statesTR = actionsStatesTR[a];
+            var sp = this.getRandomIndex(statesTR);
+
+            var TR = statesTR[sp];
+            var R = TR[1];
+
+            var learningRate = learningRateStart / (1 + iteration * learningRateDecay);
+
+            Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Math.max(...Q[sp]));
+
+            s = sp;
+        }
+
+        return Q;
+    }
+}
+
+/**
+ * Reinforcement Learning MDP class
+ *
+ * @author Björn Hempel <bjoern@hempel.li>
+ * @version 1.0 (2018-09-20)
+ */
+class ReinforcementLearningMDP extends ReinforcementLearningBase {
+    /**
+     * Do all calculations.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-28)
+     */
+    calculateQ() {
+
+        /* analyse and adopt given arguments */
+        for (var i = 0; i < arguments.length; i++) {
+            switch (typeof(arguments[i])) {
+
+                /* object given */
+                case 'object':
+                    this.adoptConfig(arguments[i]);
+                    break;
+
+                /* number given -> discount factor */
+                case 'number':
+                    this.config.discountFactor = arguments[i];
+                    break;
+            }
+        }
+
+        var Q = this.getInitialQ();
+
+        var Q_prev = null;
+
+        var counter = 0;
+
+        /* Iterate until a threshold or a iteration number is reached */
+        while (true) {
+
+            /* Calculate until threshold is reached */
+            if (this.config.iterations === 'auto') {
+
+                /* The maximum iterations are reached */
+                if (counter >= this.config.iterationsMax) {
+                    break;
+                }
+
+                if (Q_prev !== null) {
+                    var difference = this.calculateQDifferenceMax(Q, Q_prev);
+
+                    /* Cancel the calculation if the difference between Q and Q_prev is lower than iterationThreshold */
+                    if (difference < this.config.iterationThreshold) {
+                        break;
+                    }
+                }
+
+                /* Iteration number was given */
+            } else {
+
+                /* Wanted iterations reached */
+                if (counter >= this.config.iterations) {
+                    break;
+                }
+            }
+
+            /* Copy last Q values */
+            Q_prev = this.deepCopy(Q);
+
+            /* Iterate through all available states */
+            for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+                var actionsStatesTR = this.statesActionsStatesTR[s];
+
+                /* Iterate through all available actions */
+                for (var a = 0; a < actionsStatesTR.length; a++) {
+                    var statesTR = actionsStatesTR[a];
+                    Q[s][a] = 0;
+
+                    /* iterate through all target states */
+                    for (var sp in statesTR) {
+                        var T = statesTR[sp][0];
+                        var R = statesTR[sp][1];
+
+                        Q[s][a] += T * (R + this.config.discountFactor * Math.max(...Q_prev[sp]));
+                    }
+                }
+            }
+
+            /* Increase the counter. */
+            counter++;
+        }
+
+        return Q;
+    }
+}
+
+/**
+ * Reinforcement factory.
+ *
+ * @author Björn Hempel <bjoern@hempel.li>
+ * @version 1.0 (2018-09-20)
+ * @type {{mdp: (function(): ReinforcementLearningQLearning), qLearning: (function(): ReinforcementLearningMDP)}}
+ */
+var ReinforcementLearning = {
+
+    /**
+     * Markov decision process
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-20)
+     * @returns {ReinforcementLearningQLearning}
+     */
+    mdp: function () {
+        return new ReinforcementLearningMDP();
+    },
+
+    /**
+     * Q-Learning
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-20)
+     * @returns {ReinforcementLearningMDP}
+     */
+    qLearning: function () {
+        return new ReinforcementLearningQLearning();
+    }
+};

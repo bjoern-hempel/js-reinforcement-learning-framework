@@ -2,12 +2,12 @@ function startRLTest() {
 
     /* RL: Calculate Q test 1 */
     new JsSuccessTest(
-        ReinforcementLearning.SUCCESS_CALCULATE_Q,
+        ReinforcementLearningBase.SUCCESS_CALCULATE_Q,
         new JsTestTestFunction(function () {
             var discountFactor = 0.95;
             var iterations     = 100;
 
-            var rl = new ReinforcementLearning();
+            var rl = new ReinforcementLearning.mdp();
 
             var s0 = rl.addState();
             var s1 = rl.addState();
@@ -47,12 +47,12 @@ function startRLTest() {
 
     /* RL: Calculate Q test 2 */
     new JsSuccessTest(
-        ReinforcementLearning.SUCCESS_CALCULATE_Q,
+        ReinforcementLearningBase.SUCCESS_CALCULATE_Q,
         new JsTestTestFunction(function () {
             var discountFactor = 0.95;
             var iterations     = 100;
 
-            var rl = new ReinforcementLearning();
+            var rl = new ReinforcementLearning.mdp();
 
             var s0 = rl.addState();
             var s1 = rl.addState();
