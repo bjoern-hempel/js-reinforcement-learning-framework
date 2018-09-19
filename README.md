@@ -10,7 +10,17 @@ In progress..
 
 ### 2.1 Theory
 
-<img src="https://latex.ixno.de/?r=300&f=V%5E%2A%28s%29%20%3D%20%5Csubstack%7B%5Ctextbf%7Bmax%7D%5C%5C%20%7B%5Ctiny%20a%7D%7D%5Csum_%7Bs%27%7D%5E%7B%7D%20T%28s%2C%20a%2C%20s%27%29%5BR%28s%2C%20a%2C%20s%27%29%20%2B%20%5Cgamma%20%5Ccdot%20V_k%28s%27%29%5D" width="453" alt="V^*(s) = \substack{\textbf{max}\\ {\tiny a}}\sum_{s'}^{} T(s, a, s')[R(s, a, s') + \gamma \cdot V_k(s')]">
+#### 2.1.1 The bellman equation
+
+<img src="https://latex.ixno.de/?r=300&p=1pt&c=1&f=V%5E%2A%28s%29%20%3D%20%5Csubstack%7B%5Ctextbf%7Bmax%7D%5C%5C%20%7B%5Ctiny%20a%7D%7D%5Csum_%7Bs%27%7D%5E%7B%7D%20T%28s%2C%20a%2C%20s%27%29%5BR%28s%2C%20a%2C%20s%27%29%20%2B%20%5Cgamma%20%5Ccdot%20V%5E%2A%28s%27%29%5D%20%5Cquad%20%5Cforall%20s" width="499" alt="V^*(s) = \substack{\textbf{max}\\ {\tiny a}}\sum_{s'}^{} T(s, a, s')[R(s, a, s') + \gamma \cdot V^*(s')] \quad \forall s">
+
+#### 2.1.2 The value iteration algorithm
+
+<img src="https://latex.ixno.de/?r=300&p=1pt&c=1&f=V_%7Bk%2B1%7D%28s%29%20%5Cleftarrow%20%5Csubstack%7B%5Ctextbf%7Bmax%7D%5C%5C%20%7B%5Ctiny%20a%7D%7D%5Csum_%7Bs%27%7D%5E%7B%7D%20T%28s%2C%20a%2C%20s%27%29%5BR%28s%2C%20a%2C%20s%27%29%20%2B%20%5Cgamma%20%5Ccdot%20V_k%28s%27%29%5D%20%5Cquad%20%5Cforall%20s" width="516" alt="V_{k+1}(s) \leftarrow \substack{\textbf{max}\\ {\tiny a}}\sum_{s'}^{} T(s, a, s')[R(s, a, s') + \gamma \cdot V_k(s')] \quad \forall s">
+
+#### 2.1.3 The Q-value iteration algorithm
+
+<img src="https://latex.ixno.de/?r=300&p=1pt&c=1&f=Q_%7Bk%2B1%7D%28s%2Ca%29%20%5Cleftarrow%20%5Csum_%7Bs%27%7D%5E%7B%7D%20T%28s%2C%20a%2C%20s%27%29%5BR%28s%2C%20a%2C%20s%27%29%20%2B%20%5Cgamma%20%5Ccdot%20%5Csubstack%7B%5Ctextbf%7Bmax%7D%5C%5C%20%7B%5Ctiny%20a%27%7D%7D%20Q_k%28s%27%2Ca%27%29%5D%20%5Cquad%20%5Cforall%20%28s%2Ca%29" width="604" alt="Q_{k+1}(s,a) \leftarrow \sum_{s'}^{} T(s, a, s')[R(s, a, s') + \gamma \cdot \substack{\textbf{max}\\ {\tiny a'}} Q_k(s',a')] \quad \forall (s,a)">
 
 ### 2.2 Usage
 
@@ -97,7 +107,7 @@ Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>:
 
 ##### 2.2.1.2 Watch at the [demo](demo/rl-super-basic.html):
 
-<img src="/images/SuperBasicDemo.png" width="747" alt="super basic example">
+<img src="/images/SuperBasicDemo.png" width="785" alt="super basic example">
 
 #### 2.2.2 Basic example
 
@@ -143,7 +153,7 @@ As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> w
 
 ##### 2.2.2.2 Watch at the [demo](demo/rl-basic.html):
 
-<img src="/images/BasicDemo.png" width="792" alt="basic example">
+<img src="/images/BasicDemo.png" width="817" alt="basic example">
 
 ##### 2.2.2.3 Comparison of different discount rates
 
@@ -206,7 +216,7 @@ console.log(JSON.stringify(Q));
 
 ##### 2.2.3.2 Watch at the [demo](demo/rl-more-complex.html):
 
-<img src="/images/MoreComplexDemo.png" width="822" alt="more complex example">
+<img src="/images/MoreComplexDemo.png" width="845" alt="more complex example">
 
 ##### 2.2.3.3 Comparison of different discount rates
 
