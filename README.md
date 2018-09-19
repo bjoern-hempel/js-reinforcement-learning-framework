@@ -39,7 +39,7 @@ As one can logically see, a<sub>0</sub> is the best option and leads to maximum 
 ```javascript
 var discountFactor = 0;
 
-var rl = new ReinforcementLearning();
+var rl = new ReinforcementLearning.mdp();
 
 /* s0 */
 var s0 = rl.addState();
@@ -124,7 +124,7 @@ If we look at this example in the short term, it is a good idea to permanently g
 ```javascript
 var discountRate = 0.9;
 
-var rl = new ReinforcementLearning();
+var rl = new ReinforcementLearning.mdp();
 
 /* s0 and s1 */
 var s0 = rl.addState();
@@ -185,7 +185,7 @@ Short-sightedly it is a good idea to permanently go through a<sub>0</sub> and st
 ```javascript
 var discountRate =  0.9;
 
-var rl = new ReinforcementLearning();
+var rl = new ReinforcementLearning.mdp();
 
 /* s0, s1 and s2 */
 var s0 = rl.addState();
