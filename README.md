@@ -243,6 +243,20 @@ Discount rate 0.9:
 
 <img src="/images/ComplexResult0.9.png" width="960" alt="more complex example result">
 
+#### 2.2.4 Real example
+
+##### 2.2.4.1 Code
+
+Todo..
+
+##### 2.2.4.2 Watch at the [demo](demo/rl-real.html)
+
+Todo..
+
+##### 2.2.4.3 Comparison of different discount rates
+
+Todo..
+
 ## 3. Temporal Difference Learning and Q-Learning
 
 In progress..
