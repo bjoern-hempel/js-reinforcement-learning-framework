@@ -247,15 +247,15 @@ Discount rate 0.9:
 
 ##### 2.2.4.1 Code
 
-Todo..
+In progress..
 
 ##### 2.2.4.2 Watch at the [demo](demo/rl-real.html)
 
-Todo..
+In progress..
 
 ##### 2.2.4.3 Comparison of different discount rates
 
-Todo..
+In progress..
 
 ## 3. Temporal Difference Learning and Q-Learning
 
