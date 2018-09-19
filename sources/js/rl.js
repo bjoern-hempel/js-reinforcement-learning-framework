@@ -433,23 +433,6 @@ class ReinforcementLearning {
     }
 
     /**
-     * Q-Learning: Get the max Q from next state.
-     *
-     * @param Q
-     * @param sNext
-     * @returns {number}
-     */
-    getMaxQFromNextState(Q, sNext) {
-        var Q_all = [];
-
-        for (var s in this.statesActionsStatesTR[sNext]) {
-            Q_all.push(Q[sNext][s]);
-        }
-
-        return Math.max(...Q_all)
-    }
-
-    /**
      * Returns a random element of given array or object.
      *
      * @author Björn Hempel <bjoern@hempel.li>
@@ -664,8 +647,6 @@ class ReinforcementLearning {
                     if (spCounter === 0) {
                         this.addTd(tr, this.getArrow(a, actionsStatesTR.length, true), {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
                     }
-
-                    console.log(QMax[s].length);
 
                     /* optimal action */
                     if (a === 0 && spCounter === 0) {
