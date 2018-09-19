@@ -450,55 +450,79 @@ class ReinforcementLearning {
     }
 
     /**
+     * Returns a random element of given array or object.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-18)
+     * @param element
+     * @returns {*}
+     */
+    getRandomIndex(element) {
+        switch (true) {
+            /* array */
+            case this.isArray(element):
+                return Math.round((element.length - 1) * Math.random());
+
+            /* object */
+            case typeof element === 'object':
+                var keys = Object.keys(element);
+                return parseInt(keys[Math.round((keys.length - 1) * Math.random())]);
+
+            /* unsupported kind of element */
+            default:
+                return null;
+        }
+    }
+
+    /**
+     * Check if given element is an array.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-18)
+     * @param element
+     * @returns {*}
+     */
+    isArray(element) {
+        if (typeof Array.isArray === 'undefined') {
+            return Object.prototype.toString.call(obj) === '[object Array]';
+        } else {
+            return Array.isArray(element);
+        }
+    }
+
+    /**
      * Q-Learning: Do all calculations.
      *
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-08-28)
      */
     calculateQLearning() {
-        var Q = [];
+        var Q = this.getInitialQ();
 
-        /* Convert the internal data structure to Q learning structure */
-        for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+        var learningRateStart = 0.05;
+        var learningRateDecay = 0.1;
+        var iterations = 20000;
+
+        var s = 0;
+
+        for (var iteration = 0; iteration < iterations; iteration++) {
             var actionsStatesTR = this.statesActionsStatesTR[s];
+            var a = this.getRandomIndex(actionsStatesTR);
 
-            var temp = {};
+            var statesTR = actionsStatesTR[a];
+            var sp = this.getRandomIndex(statesTR);
 
-            Q.push({});
+            var TR = statesTR[sp];
+            var R = TR[1];
 
-            /* Iterate through all available actions */
-            for (var a = 0; a < actionsStatesTR.length; a++) {
-                var statesTR = actionsStatesTR[a];
+            var learningRate = learningRateStart / (1 + iteration * learningRateDecay);
 
-                /* iterate through all target states */
-                for (var sp in statesTR) {
-                    temp[sp] = [statesTR[sp][1]];
+            Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Math.max(...Q[sp]));
 
-                    Q[Q.length - 1][sp] = 0;
-                }
-            }
-
-            this.statesActionsStatesTR[s] = temp;
+            s = sp;
         }
 
-        for (var i = 0; i < 1000; i++) {
-            var sCurrent = null;
-            var sNext = null;
-            var sKeys = null;
-
-            for (var j = 1; j <= 100; j++) {
-                sCurrent = sNext !== null ? sNext : Math.round((this.statesActionsStatesTR.length - 1) * Math.random());
-                sKeys = Object.keys(this.statesActionsStatesTR[sCurrent]);
-                sNext = parseInt(sKeys[Math.round((sKeys.length - 1) * Math.random())]);
-
-                var R = this.statesActionsStatesTR[sCurrent][sNext][0];
-                var QMax = this.getMaxQFromNextState(Q, sNext);
-
-                Q[sCurrent][sNext] = R + Math.pow(this.config.discountFactor, j) * QMax;
-            }
-        }
-
-        console.log('Q', Q);
+        return Q;
     }
 
     /**
@@ -528,7 +552,7 @@ class ReinforcementLearning {
 
             this.addTd(
                 tr,
-                String('S<sub>(%s)</sub>').replace(/%s/, s),
+                String('S<sub>%s</sub>').replace(/%s/, s),
                 {
                     rowspan: config.state[s].rows,
                     style: {fontWeight: 'bold', fontSize: '20px'}
@@ -558,7 +582,7 @@ class ReinforcementLearning {
                 this.addTd(tr, this.getArrow(a, actionsStatesTR.length), {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
                 this.addTd(
                     tr,
-                    String('a<sub>(%s)</sub>').replace(/%s/, a),
+                    String('a<sub>%s</sub>').replace(/%s/, a),
                     {
                         rowspan: config.action[s][a].rows,
                         style: {fontWeight: 'bold', fontSize: '14px'}
@@ -590,7 +614,7 @@ class ReinforcementLearning {
                     this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length), {style: {fontSize: '30px'}});
                     this.addTd(
                         tr,
-                        String('S<sub>(%s)</sub>').replace(/%s/, sp),
+                        String('S<sub>%s</sub>').replace(/%s/, sp),
                         {
                             style: {fontWeight: 'bold', fontSize: '14px'}
                         },
@@ -641,11 +665,15 @@ class ReinforcementLearning {
                         this.addTd(tr, this.getArrow(a, actionsStatesTR.length, true), {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
                     }
 
+                    console.log(QMax[s].length);
+
                     /* optimal action */
                     if (a === 0 && spCounter === 0) {
                         this.addTd(
                             tr,
-                            String('S<sub>(%s)</sub>.a<sub>(%s)</sub>').replace(/%s/, s).replace(/%s/, QMax[s].join(';')),
+                            String('S<sub>%s</sub>.a<sub>%s</sub>').
+                                replace(/%s/, s).
+                                replace(/%s/, QMax[s].length === 1 ? QMax[s][0] : '[' + QMax[s].join(';') + ']'),
                             {
                                 rowspan: config.state[s].rows,
                                 style: {fontWeight: 'bold', padding: '0 15px'}

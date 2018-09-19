@@ -19,28 +19,28 @@
     var s4 = rl.addState();
     var s5 = rl.addState();
 
-    rl.addAction(s0, new StateChange(s4, 1.0,   0));
+    rl.addAction(s0, new StateChange(s4, 1.0,    0));
 
-    rl.addAction(s1, new StateChange(s3, 1.0,   0));
-    rl.addAction(s1, new StateChange(s5, 1.0, 100));
+    rl.addAction(s1, new StateChange(s3, 1.0,    0));
+    rl.addAction(s1, new StateChange(s5, 1.0,  100));
 
-    rl.addAction(s2, new StateChange(s3, 1.0,   0));
+    rl.addAction(s2, new StateChange(s3, 1.0,    0));
 
-    rl.addAction(s3, new StateChange(s1, 1.0,   0));
-    rl.addAction(s3, new StateChange(s2, 1.0,   0));
-    rl.addAction(s3, new StateChange(s4, 1.0,   0));
+    rl.addAction(s3, new StateChange(s1, 1.0,    1));
+    rl.addAction(s3, new StateChange(s2, 1.0,    0));
+    rl.addAction(s3, new StateChange(s4, 1.0,    1));
 
-    rl.addAction(s4, new StateChange(s0, 1.0,   0));
-    rl.addAction(s4, new StateChange(s3, 1.0,   0));
-    rl.addAction(s4, new StateChange(s5, 1.0, 100));
+    rl.addAction(s4, new StateChange(s0, 1.0,    0));
+    rl.addAction(s4, new StateChange(s3, 1.0,    0));
+    rl.addAction(s4, new StateChange(s5, 1.0,  100));
 
-    rl.addAction(s5, new StateChange(s1, 1.0,   0));
-    rl.addAction(s5, new StateChange(s4, 1.0,   0));
-    rl.addAction(s5, new StateChange(s5, 1.0, 100));
+    rl.addAction(s5, new StateChange(s1, 1.0, -100));
+    rl.addAction(s5, new StateChange(s4, 1.0, -100));
+    rl.addAction(s5, new StateChange(s5, 1.0,  100));
 
     var Q = rl.calculateQLearning(discountRate);
 
-    //rl.printTable(Q);
+    rl.printTable(Q);
 
 </script>
 </body>
