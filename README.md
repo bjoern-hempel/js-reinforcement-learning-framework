@@ -105,9 +105,11 @@ var discountFactor = 0.9;
 
 Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub>: 9.991404955442832. The algorithm of the `calculateQ` function stops the iteration of the above Markov formula until the Q change difference falls below a certain threshold: the default value of this threshold is 0.001.
 
-##### 2.2.1.2 Watch at the [demo](demo/rl-super-basic.html):
+##### 2.2.1.2 Watch at the [demo](demo/rl-super-basic.html)
 
-<img src="/images/SuperBasicDemo.png" width="785" alt="super basic example">
+Discount rate 0.9:
+
+<img src="/images/SuperBasicDemo.png" width="793" alt="super basic example">
 
 #### 2.2.2 Basic example
 
@@ -151,9 +153,11 @@ As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> w
 ]
 ```
 
-##### 2.2.2.2 Watch at the [demo](demo/rl-basic.html):
+##### 2.2.2.2 Watch at the [demo](demo/rl-basic.html)
 
-<img src="/images/BasicDemo.png" width="817" alt="basic example">
+Discount rate 0.9:
+
+<img src="/images/BasicDemo.png" width="828" alt="basic example">
 
 ##### 2.2.2.3 Comparison of different discount rates
 
@@ -214,9 +218,11 @@ console.log(JSON.stringify(Q));
 ]
 ```
 
-##### 2.2.3.2 Watch at the [demo](demo/rl-more-complex.html):
+##### 2.2.3.2 Watch at the [demo](demo/rl-more-complex.html)
 
-<img src="/images/MoreComplexDemo.png" width="845" alt="more complex example">
+Discount rate 0.9:
+
+<img src="/images/MoreComplexDemo.png" width="852" alt="more complex example">
 
 ##### 2.2.3.3 Comparison of different discount rates
 
