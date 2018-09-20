@@ -2,7 +2,7 @@ function startRLTest() {
 
     /* RL: Calculate Q test 1 */
     new JsSuccessTest(
-        ReinforcementLearningBase.SUCCESS_CALCULATE_Q,
+        ReinforcementLearningMDP.SUCCESS_CALCULATE_Q,
         new JsTestTestFunction(function () {
             var discountFactor = 0.95;
             var iterations     = 100;
@@ -47,7 +47,7 @@ function startRLTest() {
 
     /* RL: Calculate Q test 2 */
     new JsSuccessTest(
-        ReinforcementLearningBase.SUCCESS_CALCULATE_Q,
+        ReinforcementLearningMDP.SUCCESS_CALCULATE_Q,
         new JsTestTestFunction(function () {
             var discountFactor = 0.95;
             var iterations     = 100;

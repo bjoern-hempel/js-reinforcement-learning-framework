@@ -196,31 +196,15 @@ class StateChange {
  */
 class ReinforcementLearningBase {
 
-    static get SUCCESS_CALCULATE_Q() {
-        return [new JsTestException(201, 'Calculate Q test'), this];
-    }
-
     /**
      * The constructor of this class.
      * Creates a new environment.
      *
-     * @param T
-     * @param R
-     * @param Q
-     * @param possibleActions
      */
     constructor() {
         this.name = 'ReinforcementLearning';
 
         this.statesActionsStatesTR = [];
-
-        /* add config */
-        this.config = {
-            iterations: 'auto',
-            iterationThreshold: 0.001,
-            iterationsMax: 100000,
-            discountFactor: 0.95
-        }
     }
 
     /**
@@ -877,57 +861,36 @@ class ReinforcementLearningBase {
 }
 
 /**
- * Reinforcement Q Learning class.
- *
- * @author Björn Hempel <bjoern@hempel.li>
- * @version 1.0 (2018-09-20)
- */
-class ReinforcementLearningQLearning extends ReinforcementLearningBase {
-
-    /**
-     * Q-Learning: Do all calculations.
-     *
-     * @author Björn Hempel <bjoern@hempel.li>
-     * @version 1.0 (2018-08-28)
-     */
-    calculateQ() {
-
-        var Q = this.getInitialQ();
-
-        var learningRateStart = 0.05;
-        var learningRateDecay = 0.1;
-        var iterations = 20000;
-
-        var s = 0;
-
-        for (var iteration = 0; iteration < iterations; iteration++) {
-            var actionsStatesTR = this.statesActionsStatesTR[s];
-            var a = this.getRandomIndex(actionsStatesTR);
-
-            var statesTR = actionsStatesTR[a];
-            var sp = this.getRandomIndex(statesTR);
-
-            var TR = statesTR[sp];
-            var R = TR[1];
-
-            var learningRate = learningRateStart / (1 + iteration * learningRateDecay);
-
-            Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Math.max(...Q[sp]));
-
-            s = sp;
-        }
-
-        return Q;
-    }
-}
-
-/**
  * Reinforcement Learning MDP class
  *
  * @author Björn Hempel <bjoern@hempel.li>
  * @version 1.0 (2018-09-20)
  */
 class ReinforcementLearningMDP extends ReinforcementLearningBase {
+
+    static get SUCCESS_CALCULATE_Q() {
+        return [new JsTestException(201, 'Calculate Q test'), this];
+    }
+
+    /**
+     * The constructor of this class.
+     * Creates a new environment.
+     *
+     */
+    constructor() {
+        super();
+
+        this.name = 'ReinforcementLearningMDP';
+
+        /* add config */
+        this.config = {
+            iterations: 'auto',
+            iterationThreshold: 0.001,
+            iterationsMax: 100000,
+            discountFactor: 0.95
+        }
+    }
+
     /**
      * Do all calculations.
      *
@@ -1008,6 +971,112 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
                     }
                 }
             }
+
+            /* Increase the counter. */
+            counter++;
+        }
+
+        return Q;
+    }
+}
+
+/**
+ * Reinforcement Q Learning class.
+ *
+ * @author Björn Hempel <bjoern@hempel.li>
+ * @version 1.0 (2018-09-20)
+ */
+class ReinforcementLearningQLearning extends ReinforcementLearningBase {
+
+    /**
+     * The constructor of this class.
+     * Creates a new environment.
+     *
+     */
+    constructor() {
+        super();
+
+        this.name = 'ReinforcementLearningQLearning';
+
+        /* add config */
+        this.config = {
+            iterations: 'auto',
+            iterationThreshold: 0.001,
+            iterationsMax: 100000,
+            learningRateStart: 0.05,
+            learningRateDecay: 0.1,
+            discountFactor: 0.95
+        }
+    }
+
+    /**
+     * Q-Learning: Do all calculations.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-28)
+     */
+    calculateQ() {
+
+        /* analyse and adopt given arguments */
+        for (var i = 0; i < arguments.length; i++) {
+            switch (typeof(arguments[i])) {
+
+                /* object given */
+                case 'object':
+                    this.adoptConfig(arguments[i]);
+                    break;
+
+                /* number given -> discount factor */
+                case 'number':
+                    this.config.discountFactor = arguments[i];
+                    break;
+            }
+        }
+
+        var Q = this.getInitialQ(),
+            s = 0,
+            counter = 0;
+
+        /* Iterate until a threshold or a iteration number is reached */
+        while (true) {
+
+            /* Calculate until threshold is reached */
+            if (this.config.iterations === 'auto') {
+
+                /* The maximum iterations are reached */
+                if (counter >= this.config.iterationsMax) {
+                    break;
+                }
+
+                /* implement the threshold algorithm */
+                alert('Not implemented yet');
+                break;
+
+                /* Iteration number was given */
+            } else {
+
+                /* Wanted iterations reached */
+                if (counter >= this.config.iterations) {
+                    break;
+                }
+            }
+
+            var actionsStatesTR = this.statesActionsStatesTR[s];
+            var a = this.getRandomIndex(actionsStatesTR);
+
+            var statesTR = actionsStatesTR[a];
+            var sp = this.getRandomIndex(statesTR);
+
+            var TR = statesTR[sp];
+            var R = TR[1];
+
+            /* from this.config.learningRateStart to about 0 */
+            var learningRate = this.config.learningRateStart / (1 + counter * this.config.learningRateDecay);
+
+            /* (1 - learningRate) * CURRENT_Q + learningRate * (REWARD + NEXT_MAX_Q) */
+            Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Math.max(...Q[sp]));
+
+            s = sp;
 
             /* Increase the counter. */
             counter++;
