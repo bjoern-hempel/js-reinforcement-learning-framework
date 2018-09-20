@@ -894,7 +894,7 @@ class ReinforcementLearningBase {
      * @param Q_prev
      * @returns {boolean}
      */
-    cancelIfThresholdIsReached(counter, Q, Q_prev) {
+    cancelIfThresholdIsReached(counter, Q, Q_prev, cancelFunction) {
         /* Calculate until threshold is reached */
         if (this.config.iterations === 'auto') {
 
@@ -903,13 +903,8 @@ class ReinforcementLearningBase {
                 return true;
             }
 
-            if (Q_prev !== null) {
-                var difference = this.calculateQDifferenceMax(Q, Q_prev);
-
-                /* Cancel the calculation if the difference between Q and Q_prev is lower than iterationThreshold */
-                if (difference < this.config.iterationThreshold) {
-                    return true;
-                }
+            if (cancelFunction.call(this, counter, Q, Q_prev)) {
+                return true;
             }
 
             /* Iteration number was given */
@@ -965,17 +960,26 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
         /* analyse and adopt given arguments */
         this.analyseAndAdoptGivenArguments(...arguments);
 
-        var Q = this.getInitialQ();
-
-        var Q_prev = null;
-
-        var counter = 0;
+        var Q = this.getInitialQ(),
+            Q_prev = null,
+            counter = 0;
 
         /* Iterate until a threshold or a iteration number is reached */
         while (true) {
 
+            /* cancel function in auto mode */
+            var cancelFunction = function (counter, Q, Q_prev) {
+                if (Q_prev !== null) {
+                    if (this.calculateQDifferenceMax(Q, Q_prev) < this.config.iterationThreshold) {
+                        return true;
+                    }
+                }
+
+                return false;
+            };
+
             /* cancel if threshold is reached. */
-            if (this.cancelIfThresholdIsReached(counter, Q, Q_prev)) {
+            if (this.cancelIfThresholdIsReached(counter, Q, Q_prev, cancelFunction)) {
                 break;
             }
 
