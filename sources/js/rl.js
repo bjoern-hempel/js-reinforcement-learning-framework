@@ -128,7 +128,7 @@ class StateChange {
                     if (this.values.reward === null) {
                         this.values.reward = arguments[i];
                     } else if (this.values.likelihood === null) {
-                        this.values.likelihood = this.values.reward
+                        this.values.likelihood = this.values.reward;
                         this.values.reward = arguments[i];
                     } else {
                         console.error('Too much numbers given!');
