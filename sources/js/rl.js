@@ -479,7 +479,11 @@ class ReinforcementLearningBase {
                             }
                         })
                     );
-                    this.addTd(tr, String('T = %s').replace('%s', String(T)), {style: {textAlign: 'left', padding: '0 15px'}});
+
+                    if (this.name === 'ReinforcementLearningMDP') {
+                        this.addTd(tr, String('T = %s').replace('%s', String(T)), {style: {textAlign: 'left', padding: '0 15px'}});
+                    }
+
                     this.addTd(tr, String('R = %s').replace('%s', String(R)), {style: {textAlign: 'left', padding: '0 15px'}});
 
                     this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length, true), {style: {fontSize: '30px'}});
@@ -890,8 +894,7 @@ class ReinforcementLearningBase {
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-09-20)
      * @param counter
-     * @param Q
-     * @param Q_prev
+     * @param parameter
      * @returns {boolean}
      */
     cancelIfThresholdIsReached(counter, parameter, cancelFunction) {
@@ -907,7 +910,7 @@ class ReinforcementLearningBase {
                 return true;
             }
 
-            /* Iteration number was given */
+        /* Iteration number was given */
         } else {
 
             /* Wanted iterations reached */
