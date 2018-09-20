@@ -1073,27 +1073,6 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
                 break;
             }
 
-            /* Calculate until threshold is reached */
-            if (this.config.iterations === 'auto') {
-
-                /* The maximum iterations are reached */
-                if (counter >= this.config.iterationsMax) {
-                    break;
-                }
-
-                /* implement the threshold algorithm */
-                alert('Not implemented yet');
-                break;
-
-                /* Iteration number was given */
-            } else {
-
-                /* Wanted iterations reached */
-                if (counter >= this.config.iterations) {
-                    break;
-                }
-            }
-
             var actionsStatesTR = this.statesActionsStatesTR[s];
             var a = this.getRandomIndex(actionsStatesTR);
 
