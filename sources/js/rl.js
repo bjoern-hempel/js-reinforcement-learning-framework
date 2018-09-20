@@ -204,6 +204,8 @@ class ReinforcementLearningBase {
     constructor() {
         this.name = 'ReinforcementLearning';
 
+        this.config = {};
+
         this.statesActionsStatesTR = [];
     }
 
@@ -858,6 +860,29 @@ class ReinforcementLearningBase {
     deepCopy(object) {
         return JSON.parse(JSON.stringify(object));
     }
+
+    /**
+     * Analyse and adopt given arguments.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-20)
+     */
+    analyseAndAdoptGivenArguments() {
+        for (var i = 0; i < arguments.length; i++) {
+            switch (typeof(arguments[i])) {
+
+                /* object given */
+                case 'object':
+                    this.adoptConfig(arguments[i]);
+                    break;
+
+                /* number given → discount factor */
+                case 'number':
+                    this.config.discountFactor = arguments[i];
+                    break;
+            }
+        }
+    }
 }
 
 /**
@@ -900,20 +925,7 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
     calculateQ() {
 
         /* analyse and adopt given arguments */
-        for (var i = 0; i < arguments.length; i++) {
-            switch (typeof(arguments[i])) {
-
-                /* object given */
-                case 'object':
-                    this.adoptConfig(arguments[i]);
-                    break;
-
-                /* number given -> discount factor */
-                case 'number':
-                    this.config.discountFactor = arguments[i];
-                    break;
-            }
-        }
+        this.analyseAndAdoptGivenArguments(...arguments);
 
         var Q = this.getInitialQ();
 
@@ -1018,20 +1030,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
     calculateQ() {
 
         /* analyse and adopt given arguments */
-        for (var i = 0; i < arguments.length; i++) {
-            switch (typeof(arguments[i])) {
-
-                /* object given */
-                case 'object':
-                    this.adoptConfig(arguments[i]);
-                    break;
-
-                /* number given -> discount factor */
-                case 'number':
-                    this.config.discountFactor = arguments[i];
-                    break;
-            }
-        }
+        this.analyseAndAdoptGivenArguments(...arguments);
 
         var Q = this.getInitialQ(),
             s = 0,
