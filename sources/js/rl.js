@@ -1009,8 +1009,6 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
             counter++;
         }
 
-        console.log(counter);
-
         return Q;
     }
 }
