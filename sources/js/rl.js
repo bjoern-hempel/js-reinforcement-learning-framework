@@ -883,6 +883,44 @@ class ReinforcementLearningBase {
             }
         }
     }
+
+    /**
+     * Cancel function if threshold is reached.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-20)
+     * @param counter
+     * @param Q
+     * @param Q_prev
+     * @returns {boolean}
+     */
+    cancelIfThresholdIsReached(counter, Q, Q_prev) {
+        /* Calculate until threshold is reached */
+        if (this.config.iterations === 'auto') {
+
+            /* The maximum iterations are reached */
+            if (counter >= this.config.iterationsMax) {
+                return true;
+            }
+
+            if (Q_prev !== null) {
+                var difference = this.calculateQDifferenceMax(Q, Q_prev);
+
+                /* Cancel the calculation if the difference between Q and Q_prev is lower than iterationThreshold */
+                if (difference < this.config.iterationThreshold) {
+                    return true;
+                }
+            }
+
+            /* Iteration number was given */
+        } else {
+
+            /* Wanted iterations reached */
+            if (counter >= this.config.iterations) {
+                return true;
+            }
+        }
+    }
 }
 
 /**
@@ -936,30 +974,9 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
         /* Iterate until a threshold or a iteration number is reached */
         while (true) {
 
-            /* Calculate until threshold is reached */
-            if (this.config.iterations === 'auto') {
-
-                /* The maximum iterations are reached */
-                if (counter >= this.config.iterationsMax) {
-                    break;
-                }
-
-                if (Q_prev !== null) {
-                    var difference = this.calculateQDifferenceMax(Q, Q_prev);
-
-                    /* Cancel the calculation if the difference between Q and Q_prev is lower than iterationThreshold */
-                    if (difference < this.config.iterationThreshold) {
-                        break;
-                    }
-                }
-
-                /* Iteration number was given */
-            } else {
-
-                /* Wanted iterations reached */
-                if (counter >= this.config.iterations) {
-                    break;
-                }
+            /* cancel if threshold is reached. */
+            if (this.cancelIfThresholdIsReached(counter, Q, Q_prev)) {
+                break;
             }
 
             /* Copy last Q values */
@@ -987,6 +1004,8 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
             /* Increase the counter. */
             counter++;
         }
+
+        console.log(counter);
 
         return Q;
     }
