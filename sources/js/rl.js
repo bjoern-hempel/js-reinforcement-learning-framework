@@ -1062,6 +1062,17 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
         /* Iterate until a threshold or a iteration number is reached */
         while (true) {
 
+            /* cancel function in auto mode */
+            var cancelFunction = function (counter, parameter) {
+                alert('Not implemented yet');
+                return true;
+            };
+
+            /* cancel if threshold is reached. */
+            if (this.cancelIfThresholdIsReached(counter, {}, cancelFunction)) {
+                break;
+            }
+
             /* Calculate until threshold is reached */
             if (this.config.iterations === 'auto') {
 
