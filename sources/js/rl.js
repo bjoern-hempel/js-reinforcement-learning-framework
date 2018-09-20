@@ -894,7 +894,7 @@ class ReinforcementLearningBase {
      * @param Q_prev
      * @returns {boolean}
      */
-    cancelIfThresholdIsReached(counter, Q, Q_prev, cancelFunction) {
+    cancelIfThresholdIsReached(counter, parameter, cancelFunction) {
         /* Calculate until threshold is reached */
         if (this.config.iterations === 'auto') {
 
@@ -903,7 +903,7 @@ class ReinforcementLearningBase {
                 return true;
             }
 
-            if (cancelFunction.call(this, counter, Q, Q_prev)) {
+            if (cancelFunction.call(this, counter, parameter)) {
                 return true;
             }
 
@@ -968,9 +968,9 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
         while (true) {
 
             /* cancel function in auto mode */
-            var cancelFunction = function (counter, Q, Q_prev) {
+            var cancelFunction = function (counter, parameter) {
                 if (Q_prev !== null) {
-                    if (this.calculateQDifferenceMax(Q, Q_prev) < this.config.iterationThreshold) {
+                    if (this.calculateQDifferenceMax(parameter.Q, parameter.Q_prev) < this.config.iterationThreshold) {
                         return true;
                     }
                 }
@@ -979,7 +979,7 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
             };
 
             /* cancel if threshold is reached. */
-            if (this.cancelIfThresholdIsReached(counter, Q, Q_prev, cancelFunction)) {
+            if (this.cancelIfThresholdIsReached(counter, {Q: Q, Q_prev: Q_prev}, cancelFunction)) {
                 break;
             }
 
