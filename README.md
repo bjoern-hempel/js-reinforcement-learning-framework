@@ -103,11 +103,11 @@ var discountFactor = 0.9;
 ]
 ```
 
-Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub> ≈ 10. The algorithm of the `calculateQ` function stops the iteration of the above Markov formula until the Q change difference falls below a certain threshold: the default value of this threshold is 0.001.
+Q<sub>(s=0,a=0)</sub> is still the winner with the maximum of Q<sub>(s=0)</sub> ≈ 10. The algorithm of the `calculateQ` function stops the iteration of the above Markov formula until the Q change difference falls below a certain threshold: the default value of this threshold is 0,001.
 
 ##### 2.2.1.2 Watch at the [demo](demo/rl-super-basic.html)
 
-Discount rate 0.9:
+Discount rate 0,9:
 
 <img src="/images/SuperBasicDemo.png" width="793" alt="super basic example">
 
@@ -117,7 +117,7 @@ Let's look at the next following example:
 
 <img src="/images/Basic.png" width="512" alt="super basic example">
 
-If we look at this example in the short term, it is a good idea to permanently go through a<sub>1</sub> from s<sub>0</sub> (discountRate = 0) and stay on state s<sub>0</sub>: Because we always get a reward of 2 and we don't want to receive any punishment of -5. From a far-sighted point of view, it's better to go through a<sub>0</sub> (discountRate = 0.9), because in future we will receive a reward of 10 in addition to the punishment of -5 (it means the sum of 5 reward instead of only 2). Let's calculate that:  
+If we look at this example in the short term, it is a good idea to permanently go through a<sub>1</sub> from s<sub>0</sub> (discountRate = 0) and stay on state s<sub>0</sub>: Because we always get a reward of 2 and we don't want to receive any punishment of -5. From a far-sighted point of view, it's better to go through a<sub>0</sub> (discountRate = 0,9), because in future we will receive a reward of 10 in addition to the punishment of -5 (it means the sum of 5 reward instead of only 2). Let's calculate that:  
 
 ##### 2.2.2.1 Code
 
@@ -155,7 +155,7 @@ As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> w
 
 ##### 2.2.2.2 Watch at the [demo](demo/rl-basic.html)
 
-Discount rate 0.9:
+Discount rate 0,9:
 
 <img src="/images/BasicDemo.png" width="828" alt="basic example">
 
@@ -220,7 +220,7 @@ console.log(JSON.stringify(Q));
 
 ##### 2.2.3.2 Watch at the [demo](demo/rl-more-complex.html)
 
-Discount rate 0.9:
+Discount rate 0,9:
 
 <img src="/images/MoreComplexDemo.png" width="852" alt="more complex example">
 
