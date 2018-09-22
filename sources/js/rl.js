@@ -1053,6 +1053,10 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
  */
 class ReinforcementLearningQLearning extends ReinforcementLearningBase {
 
+    static get SUCCESS_CALCULATE_Q() {
+        return [new JsTestException(301, 'Calculate Q test'), this];
+    }
+
     /**
      * The constructor of this class.
      * Creates a new environment.
