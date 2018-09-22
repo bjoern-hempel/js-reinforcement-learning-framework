@@ -208,6 +208,8 @@ class ReinforcementLearningBase {
         this.config = {};
 
         this.statesActionsStatesTR = [];
+
+        this.randomSeedNumber = 1;
     }
 
     /**
@@ -343,12 +345,14 @@ class ReinforcementLearningBase {
         switch (true) {
             /* array */
             case this.isArray(element):
-                return Math.round((element.length - 1) * Math.random());
+                var random = this.config.useSeededRandom ? this.seedRandom() : Math.random();
+                return Math.round((element.length - 1) * random);
 
             /* object */
             case typeof element === 'object':
                 var keys = Object.keys(element);
-                return parseInt(keys[Math.round((keys.length - 1) * Math.random())]);
+                var random = this.config.useSeededRandom ? this.seedRandom() : Math.random();
+                return parseInt(keys[Math.round((keys.length - 1) * random)]);
 
             /* unsupported kind of element */
             default:
@@ -920,6 +924,30 @@ class ReinforcementLearningBase {
             }
         }
     }
+
+    /**
+     * Generates a seeded random number.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-22)
+     * @param {Number=} min (optional)
+     * @param {Number=} max (optional)
+     * @returns {Number}
+     */
+    seedRandom(min, max) {
+        /* set min and max to default if needed */
+        var max = max || 1;
+        var min = min || 0;
+
+        /* use only the digits from the 5th position of the sin function */
+        var number = Math.sin(this.randomSeedNumber++) * 10000;
+
+        /* Math.abs and use only the fractional part of the number */
+        var rnd = number - Math.floor(number);
+
+        /* return the seeded random number */
+        return min + rnd * (max - min);
+    }
 }
 
 /**
@@ -1042,7 +1070,8 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             iterationsMax: 100000,
             learningRateStart: 0.05,
             learningRateDecay: 0.1,
-            discountFactor: 0.95
+            discountFactor: 0.95,
+            useSeededRandom: false
         }
     }
 
@@ -1105,7 +1134,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
  *
  * @author Björn Hempel <bjoern@hempel.li>
  * @version 1.0 (2018-09-20)
- * @type {{mdp: (function(): ReinforcementLearningQLearning), qLearning: (function(): ReinforcementLearningMDP)}}
+ * @type {{mdp: (function(): ReinforcementLearningMDP), qLearning: (function(): ReinforcementLearningQLearning)}}
  */
 var ReinforcementLearning = {
 
@@ -1114,7 +1143,7 @@ var ReinforcementLearning = {
      *
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-09-20)
-     * @returns {ReinforcementLearningQLearning}
+     * @returns {ReinforcementLearningMDP}
      */
     mdp: function () {
         return new ReinforcementLearningMDP();
@@ -1125,7 +1154,7 @@ var ReinforcementLearning = {
      *
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-09-20)
-     * @returns {ReinforcementLearningMDP}
+     * @returns {ReinforcementLearningQLearning}
      */
     qLearning: function () {
         return new ReinforcementLearningQLearning();

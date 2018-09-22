@@ -39,7 +39,7 @@
         rl.addAction(s5, new StateChange(s4,   0));
         rl.addAction(s5, new StateChange(s5, 100));
 
-        var Q = rl.calculateQ(discountRate, {iterations: 20000});
+        var Q = rl.calculateQ(discountRate, {iterations: 20000, useSeededRandom: true});
 
         rl.printTable(Q);
 
