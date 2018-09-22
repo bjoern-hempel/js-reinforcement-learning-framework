@@ -392,7 +392,7 @@ class ReinforcementLearningBase {
 
         var config = this.calculateConfig();
         var table  = this.addTable(document.body, {border: 0, cellspacing: 0, cellpadding: 0});
-        var QMax   = this.calculateQMax(Q);
+        var QMax   = this.calculateQMaxArray(Q);
         var tr     = null;
 
         /* Iterate through all available states */
@@ -559,12 +559,38 @@ class ReinforcementLearningBase {
     }
 
     /**
-     * Calculate the QMax.
+     * Calculate the QMax from Q Array.
      *
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-09-13)
      */
-    calculateQMax(Q) {
+    calculateQMax(Q, N, exploreFunction) {
+
+        var max = -Infinity;
+
+        var useExploreFunction = typeof exploreFunction === 'function' &&
+            this.isArray(N) &&
+            Q.length === N.length &&
+            this.config.hyperParameter > 0;
+
+        for (var i = 0; i < Q.length; i++) {
+            var Q_current = useExploreFunction ? exploreFunction.call(this, Q[i], N[i]) : Q[i];
+
+            if (Q_current > max) {
+                max = Q_current;
+            }
+        }
+
+        return max;
+    }
+
+    /**
+     * Calculate the QMax from Q Array.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     */
+    calculateQMaxArray(Q) {
         var QMax = [];
 
         for (var i = 0; i < Q.length; i++) {
@@ -1075,6 +1101,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             learningRateStart: 0.05,
             learningRateDecay: 0.1,
             discountFactor: 0.95,
+            hyperParameter: 0,
             useSeededRandom: false
         }
     }
@@ -1091,6 +1118,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
         this.analyseAndAdoptGivenArguments(...arguments);
 
         var Q = this.getInitialQ(),
+            N = this.getInitialQ(),
             s = 0,
             counter = 0;
 
@@ -1108,28 +1136,51 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
                 break;
             }
 
+            /* get possible actions from current state */
             var actionsStatesTR = this.statesActionsStatesTR[s];
+
+            /* get random action a from current state */
             var a = this.getRandomIndex(actionsStatesTR);
 
+            /* get possible states from current action a */
             var statesTR = actionsStatesTR[a];
+
+            /* get random state s' */
             var sp = this.getRandomIndex(statesTR);
 
-            var TR = statesTR[sp];
-            var R = TR[1];
+            /* get reward */
+            var R = statesTR[sp][1];
 
             /* from this.config.learningRateStart to about 0 */
             var learningRate = this.config.learningRateStart / (1 + counter * this.config.learningRateDecay);
 
-            /* (1 - learningRate) * CURRENT_Q + learningRate * (REWARD + NEXT_MAX_Q) */
-            Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Math.max(...Q[sp]));
+            /* max from Q */
+            var Q_max = this.calculateQMax(Q[sp], N[sp], function (q, n) {
+                return q + this.config.hyperParameter / (1 + n);
+            });
 
+            /* (1 - learningRate) * CURRENT_Q + learningRate * (REWARD + NEXT_MAX_Q) */
+            Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Q_max);
+
+            /* count used state changes */
+            N[s][a]++;
+
+            /* Use s' as next state */
             s = sp;
 
             /* Increase the counter. */
             counter++;
         }
 
+        console.log(N);
+
         return Q;
+    }
+
+    exploreFunction(QMax, NMax) {
+        var K = 1;
+
+        return QMax + K / (1 + NMax);
     }
 }
 
