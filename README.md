@@ -26,7 +26,7 @@ In progress..
 
 #### 2.2.1 Super basic example
 
-Let's look at a state s<sub>0</sub> which contains 3 actions which point back to the state s<sub>0</sub>. The first action receives a reward of 1. The second action remains neutral and results in neither reward nor punishment. The third action receives a penalty of 1 (-1). The whole setup does not make much sense, but it should show the procedure in more detail:
+Let's look at a state s<sub>0</sub> which contains 3 actions which point back to the state s<sub>0</sub>. The first action a<sub>0</sub> receives a reward of 1. The second action a<sub>1</sub> remains neutral and results in neither reward nor punishment. The third action a<sub>2</sub> receives a penalty of 1 (-1). The whole setup does not make much sense, but it should show the procedure in more detail:
 
 <img src="/images/SuperBasic.png" width="480" alt="super basic example">
 
