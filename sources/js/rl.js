@@ -1185,6 +1185,10 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
         return [new JsTestException(301, 'Calculate Q test'), this];
     }
 
+    static get SUCCESS_CALCULATE_Q_GRID_WORLD() {
+        return [new JsTestException(302, 'Calculate Q test (grid world)'), this];
+    }
+
     /**
      * The constructor of this class.
      * Creates a new environment.

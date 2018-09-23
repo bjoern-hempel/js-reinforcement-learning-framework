@@ -129,5 +129,32 @@ function startRLTest() {
                 JsTest.equalArrayValues(Q, QExpected, 3)
             );
         })
-    )
+    );
+
+    /* RL.ql: Calculate Q test 2 */
+    new JsSuccessTest(
+        ReinforcementLearningQLearning.SUCCESS_CALCULATE_Q_GRID_WORLD,
+        new JsTestTestFunction(function () {
+            var discountRate = 0.9;
+            var rl = new ReinforcementLearning.qLearning();
+
+            /* build the grid world */
+            rl.buildGridWorld(3, 2, {2: {0: -100}, 0: {1: 100}});
+
+            var Q = rl.calculateQ(discountRate, {iterations: 20000, useSeededRandom: true});
+
+            var QExpected = [
+                [0.0831,   0.0238,   0.1494, 4.1416],
+                [0.1614, -19.6543,   0.0474, 0.5464],
+                [0.0432, -36.6825, -33.8223, 0.0307],
+                [2.1008,   0.2157,   0.0774, 3.0870],
+                [7.7776,   0.0189,   0.0244, 0.2461],
+                [0.4708,   0.034,  -16.4746, 0.0201]
+            ];
+
+            return (
+                JsTest.equalArrayValues(Q, QExpected, 3)
+            );
+        })
+    );
 }
