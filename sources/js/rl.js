@@ -974,6 +974,108 @@ class ReinforcementLearningBase {
         /* return the seeded random number */
         return min + rnd * (max - min);
     }
+
+    /**
+     * Calculates the grid world number from x and y.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-20)
+     * @param xy
+     * @param x_rows
+     * @returns {*}
+     */
+    getStateNumber(xy, x_rows) {
+        return xy.y * x_rows + xy.x;
+    }
+
+    /**
+     * Calculates the x and y position from given x, y and grid dimensions.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-20)
+     * @param x
+     * @param y
+     * @param grid
+     * @returns {{x: (number|*), y: (number|*)}}
+     */
+    getXY(x, y, grid, modus) {
+        switch (modus) {
+            case 0:
+                x--;
+                break;
+
+            case 1:
+                x++;
+                break;
+
+            case 2:
+                y--;
+                break;
+
+            case 3:
+                y++;
+                break;
+        }
+
+        x = x < 0 ? x + 1 : x;
+        x = x > grid[0] - 1 ? grid[0] - 1 : x;
+
+        y = y < 0 ? y + 1 : y;
+        y = y > grid[1] - 1 ? grid[1] - 1 : y;
+
+        return {
+            x: x,
+            y: y
+        }
+    }
+
+    /**
+     * Builds the grid world.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-20)
+     * @param width
+     * @param height
+     * @param reward
+     */
+    buildGridWorld(width, height, reward) {
+        var states = [];
+        var grid = [width, height];
+        var stateReward = {};
+
+        /* calculate the state reward list */
+        for (var x in reward) {
+            for (var y in reward[x]) {
+                stateReward[this.getStateNumber({x: parseInt(x), y: parseInt(y)}, grid[0])] = reward[x][y];
+            }
+        }
+
+        /* create states */
+        for (var y = 0; y < grid[1]; y++) {
+            for (var x = 0 ; x < grid[0]; x++) {
+                states[this.getStateNumber({x: x, y: y}, grid[0])] = this.addState();
+            }
+        }
+
+        /* create state changes */
+        for (var y = 0; y < grid[1]; y++) {
+            for (var x = 0 ; x < grid[0]; x++) {
+                var stateFromNumber = this.getStateNumber({x: x, y: y}, grid[0]);
+                var stateToNumber   = null;
+
+                for (var i = 0; i < 4; i++) {
+                    stateToNumber = this.getStateNumber(this.getXY(x, y, grid, i), grid[0]);
+
+                    var R = stateReward[stateToNumber] ? stateReward[stateToNumber] : 0;
+
+                    this.addAction(
+                        states[stateFromNumber],
+                        new StateChange(states[stateToNumber], R)
+                    );
+                }
+            }
+        }
+    }
 }
 
 /**
@@ -1162,7 +1264,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             /* (1 - learningRate) * CURRENT_Q + learningRate * (REWARD + NEXT_MAX_Q) */
             Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Q_max);
 
-            /* count used state changes */
+            /* count used state-action-state' change */
             N[s][a]++;
 
             /* Use s' as next state */
@@ -1171,8 +1273,6 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             /* Increase the counter. */
             counter++;
         }
-
-        console.log(N);
 
         return Q;
     }

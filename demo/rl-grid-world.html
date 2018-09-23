@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reinforced Learning</title>
+    <script src="../sources/js/rl.js"></script>
+</head>
+<body>
+    <script>
+
+        var discountRate = 0.9;
+        var rl = new ReinforcementLearning.qLearning();
+
+        /* build the grid world */
+        rl.buildGridWorld(3, 2, {2: {0: -100}, 0: {1: 100}});
+
+        var Q = rl.calculateQ(discountRate, {iterations: 20000, useSeededRandom: true});
+
+        rl.printTable(Q);
+
+    </script>
+</body>
+</html>
