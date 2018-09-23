@@ -407,6 +407,7 @@ class ReinforcementLearningBase {
         });
 
         var QSign = rl.translateGrid(rl.calculateQMaxArray(Q));
+
         var tr = null;
 
         for (var state in QSign) {
@@ -441,7 +442,7 @@ class ReinforcementLearningBase {
                         width: '100px',
                         height: '100px',
                         lineHeight: '100px',
-                        borderRadius: '52px',
+                        borderRadius: '20px',
                         boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
                         textAlign: 'center'
                     }
@@ -668,7 +669,7 @@ class ReinforcementLearningBase {
         var QMax = [];
 
         for (var i = 0; i < Q.length; i++) {
-            var max = 0;
+            var max = -Infinity;
             var index = [];
 
             for (var j = 0; j < Q[i].length; j++) {
