@@ -11,18 +11,22 @@
         var discountRate = 0.9;
         var rl = new ReinforcementLearning.qLearning();
 
+        var width = 5;
+        var height = 3;
+        var R = {
+            0: {2: 10000},
+            1: {2: -10000},
+            2: {2: -10000},
+            3: {2: -10000},
+            4: {2: 0}
+        };
+
         /* build the grid world */
-        rl.buildGridWorld(3, 2, {2: {0: -100}, 0: {1: 100}});
+        rl.buildGridWorld(width, height, R);
 
-        var Q = rl.calculateQ(discountRate, {iterations: 20000, useSeededRandom: true});
+        var Q = rl.calculateQ(discountRate, {iterations: 100000, useSeededRandom: true});
 
-        console.log(Q);
-
-        // for (var i in Q) {
-        //     for (var j in Q[i]) {
-        //         Q[i][j] = Math.round(Q[i][j] * 10000) / 10000;
-        //     }
-        // }
+        rl.printTableGridWorld(Q, width, R);
 
         rl.printTable(Q);
 

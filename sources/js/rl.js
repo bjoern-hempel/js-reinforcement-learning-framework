@@ -383,6 +383,80 @@ class ReinforcementLearningBase {
      * @version 1.0 (2018-09-13)
      * @param object
      */
+    printTableGridWorld(Q, width, reward) {
+
+        /* Nothing to to, if we do not have any states */
+        if (this.statesActionsStatesTR.length <= 0) {
+            return;
+        }
+
+        var stateReward = {};
+
+        /* calculate the state reward list */
+        for (var x in reward) {
+            for (var y in reward[x]) {
+                stateReward[this.getStateNumber({x: parseInt(x), y: parseInt(y)}, width)] = reward[x][y];
+            }
+        }
+
+        var table = this.addTable(document.body, {
+            border: 0,
+            cellspacing: 0,
+            cellpadding: 0,
+            style: {paddingBottom: '100px'}
+        });
+
+        var QSign = rl.translateGrid(rl.calculateQMaxArray(Q));
+        var tr = null;
+
+        for (var state in QSign) {
+
+            var R = stateReward[state] ? stateReward[state] : 0;
+
+            var color = '#808080';
+
+            if (R < 0) {
+                color = '#ff8080';
+            }
+
+            if (R > 0) {
+                color = '#80ff80';
+            }
+
+            if (state % width === 0) {
+                tr = this.addTr(table);
+            }
+
+            this.addTd(
+                tr,
+                QSign[state],
+                {
+                    style: {fontWeight: 'bold', fontSize: '20px'}
+                },
+                this.createHtmlElement('div', {
+                    style: {
+                        margin: '5px',
+                        border: '2px solid #000',
+                        backgroundColor: color,
+                        width: '100px',
+                        height: '100px',
+                        lineHeight: '100px',
+                        borderRadius: '52px',
+                        boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
+                        textAlign: 'center'
+                    }
+                })
+            );
+        }
+    }
+
+    /**
+     * Prints a table with all results.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-13)
+     * @param object
+     */
     printTable(Q) {
 
         /* Nothing to to, if we do not have any states */
@@ -1027,6 +1101,37 @@ class ReinforcementLearningBase {
             x: x,
             y: y
         }
+    }
+
+    /**
+     * Calculates the x and y position from given x, y and grid dimensions.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-20)
+     * @param x
+     * @param y
+     * @param grid
+     * @returns {{x: (number|*), y: (number|*)}}
+     */
+    translateGrid(Q) {
+        for (var number in Q) {
+            switch (parseInt(Q[number])) {
+                case 0:
+                    Q[number] = '←';
+                    break;
+                case 1:
+                    Q[number] = '→';
+                    break;
+                case 2:
+                    Q[number] = '↑';
+                    break;
+                case 3:
+                    Q[number] = '↓';
+                    break;
+            }
+        }
+
+        return Q;
     }
 
     /**
