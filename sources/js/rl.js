@@ -429,9 +429,9 @@ class ReinforcementLearningBase {
 
             this.addTd(
                 tr,
-                QSign[state],
+                R > 0 ? '↻' : QSign[state],
                 {
-                    style: {fontWeight: 'bold', fontSize: '20px'}
+                    style: {fontWeight: 'bold', fontSize: '40px'}
                 },
                 this.createHtmlElement('div', {
                     style: {
