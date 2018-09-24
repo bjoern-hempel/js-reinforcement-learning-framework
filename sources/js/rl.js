@@ -414,7 +414,7 @@ class ReinforcementLearningBase {
 
             var R = stateReward[state] ? stateReward[state] : 0;
 
-            var color = '#808080';
+            var color = '#f0f0f0';
 
             if (R < 0) {
                 color = '#ff8080';
@@ -430,23 +430,27 @@ class ReinforcementLearningBase {
 
             this.addTd(
                 tr,
-                R > 0 ? '↻' : QSign[state],
+                this.createHtmlElement(
+                    'div',
+                    {
+                        style: {
+                            margin: '5px',
+                            border: '2px solid #000',
+                            backgroundColor: color,
+                            width: '75px',
+                            height: '75px',
+                            lineHeight: '75px',
+                            borderRadius: '15px',
+                            boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
+                            textAlign: 'center'
+                        }
+                    },
+                    R > 0 ? '↻' : QSign[state]
+                ),
                 {
-                    style: {fontWeight: 'bold', fontSize: '40px'}
+                    style: {fontWeight: 'bold', fontSize: '14px'}
                 },
-                this.createHtmlElement('div', {
-                    style: {
-                        margin: '5px',
-                        border: '2px solid #000',
-                        backgroundColor: color,
-                        width: '100px',
-                        height: '100px',
-                        lineHeight: '100px',
-                        borderRadius: '20px',
-                        boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                        textAlign: 'center'
-                    }
-                })
+
             );
         }
     }
@@ -478,25 +482,28 @@ class ReinforcementLearningBase {
 
             this.addTd(
                 tr,
-                String('S<sub>%s</sub>').replace(/%s/, s),
+                this.createHtmlElement(
+                    'div',
+                    {
+                        style: {
+                            margin: '5px',
+                            border: '2px solid #000',
+                            backgroundColor: '#fff',
+                            width: '100px',
+                            height: '100px',
+                            lineHeight: '100px',
+                            borderRadius: '52px',
+                            boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
+                            textAlign: 'center',
+                            backgroundColor: config.state[s].color
+                        }
+                    },
+                    String('S<sub>%s</sub>').replace(/%s/, s)
+                ),
                 {
                     rowspan: config.state[s].rows,
                     style: {fontWeight: 'bold', fontSize: '20px'}
-                },
-                this.createHtmlElement('div', {
-                    style: {
-                        margin: '5px',
-                        border: '2px solid #000',
-                        backgroundColor: '#fff',
-                        width: '100px',
-                        height: '100px',
-                        lineHeight: '100px',
-                        borderRadius: '52px',
-                        boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                        textAlign: 'center',
-                        backgroundColor: config.state[s].color
-                    }
-                })
+                }
             );
 
             /* Iterate through all available actions */
@@ -508,25 +515,28 @@ class ReinforcementLearningBase {
                 this.addTd(tr, this.getArrow(a, actionsStatesTR.length), {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
                 this.addTd(
                     tr,
-                    String('a<sub>%s</sub>').replace(/%s/, a),
+                    this.createHtmlElement(
+                        'div',
+                        {
+                            style: {
+                                margin: '5px',
+                                border: '2px solid #000',
+                                backgroundColor: '#fff',
+                                width: '50px',
+                                height: '50px',
+                                lineHeight: '50px',
+                                borderRadius: '10px',
+                                boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
+                                backgroundColor: (QMax[s].indexOf(a) !== -1 ? '#80ff80' : '#ff8080'),
+                                textAlign: 'center'
+                            }
+                        },
+                        String('a<sub>%s</sub>').replace(/%s/, a)
+                    ),
                     {
                         rowspan: config.action[s][a].rows,
                         style: {fontWeight: 'bold', fontSize: '14px'}
-                    },
-                    this.createHtmlElement('div', {
-                        style: {
-                            margin: '5px',
-                            border: '2px solid #000',
-                            backgroundColor: '#fff',
-                            width: '50px',
-                            height: '50px',
-                            lineHeight: '50px',
-                            borderRadius: '10px',
-                            boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                            backgroundColor: (QMax[s].indexOf(a) !== -1 ? '#80ff80' : '#ff8080'),
-                            textAlign: 'center'
-                        }
-                    })
+                    }
                 );
 
                 /* iterate through all target states */
@@ -540,24 +550,27 @@ class ReinforcementLearningBase {
                     this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length), {style: {fontSize: '30px'}});
                     this.addTd(
                         tr,
-                        String('S<sub>%s</sub>').replace(/%s/, sp),
+                        this.createHtmlElement(
+                            'div',
+                            {
+                                style: {
+                                    margin: '5px',
+                                    border: '2px solid #000',
+                                    backgroundColor: '#fff',
+                                    width: '50px',
+                                    height: '50px',
+                                    lineHeight: '50px',
+                                    borderRadius: '27px',
+                                    boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
+                                    backgroundColor: config.state[sp].color,
+                                    textAlign: 'center'
+                                }
+                            },
+                            String('S<sub>%s</sub>').replace(/%s/, sp)
+                        ),
                         {
                             style: {fontWeight: 'bold', fontSize: '14px'}
-                        },
-                        this.createHtmlElement('div', {
-                            style: {
-                                margin: '5px',
-                                border: '2px solid #000',
-                                backgroundColor: '#fff',
-                                width: '50px',
-                                height: '50px',
-                                lineHeight: '50px',
-                                borderRadius: '27px',
-                                boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                                backgroundColor: config.state[sp].color,
-                                textAlign: 'center'
-                            }
-                        })
+                        }
                     );
 
                     if (this.name === 'ReinforcementLearningMDP') {
@@ -599,27 +612,30 @@ class ReinforcementLearningBase {
                     if (a === 0 && spCounter === 0) {
                         this.addTd(
                             tr,
-                            String('S<sub>%s</sub>.a<sub>%s</sub>').
-                                replace(/%s/, s).
-                                replace(/%s/, QMax[s].length === 1 ? QMax[s][0] : '[' + QMax[s].join(';') + ']'),
+                            this.createHtmlElement(
+                                'div',
+                                {
+                                    style: {
+                                        margin: '5px',
+                                        padding: '5px',
+                                        border: '2px solid #000',
+                                        boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
+                                        backgroundColor: '#fff',
+                                        width: '80px',
+                                        height: '80px',
+                                        lineHeight: '80px',
+                                        backgroundColor: '#f0f0f0',
+                                        textAlign: 'center'
+                                    }
+                                },
+                                String('S<sub>%s</sub>.a<sub>%s</sub>').
+                                    replace(/%s/, s).
+                                    replace(/%s/, QMax[s].length === 1 ? QMax[s][0] : '[' + QMax[s].join(';') + ']')
+                            ),
                             {
                                 rowspan: config.state[s].rows,
                                 style: {fontWeight: 'bold', padding: '0 15px'}
-                            },
-                            this.createHtmlElement('div', {
-                                style: {
-                                    margin: '5px',
-                                    padding: '5px',
-                                    border: '2px solid #000',
-                                    boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                                    backgroundColor: '#fff',
-                                    width: '80px',
-                                    height: '80px',
-                                    lineHeight: '80px',
-                                    backgroundColor: '#f0f0f0',
-                                    textAlign: 'center'
-                                }
-                            })
+                            }
                         );
                     }
 
@@ -896,20 +912,18 @@ class ReinforcementLearningBase {
      * @param attributes
      * @returns {HTMLTableDataCellElement}
      */
-    addTd(tr, html, attributes, wrapper) {
+    addTd(tr, html, attributes) {
         var td = document.createElement('td');
         tr.appendChild(td);
 
-        if (wrapper) {
-            td.appendChild(wrapper);
-        }
+        switch (true) {
+            case html instanceof HTMLElement:
+                td.appendChild(html);
+                break;
 
-        if (html) {
-            if (wrapper) {
-                wrapper.innerHTML = html;
-            } else {
+            case typeof html === 'string':
                 td.innerHTML = html;
-            }
+                break;
         }
 
         if (attributes) {
@@ -928,11 +942,15 @@ class ReinforcementLearningBase {
      * @param attributes
      * @returns {HTMLElement | HTMLSelectElement | HTMLLegendElement | HTMLTableCaptionElement | HTMLTextAreaElement | HTMLModElement | HTMLHRElement | HTMLOutputElement | HTMLPreElement | HTMLEmbedElement | HTMLCanvasElement | HTMLFrameSetElement | HTMLMarqueeElement | HTMLScriptElement | HTMLInputElement | HTMLUnknownElement | HTMLMetaElement | HTMLStyleElement | HTMLObjectElement | HTMLTemplateElement | HTMLBRElement | HTMLAudioElement | HTMLIFrameElement | HTMLMapElement | HTMLTableElement | HTMLAnchorElement | HTMLMenuElement | HTMLPictureElement | HTMLParagraphElement | HTMLTableDataCellElement | HTMLTableSectionElement | HTMLQuoteElement | HTMLTableHeaderCellElement | HTMLProgressElement | HTMLLIElement | HTMLTableRowElement | HTMLFontElement | HTMLSpanElement | HTMLTableColElement | HTMLOptGroupElement | HTMLDataElement | HTMLDListElement | HTMLFieldSetElement | HTMLSourceElement | HTMLBodyElement | HTMLDirectoryElement | HTMLDivElement | HTMLUListElement | HTMLHtmlElement | HTMLAreaElement | HTMLMeterElement | HTMLAppletElement | HTMLFrameElement | HTMLOptionElement | HTMLImageElement | HTMLLinkElement | HTMLHeadingElement | HTMLSlotElement | HTMLVideoElement | HTMLBaseFontElement | HTMLTitleElement | HTMLButtonElement | HTMLHeadElement | HTMLParamElement | HTMLTrackElement | HTMLOListElement | HTMLDataListElement | HTMLLabelElement | HTMLFormElement | HTMLTimeElement | HTMLBaseElement}
      */
-    createHtmlElement(name, attributes) {
+    createHtmlElement(name, attributes, html) {
         var htmlElement = document.createElement(name);
 
         if (attributes) {
             this.applyAttributes(htmlElement, attributes);
+        }
+
+        if (html) {
+            htmlElement.innerHTML = html;
         }
 
         return htmlElement;
