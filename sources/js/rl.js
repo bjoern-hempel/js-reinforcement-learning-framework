@@ -432,6 +432,7 @@ class ReinforcementLearningBase {
                 tr,
                 this.createHtmlElement(
                     'div',
+                    R > 0 ? '↻' : QSign[state],
                     {
                         style: {
                             margin: '5px',
@@ -444,8 +445,7 @@ class ReinforcementLearningBase {
                             boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
                             textAlign: 'center'
                         }
-                    },
-                    R > 0 ? '↻' : QSign[state]
+                    }
                 ),
                 {
                     style: {fontWeight: 'bold', fontSize: '14px'}
@@ -484,6 +484,7 @@ class ReinforcementLearningBase {
                 tr,
                 this.createHtmlElement(
                     'div',
+                    String('S<sub>%s</sub>').replace(/%s/, s),
                     {
                         style: {
                             margin: '5px',
@@ -497,8 +498,7 @@ class ReinforcementLearningBase {
                             textAlign: 'center',
                             backgroundColor: config.state[s].color
                         }
-                    },
-                    String('S<sub>%s</sub>').replace(/%s/, s)
+                    }
                 ),
                 {
                     rowspan: config.state[s].rows,
@@ -517,6 +517,7 @@ class ReinforcementLearningBase {
                     tr,
                     this.createHtmlElement(
                         'div',
+                        String('a<sub>%s</sub>').replace(/%s/, a),
                         {
                             style: {
                                 margin: '5px',
@@ -530,8 +531,7 @@ class ReinforcementLearningBase {
                                 backgroundColor: (QMax[s].indexOf(a) !== -1 ? '#80ff80' : '#ff8080'),
                                 textAlign: 'center'
                             }
-                        },
-                        String('a<sub>%s</sub>').replace(/%s/, a)
+                        }
                     ),
                     {
                         rowspan: config.action[s][a].rows,
@@ -552,6 +552,7 @@ class ReinforcementLearningBase {
                         tr,
                         this.createHtmlElement(
                             'div',
+                            String('S<sub>%s</sub>').replace(/%s/, sp),
                             {
                                 style: {
                                     margin: '5px',
@@ -565,8 +566,7 @@ class ReinforcementLearningBase {
                                     backgroundColor: config.state[sp].color,
                                     textAlign: 'center'
                                 }
-                            },
-                            String('S<sub>%s</sub>').replace(/%s/, sp)
+                            }
                         ),
                         {
                             style: {fontWeight: 'bold', fontSize: '14px'}
@@ -614,6 +614,9 @@ class ReinforcementLearningBase {
                             tr,
                             this.createHtmlElement(
                                 'div',
+                                String('S<sub>%s</sub>.a<sub>%s</sub>').
+                                    replace(/%s/, s).
+                                    replace(/%s/, QMax[s].length === 1 ? QMax[s][0] : '[' + QMax[s].join(';') + ']'),
                                 {
                                     style: {
                                         margin: '5px',
@@ -627,10 +630,7 @@ class ReinforcementLearningBase {
                                         backgroundColor: '#f0f0f0',
                                         textAlign: 'center'
                                     }
-                                },
-                                String('S<sub>%s</sub>.a<sub>%s</sub>').
-                                    replace(/%s/, s).
-                                    replace(/%s/, QMax[s].length === 1 ? QMax[s][0] : '[' + QMax[s].join(';') + ']')
+                                }
                             ),
                             {
                                 rowspan: config.state[s].rows,
@@ -939,10 +939,11 @@ class ReinforcementLearningBase {
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-09-15)
      * @param name
+     * @param html
      * @param attributes
-     * @returns {HTMLElement | HTMLSelectElement | HTMLLegendElement | HTMLTableCaptionElement | HTMLTextAreaElement | HTMLModElement | HTMLHRElement | HTMLOutputElement | HTMLPreElement | HTMLEmbedElement | HTMLCanvasElement | HTMLFrameSetElement | HTMLMarqueeElement | HTMLScriptElement | HTMLInputElement | HTMLUnknownElement | HTMLMetaElement | HTMLStyleElement | HTMLObjectElement | HTMLTemplateElement | HTMLBRElement | HTMLAudioElement | HTMLIFrameElement | HTMLMapElement | HTMLTableElement | HTMLAnchorElement | HTMLMenuElement | HTMLPictureElement | HTMLParagraphElement | HTMLTableDataCellElement | HTMLTableSectionElement | HTMLQuoteElement | HTMLTableHeaderCellElement | HTMLProgressElement | HTMLLIElement | HTMLTableRowElement | HTMLFontElement | HTMLSpanElement | HTMLTableColElement | HTMLOptGroupElement | HTMLDataElement | HTMLDListElement | HTMLFieldSetElement | HTMLSourceElement | HTMLBodyElement | HTMLDirectoryElement | HTMLDivElement | HTMLUListElement | HTMLHtmlElement | HTMLAreaElement | HTMLMeterElement | HTMLAppletElement | HTMLFrameElement | HTMLOptionElement | HTMLImageElement | HTMLLinkElement | HTMLHeadingElement | HTMLSlotElement | HTMLVideoElement | HTMLBaseFontElement | HTMLTitleElement | HTMLButtonElement | HTMLHeadElement | HTMLParamElement | HTMLTrackElement | HTMLOListElement | HTMLDataListElement | HTMLLabelElement | HTMLFormElement | HTMLTimeElement | HTMLBaseElement}
+     * @returns {HTMLElement}
      */
-    createHtmlElement(name, attributes, html) {
+    createHtmlElement(name, html, attributes) {
         var htmlElement = document.createElement(name);
 
         if (attributes) {
