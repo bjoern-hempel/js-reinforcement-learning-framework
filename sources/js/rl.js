@@ -432,7 +432,27 @@ class ReinforcementLearningBase {
                 tr,
                 this.createHtmlElement(
                     'div',
-                    R > 0 ? '↻' : QSign[state],
+                    [
+                        this.createHtmlElement(
+                            'div',
+                            R > 0 ? '↻' : QSign[state]
+                        ),
+                        this.createHtmlElement(
+                            'div',
+                            String(R),
+                            {
+                                style: {
+                                    position: 'absolute',
+                                    right: '5px',
+                                    bottom: '5px',
+                                    lineHeight: 'normal',
+                                    fontSize: '12px',
+                                    color: '#404040',
+                                    fontStyle: 'italic'
+                                }
+                            }
+                        )
+                    ],
                     {
                         style: {
                             margin: '5px',
@@ -443,12 +463,13 @@ class ReinforcementLearningBase {
                             lineHeight: '75px',
                             borderRadius: '15px',
                             boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                            textAlign: 'center'
+                            textAlign: 'center',
+                            position: 'relative'
                         }
                     }
                 ),
                 {
-                    style: {fontWeight: 'bold', fontSize: '14px'}
+                    style: {fontWeight: 'bold', fontSize: '20px'}
                 },
 
             );
@@ -946,12 +967,24 @@ class ReinforcementLearningBase {
     createHtmlElement(name, html, attributes) {
         var htmlElement = document.createElement(name);
 
-        if (attributes) {
-            this.applyAttributes(htmlElement, attributes);
+        switch (true) {
+            case html instanceof HTMLElement:
+                htmlElement.appendChild(html);
+                break;
+
+            case typeof html === 'string':
+                htmlElement.innerHTML = html;
+                break;
+
+            case this.isArray(html):
+                for (var i = 0; i < html.length; i++) {
+                    htmlElement.appendChild(html[i]);
+                }
+                break;
         }
 
-        if (html) {
-            htmlElement.innerHTML = html;
+        if (attributes) {
+            this.applyAttributes(htmlElement, attributes);
         }
 
         return htmlElement;
