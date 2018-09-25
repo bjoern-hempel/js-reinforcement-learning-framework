@@ -617,7 +617,7 @@ class ReinforcementLearningBase {
 
                         this.addTd(
                             tr,
-                            String('Q = %s').replace('%s', String(Math.round(Q[s][a] * 1000) / 1000)),
+                            String('Q = %s').replace('%s', String(this.roundToAtLeastNumberView(Q[s][a], 2).toPrecision())),
                             {
                                 rowspan: config.action[s][a].rows,
                                 style: style
@@ -1021,6 +1021,27 @@ class ReinforcementLearningBase {
      */
     deepCopy(object) {
         return JSON.parse(JSON.stringify(object));
+    }
+
+
+    /**
+     * Round the number to see at least "view" numbers.
+     * 1.234 3 -> 1.234; 0.0001234 3 -> 0.000123
+     *
+     * @param number
+     * @param view
+     * @returns {number}
+     */
+    roundToAtLeastNumberView(number, view) {
+        var exponential = number.toExponential().split('e');
+        exponential[0] = parseFloat(exponential[0]);
+        exponential[1] = parseInt(exponential[1]);
+
+        var roundValue = exponential[1] >= 0 ?
+            Math.pow(10, view):
+            Math.pow(10, -1 * exponential[1] + view - 1);
+
+        return Math.round(number * roundValue) / roundValue;
     }
 
     /**
