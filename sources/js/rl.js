@@ -406,13 +406,15 @@ class ReinforcementLearningBase {
             style: {paddingBottom: '100px'}
         });
 
-        var QSign = rl.translateGrid(rl.calculateQMaxArray(Q));
+        var QMax  = rl.calculateQMaxArray(Q);
+        var QSign = rl.translateGrid(QMax);
 
         var tr = null;
 
         for (var state in QSign) {
 
-            var R = stateReward[state] ? stateReward[state] : 0;
+            var R           = stateReward[state] ? stateReward[state] : 0;
+            var QMaxCurrent = Q[state][QMax[state]];
 
             var color = '#f0f0f0';
 
@@ -445,6 +447,21 @@ class ReinforcementLearningBase {
                                     position: 'absolute',
                                     right: '5px',
                                     bottom: '5px',
+                                    lineHeight: 'normal',
+                                    fontSize: '12px',
+                                    color: '#404040',
+                                    fontStyle: 'italic'
+                                }
+                            }
+                        ),
+                        this.createHtmlElement(
+                            'div',
+                            String(this.roundToAtLeastNumberView(QMaxCurrent, 2)),
+                            {
+                                style: {
+                                    position: 'absolute',
+                                    right: '5px',
+                                    top: '5px',
                                     lineHeight: 'normal',
                                     fontSize: '12px',
                                     color: '#404040',
@@ -617,7 +634,7 @@ class ReinforcementLearningBase {
 
                         this.addTd(
                             tr,
-                            String('Q = %s').replace('%s', String(this.roundToAtLeastNumberView(Q[s][a], 2).toPrecision())),
+                            String('Q = %s').replace('%s', String(this.roundToAtLeastNumberView(Q[s][a], 2))),
                             {
                                 rowspan: config.action[s][a].rows,
                                 style: style
@@ -1033,9 +1050,14 @@ class ReinforcementLearningBase {
      * @returns {number}
      */
     roundToAtLeastNumberView(number, view) {
-        var exponential = number.toExponential().split('e');
+        var exponential = number.toExponential(view).split('e');
+
         exponential[0] = parseFloat(exponential[0]);
         exponential[1] = parseInt(exponential[1]);
+
+        if (exponential[1] < -3) {
+            return exponential.join('e');
+        }
 
         var roundValue = exponential[1] >= 0 ?
             Math.pow(10, view):
@@ -1188,6 +1210,8 @@ class ReinforcementLearningBase {
      * @returns {{x: (number|*), y: (number|*)}}
      */
     translateGrid(Q) {
+        var Q = this.deepCopy(Q);
+
         for (var number in Q) {
             switch (parseInt(Q[number])) {
                 case 0:
