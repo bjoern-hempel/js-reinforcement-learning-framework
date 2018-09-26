@@ -482,6 +482,22 @@ class ReinforcementLearningBase {
                             boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
                             textAlign: 'center',
                             position: 'relative'
+                        },
+                        id: 'rl-state-' + state,
+                        onmouseover: function (e) {
+                            var id = e.target.id;
+
+                            if (!id) {
+                                id = e.target.parentNode.id;
+                            }
+
+                            if (!id) {
+                                console.error('Something went wrong');
+                            }
+
+                            id = parseInt(id.replace('rl-state-', ''));
+
+                            console.log(id);
                         }
                     }
                 ),
@@ -844,7 +860,15 @@ class ReinforcementLearningBase {
                     break;
 
                 default:
-                    element.setAttribute(name, attributes[name]);
+                    switch (true) {
+                        case typeof attributes[name] === 'function':
+                            element[name] = attributes[name];
+                            break;
+
+                        case typeof attributes[name] === 'string':
+                            element.setAttribute(name, attributes[name]);
+                            break;
+                    }
                     break;
             }
         }
