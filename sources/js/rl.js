@@ -866,6 +866,7 @@ class ReinforcementLearningBase {
                             break;
 
                         case typeof attributes[name] === 'string':
+                        case typeof attributes[name] === 'number':
                             element.setAttribute(name, attributes[name]);
                             break;
                     }
@@ -1074,6 +1075,10 @@ class ReinforcementLearningBase {
      * @returns {number}
      */
     roundToAtLeastNumberView(number, view) {
+        if (typeof number === 'undefined') {
+            return 0;
+        }
+
         var exponential = number.toExponential(view).split('e');
 
         exponential[0] = parseFloat(exponential[0]);
