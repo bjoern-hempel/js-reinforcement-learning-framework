@@ -133,7 +133,7 @@ function startRLTest() {
 
     /* RL.ql: Calculate Q test 1 */
     new JsSuccessTest(
-        ReinforcementLearningQLearning.SUCCESS_CALCULATE_Q,
+        ReinforcementLearningQLearning.SUCCESS_CALCULATE_Q_OPTIMIZED,
         new JsTestTestFunction(function () {
             var discountRate = 0.9;
 
