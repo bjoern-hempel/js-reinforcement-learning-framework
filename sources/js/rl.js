@@ -300,6 +300,41 @@ class ReinforcementLearningBase {
     }
 
     /**
+     * Create the initial N Array.
+     *
+     * @returns {Array}
+     */
+    getInitialN(div) {
+        var div = div ? div : 0;
+
+        var N = [];
+
+        for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+            if (div === 0) {
+                N.push(0);
+                continue;
+            }
+
+            N.push([]);
+
+            for (var a = 0; a < this.statesActionsStatesTR[s].length; a++) {
+                if (div === 1) {
+                    N[s].push(0);
+                    continue;
+                }
+
+                N[s].push({});
+
+                for (var sp in this.statesActionsStatesTR[s][a]) {
+                    N[s][a][sp] = 0;
+                }
+            }
+        }
+
+        return N;
+    }
+
+    /**
      * Calculate the difference between the current Q and the last Q.
      *
      * @author Björn Hempel <bjoern@hempel.li>
@@ -334,27 +369,80 @@ class ReinforcementLearningBase {
     }
 
     /**
-     * Returns a random element of given array or object.
+     * Returns a optimized random element of given array or object.
      *
      * @author Björn Hempel <bjoern@hempel.li>
      * @version 1.0 (2018-09-18)
-     * @param element
+     * @param NValues
+     * @returns {number}
+     */
+    getOptimizedRandomIndex(NValues) {
+        /* Get a random number from 0 to 1 */
+        var random = this.config.useSeededRandom ? this.seedRandom() : Math.random();
+
+        /* get the count min -> we only want to have the min counts */
+        var countMin = Math.min(...NValues);
+
+        /* change the N to count to a N to index array and mark counts higher than countMin with null */
+        var NPreferred = NValues.map(function(count, index) { return count <= countMin ? index : null; });
+
+        /* remove the null marked elements of NPreferred */
+        NPreferred = NPreferred.filter(function(index) { return index !== null; });
+
+        /* returns a random index of NPreferred array */
+        return NPreferred[Math.round((NPreferred.length - 1) * random)];
+    }
+
+    /**
+     * Returns a random elements of given array or object.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-18)
+     * @param N
      * @returns {*}
      */
-    getRandomIndex(element) {
+    getRandomIndex(N) {
         switch (true) {
             /* array */
-            case this.isArray(element):
-                var random = this.config.useSeededRandom ? this.seedRandom() : Math.random();
-                return Math.round((element.length - 1) * random);
+            case this.isArray(N):
+                /* extract values from array (associative array compatibility */
+                var NValues = N;
+
+                if (this.config.useOptimizedRandom) {
+                    var randomIndex = this.getOptimizedRandomIndex(NValues);
+                } else {
+                    /* Get a random number from 0 to 1 */
+                    var random = this.config.useSeededRandom ? this.seedRandom() : Math.random();
+
+                    /* get a random index of NPreferred array */
+                    var randomIndex = Math.round((NValues.length - 1) * random);
+                }
+
+                /* return random key */
+                return randomIndex;
 
             /* object */
-            case typeof element === 'object':
-                var keys = Object.keys(element);
-                var random = this.config.useSeededRandom ? this.seedRandom() : Math.random();
-                return parseInt(keys[Math.round((keys.length - 1) * random)]);
+            case typeof N === 'object':
+                /* extract values from object */
+                var NValues = Object.values(N);
 
-            /* unsupported kind of element */
+                /* extract keys from object */
+                var NKeys = Object.keys(N);
+
+                if (this.config.useOptimizedRandom) {
+                    var randomIndex = this.getOptimizedRandomIndex(NValues);
+                } else {
+                    /* Get a random number from 0 to 1 */
+                    var random = this.config.useSeededRandom ? this.seedRandom() : Math.random();
+
+                    /* get a random index of NPreferred array */
+                    var randomIndex = Math.round((NKeys.length - 1) * random);
+                }
+
+                /* return random key */
+                return parseInt(NKeys[randomIndex]);
+
+            /* unsupported kind of elements */
             default:
                 return null;
         }
@@ -1337,7 +1425,9 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
             iterations: 'auto',
             iterationThreshold: 0.001,
             iterationsMax: 100000,
-            discountFactor: 0.95
+            discountFactor: 0.95,
+            useSeededRandom: false,
+            useOptimizedRandom: false
         }
     }
 
@@ -1440,7 +1530,8 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             learningRateDecay: 0.1,
             discountFactor: 0.95,
             hyperParameter: 0,
-            useSeededRandom: false
+            useSeededRandom: false,
+            useOptimizedRandom: false
         }
     }
 
@@ -1456,9 +1547,12 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
         this.analyseAndAdoptGivenArguments(...arguments);
 
         var Q = this.getInitialQ(),
-            N = this.getInitialQ(),
             s = 0,
             counter = 0;
+
+        var N0 = this.getInitialN(0);
+        var N1 = this.getInitialN(1);
+        var N2 = this.getInitialN(2);
 
         /* Iterate until a threshold or a iteration number is reached */
         while (true) {
@@ -1478,13 +1572,13 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             var actionsStatesTR = this.statesActionsStatesTR[s];
 
             /* get random action a from current state */
-            var a = this.getRandomIndex(actionsStatesTR);
+            var a = this.getRandomIndex(N1[s]);
 
             /* get possible states from current action a */
             var statesTR = actionsStatesTR[a];
 
             /* get random state s' */
-            var sp = this.getRandomIndex(statesTR);
+            var sp = this.getRandomIndex(N2[s][a]);
 
             /* get reward */
             var R = statesTR[sp][1];
@@ -1493,7 +1587,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             var learningRate = this.config.learningRateStart / (1 + counter * this.config.learningRateDecay);
 
             /* max from Q */
-            var Q_max = this.calculateQMax(Q[sp], N[sp], function (q, n) {
+            var Q_max = this.calculateQMax(Q[sp], N1[sp], function (q, n) {
                 return q + this.config.hyperParameter / (1 + n);
             });
 
@@ -1501,7 +1595,9 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Q_max);
 
             /* count used state-action-state' change */
-            N[s][a]++;
+            N0[s]++;
+            N1[s][a]++;
+            N2[s][a][sp]++;
 
             /* Use s' as next state */
             s = sp;
@@ -1509,6 +1605,8 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             /* Increase the counter. */
             counter++;
         }
+
+        console.log(N0, N1, N2);
 
         return Q;
     }

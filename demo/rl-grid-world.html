@@ -24,7 +24,7 @@
         /* build the grid world */
         rl.buildGridWorld(width, height, R);
 
-        var Q = rl.calculateQ(discountRate, {iterations: 100000, useSeededRandom: true});
+        var Q = rl.calculateQ(discountRate, {iterations: 100000, useSeededRandom: true, useOptimizedRandom: true});
 
         rl.printTableGridWorld(Q, width, R);
 
