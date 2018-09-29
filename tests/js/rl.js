@@ -131,6 +131,58 @@ function startRLTest() {
         })
     );
 
+    /* RL.ql: Calculate Q test 1 */
+    new JsSuccessTest(
+        ReinforcementLearningQLearning.SUCCESS_CALCULATE_Q,
+        new JsTestTestFunction(function () {
+            var discountRate = 0.9;
+
+            var rl = new ReinforcementLearning.qLearning();
+
+            /* s0 to s5 */
+            var s0 = rl.addState();
+            var s1 = rl.addState();
+            var s2 = rl.addState();
+            var s3 = rl.addState();
+            var s4 = rl.addState();
+            var s5 = rl.addState();
+
+            rl.addAction(s0, new StateChange(s4,   0));
+
+            rl.addAction(s1, new StateChange(s3,   0));
+            rl.addAction(s1, new StateChange(s5, 100));
+
+            rl.addAction(s2, new StateChange(s3,   0));
+
+            rl.addAction(s3, new StateChange(s1,   0));
+            rl.addAction(s3, new StateChange(s2,   0));
+            rl.addAction(s3, new StateChange(s4,   0));
+
+            rl.addAction(s4, new StateChange(s0,   0));
+            rl.addAction(s4, new StateChange(s3,   0));
+            rl.addAction(s4, new StateChange(s5, 100));
+
+            rl.addAction(s5, new StateChange(s1,   0));
+            rl.addAction(s5, new StateChange(s4,   0));
+            rl.addAction(s5, new StateChange(s5, 100));
+
+            var Q = rl.calculateQ(discountRate, {iterations: 20000, useSeededRandom: true, useOptimizedRandom: true});
+
+            var QExpected = [
+                [3.5206],
+                [0.3037, 27.9434],
+                [0.3040],
+                [3.2307,  0.0196,  3.5750],
+                [0.2904,  0.3056, 29.1410],
+                [3.2549,  3.5909, 27.6400]
+            ];
+
+            return (
+                JsTest.equalArrayValues(Q, QExpected, 3)
+            );
+        })
+    );
+
     /* RL.ql: Calculate Q test 2 */
     new JsSuccessTest(
         ReinforcementLearningQLearning.SUCCESS_CALCULATE_Q_GRID_WORLD,
@@ -169,8 +221,6 @@ function startRLTest() {
             rl.buildGridWorld(3, 2, {2: {0: -100}, 0: {1: 100}});
 
             var Q = rl.calculateQ(discountRate, {iterations: 20000, useSeededRandom: true, useOptimizedRandom: true});
-
-            console.log(Q);
 
             var QExpected = [
                 [ 1.2897,  0.0708,    1.3174, 17.8162],
