@@ -6,29 +6,47 @@
     <script src="../sources/js/rl.js"></script>
 </head>
 <body>
+    <select id="discountRate" onchange="calculateQ();" style="width: 100px; height: 50px;">
+        <option value="0.1">0.1</option>
+        <option value="0.5">0.5</option>
+        <option value="0.9">0.9</option>
+        <option value="0.95">0.95</option>
+    </select>
+
+    <br /><br />
+
     <script>
 
-        var discountRate = 0.9;
-        var rl = new ReinforcementLearning.qLearning();
+        var rlQLearning = new ReinforcementLearning.qLearning();
 
-        var width = 5;
-        var height = 3;
-        var R = {
-            0: {2: 1000},
-            1: {2: -1000},
-            2: {2: -1000, 1: -1000},
-            3: {2: -1000},
-            4: {2: 0, 0: -1000}
-        };
+        /**
+         * Calculate Q function.
+         */
+        function calculateQ() {
+            var discountRate = parseFloat(document.getElementById('discountRate').value);
 
-        /* build the grid world */
-        rl.buildGridWorld(width, height, R);
+            rlQLearning.reset();
 
-        var Q = rl.calculateQ(discountRate, {iterations: 100000, useSeededRandom: true, useOptimizedRandom: true});
+            var width = 5;
+            var height = 3;
+            var R = {
+                0: {2: 1000},
+                1: {2: -1000},
+                2: {2: -1000, 1: -1000},
+                3: {2: -1000},
+                4: {2: 0, 0: -1000}
+            };
 
-        rl.printTableGridWorld(Q, width, R);
+            /* build the grid world */
+            rlQLearning.buildGridWorld(width, height, R);
 
-        rl.printTable(Q);
+            var Q = rlQLearning.calculateQ(discountRate, {iterations: 100000, useSeededRandom: true, useOptimizedRandom: true});
+
+            rlQLearning.printTableGridWorld(Q, width, R);
+            rlQLearning.printTableResult(Q);
+        }
+
+        calculateQ();
 
     </script>
 </body>

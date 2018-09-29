@@ -201,15 +201,29 @@ class ReinforcementLearningBase {
      * The constructor of this class.
      * Creates a new environment.
      *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-31)
      */
     constructor() {
         this.name = 'ReinforcementLearning';
 
         this.config = {};
 
-        this.statesActionsStatesTR = [];
-
         this.randomSeedNumber = 1;
+
+        this.ouputs = {};
+
+        this.reset();
+    }
+
+    /**
+     * Resets all states.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-08-31)
+     */
+    reset() {
+        this.statesActionsStatesTR = [];
     }
 
     /**
@@ -473,9 +487,11 @@ class ReinforcementLearningBase {
      */
     printTableGridWorld(Q, width, reward) {
 
+        var table = this.ouputs['tableGridWorld'] ? this.ouputs['tableGridWorld'] : null;
+
         /* Nothing to to, if we do not have any states */
         if (this.statesActionsStatesTR.length <= 0) {
-            return;
+            return null;
         }
 
         var stateReward = {};
@@ -487,15 +503,22 @@ class ReinforcementLearningBase {
             }
         }
 
-        var table = this.addTable(document.body, {
-            border: 0,
-            cellspacing: 0,
-            cellpadding: 0,
-            style: {paddingBottom: '100px'}
-        });
+        /* remove table content or create table */
+        if (table) {
+            while (table.firstChild) {
+                table.removeChild(table.firstChild);
+            }
+        } else {
+            table = this.addTable(document.body, {
+                border: 0,
+                cellspacing: 0,
+                cellpadding: 0,
+                style: {paddingBottom: '100px'}
+            });
+        }
 
-        var QMax  = rl.calculateQMaxArray(Q);
-        var QSign = rl.translateGrid(QMax);
+        var QMax  = this.calculateQMaxArray(Q);
+        var QSign = this.translateGrid(QMax);
 
         var tr = null;
 
@@ -595,6 +618,10 @@ class ReinforcementLearningBase {
 
             );
         }
+
+        this.ouputs['tableGridWorld'] = table;
+
+        return table;
     }
 
     /**
@@ -604,15 +631,29 @@ class ReinforcementLearningBase {
      * @version 1.0 (2018-09-13)
      * @param object
      */
-    printTable(Q) {
+    printTableResult(Q) {
 
         /* Nothing to to, if we do not have any states */
         if (this.statesActionsStatesTR.length <= 0) {
-            return;
+            return null;
+        }
+
+        var table = this.ouputs['tableResult'] ? this.ouputs['tableResult'] : null;
+
+        /* remove table content or create table */
+        if (table) {
+            while (table.firstChild) {
+                table.removeChild(table.firstChild);
+            }
+        } else {
+            table  = this.addTable(document.body, {
+                border: 0,
+                cellspacing: 0,
+                cellpadding: 0
+            });
         }
 
         var config = this.calculateConfig();
-        var table  = this.addTable(document.body, {border: 0, cellspacing: 0, cellpadding: 0});
         var QMax   = this.calculateQMaxArray(Q);
         var tr     = null;
 
@@ -789,6 +830,10 @@ class ReinforcementLearningBase {
             tr = this.addTr(table);
             this.addTd(tr, '&nbsp;', {style: {fontSize: '40px'}});
         }
+
+        this.ouputs['tableResult'] = table;
+
+        return table;
     }
 
     /**
@@ -1605,8 +1650,6 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             /* Increase the counter. */
             counter++;
         }
-
-        console.log(N0, N1, N2);
 
         return Q;
     }
