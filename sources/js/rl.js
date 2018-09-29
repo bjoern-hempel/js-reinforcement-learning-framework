@@ -1552,8 +1552,16 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
         return [new JsTestException(301, 'Calculate Q test'), this];
     }
 
+    static get SUCCESS_CALCULATE_Q_OPTIMIZED() {
+        return [new JsTestException(302, 'Calculate Q test (optimized)'), this];
+    }
+
     static get SUCCESS_CALCULATE_Q_GRID_WORLD() {
-        return [new JsTestException(302, 'Calculate Q test (grid world)'), this];
+        return [new JsTestException(303, 'Calculate Q test (grid world)'), this];
+    }
+
+    static get SUCCESS_CALCULATE_Q_GRID_WORLD_OPTIMIZED() {
+        return [new JsTestException(304, 'Calculate Q test (grid world optimized)'), this];
     }
 
     /**

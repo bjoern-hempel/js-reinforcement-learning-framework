@@ -157,4 +157,33 @@ function startRLTest() {
             );
         })
     );
+
+    /* RL.ql: Calculate Q test 2 (optimized) */
+    new JsSuccessTest(
+        ReinforcementLearningQLearning.SUCCESS_CALCULATE_Q_GRID_WORLD_OPTIMIZED,
+        new JsTestTestFunction(function () {
+            var discountRate = 0.9;
+            var rl = new ReinforcementLearning.qLearning();
+
+            /* build the grid world */
+            rl.buildGridWorld(3, 2, {2: {0: -100}, 0: {1: 100}});
+
+            var Q = rl.calculateQ(discountRate, {iterations: 20000, useSeededRandom: true, useOptimizedRandom: true});
+
+            console.log(Q);
+
+            var QExpected = [
+                [ 1.2897,  0.0708,    1.3174, 17.8162],
+                [ 1.3582, -15.1050,   0.0696,  1.0542],
+                [ 0.0707, -13.5421, -13.4734,  0.0489],
+                [16.7688,   1.0612,   1.3709, 16.8122],
+                [15.9138,   0.0487,   0.0697,  1.0696],
+                [ 1.0718,   0.0486, -13.6306,  0.0487]
+            ];
+
+            return (
+                JsTest.equalArrayValues(Q, QExpected, 3)
+            );
+        })
+    );
 }
