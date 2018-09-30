@@ -314,6 +314,29 @@ class ReinforcementLearningBase {
     }
 
     /**
+     * Create the initial T Array.
+     *
+     * @returns {Array}
+     */
+    getInitialT() {
+        var T = [];
+
+        for (var s = 0; s < this.statesActionsStatesTR.length; s++) {
+            T.push([]);
+
+            for (var a = 0; a < this.statesActionsStatesTR[s].length; a++) {
+                T[s].push({});
+
+                for (var sp in this.statesActionsStatesTR[s][a]) {
+                    T[s][a][sp] = this.statesActionsStatesTR[s][a][sp][0];
+                }
+            }
+        }
+
+        return T;
+    }
+
+    /**
      * Create the initial N Array.
      *
      * @returns {Array}
@@ -460,6 +483,29 @@ class ReinforcementLearningBase {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Returns a random elements of given array or object.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-18)
+     * @param T
+     * @returns {*}
+     */
+    getRandomIndexByT(T) {
+        var random = this.config.useSeededRandom ? this.seedRandom() : Math.random();
+        var value  = 0;
+
+        for (var sp in T) {
+            value += T[sp];
+
+            if (random <= value) {
+                return sp;
+            }
+        }
+
+        return sp;
     }
 
     /**
@@ -1362,6 +1408,32 @@ class ReinforcementLearningBase {
     }
 
     /**
+     * Returns the left or right modus number.
+     *
+     * @author Björn Hempel <bjoern@hempel.li>
+     * @version 1.0 (2018-09-30)
+     * @param modus
+     * @param right
+     * @returns {*}
+     */
+    getLeftOrRightModus(modus, right) {
+        switch (modus) {
+            case 0:
+                return right ? 2 : 3;
+            case 1:
+                return right ? 3 : 2;
+            case 2:
+                return right ? 1 : 0;
+            case 3:
+                return right ? 0 : 1;
+        }
+
+        console.error('Unknown modus.');
+
+        return null;
+    }
+
+    /**
      * Calculates the x and y position from given x, y and grid dimensions.
      *
      * @author Björn Hempel <bjoern@hempel.li>
@@ -1425,18 +1497,39 @@ class ReinforcementLearningBase {
         /* create state changes */
         for (var y = 0; y < grid[1]; y++) {
             for (var x = 0 ; x < grid[0]; x++) {
-                var stateFromNumber = this.getStateNumber({x: x, y: y}, grid[0]);
-                var stateToNumber   = null;
+                var stateFromNumber    = this.getStateNumber({x: x, y: y}, grid[0]);
+                var stateToNumber      = null;
+                var stateToNumberRight = null;
+                var stateToNumberLeft  = null;
 
+                /* 0: x--; 1: x++; 2: y--; 3: y++ */
                 for (var i = 0; i < 4; i++) {
+                    /* create action in each direction */
+                    var a = this.addAction(states[stateFromNumber]);
+
+                    var T = 1;
+
                     stateToNumber = this.getStateNumber(this.getXY(x, y, grid, i), grid[0]);
 
-                    var R = stateReward[stateToNumber] ? stateReward[stateToNumber] : 0;
+                    if (this.config.splitAction) {
+                        stateToNumberRight = this.getStateNumber(this.getXY(x, y, grid, this.getLeftOrRightModus(i, true)), grid[0]);
+                        stateToNumberLeft = this.getStateNumber(this.getXY(x, y, grid, this.getLeftOrRightModus(i, false)), grid[0]);
 
-                    this.addAction(
-                        states[stateFromNumber],
-                        new StateChange(states[stateToNumber], R)
-                    );
+                        T -= stateFromNumber !== stateToNumberRight ? this.config.splitT : 0;
+                        T -= stateFromNumber !== stateToNumberLeft ? this.config.splitT : 0;
+                    }
+
+                    this.addStateChange(a, states[stateToNumber], T, stateReward[stateToNumber] ? stateReward[stateToNumber] : 0);
+
+                    if (this.config.splitAction) {
+                        if (stateFromNumber !== stateToNumberRight) {
+                            this.addStateChange(a, states[stateToNumberRight], this.config.splitT, stateReward[stateToNumberRight] ? stateReward[stateToNumberRight] : 0);
+                        }
+
+                        if (stateFromNumber !== stateToNumberLeft) {
+                            this.addStateChange(a, states[stateToNumberLeft], this.config.splitT, stateReward[stateToNumberLeft] ? stateReward[stateToNumberLeft] : 0);
+                        }
+                    }
                 }
             }
         }
@@ -1472,7 +1565,8 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
             iterationsMax: 100000,
             discountFactor: 0.95,
             useSeededRandom: false,
-            useOptimizedRandom: false
+            useOptimizedRandom: false,
+            splitAction: false,
         }
     }
 
@@ -1569,7 +1663,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
      * Creates a new environment.
      *
      */
-    constructor() {
+    constructor(config) {
         super();
 
         this.name = 'ReinforcementLearningQLearning';
@@ -1584,7 +1678,14 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             discountFactor: 0.95,
             hyperParameter: 0,
             useSeededRandom: false,
-            useOptimizedRandom: false
+            useOptimizedRandom: false,
+            splitAction: false,
+            splitT: 0.05
+        };
+
+        /* add own config */
+        if (config) {
+            this.adoptConfig(config);
         }
     }
 
@@ -1600,6 +1701,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
         this.analyseAndAdoptGivenArguments(...arguments);
 
         var Q = this.getInitialQ(),
+            T = this.getInitialT(),
             s = 0,
             counter = 0;
 
@@ -1631,7 +1733,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             var statesTR = actionsStatesTR[a];
 
             /* get random state s' */
-            var sp = this.getRandomIndex(N2[s][a]);
+            var sp = this.getRandomIndexByT(T[s][a]);
 
             /* get reward */
             var R = statesTR[sp][1];
@@ -1640,9 +1742,9 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             var learningRate = this.config.learningRateStart / (1 + counter * this.config.learningRateDecay);
 
             /* max from Q */
-            var Q_max = this.calculateQMax(Q[sp], N1[sp], function (q, n) {
+            var Q_max = this.calculateQMax(Q[sp], N1[sp]);/*, function (q, n) {
                 return q + this.config.hyperParameter / (1 + n);
-            });
+            });*/
 
             /* (1 - learningRate) * CURRENT_Q + learningRate * (REWARD + NEXT_MAX_Q) */
             Q[s][a] = (1 - learningRate) * Q[s][a] + learningRate * (R + this.config.discountFactor * Q_max);
@@ -1696,7 +1798,7 @@ var ReinforcementLearning = {
      * @version 1.0 (2018-09-20)
      * @returns {ReinforcementLearningQLearning}
      */
-    qLearning: function () {
-        return new ReinforcementLearningQLearning();
+    qLearning: function (config) {
+        return new ReinforcementLearningQLearning(config);
     }
 };

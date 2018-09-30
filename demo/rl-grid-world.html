@@ -17,7 +17,7 @@
 
     <script>
 
-        var rlQLearning = new ReinforcementLearning.qLearning();
+        var rlQLearning = new ReinforcementLearning.qLearning({splitAction: true, splitT: 0.025});
 
         /**
          * Calculate Q function.
@@ -30,17 +30,22 @@
             var width = 5;
             var height = 3;
             var R = {
-                0: {2: 1000},
-                1: {2: -1000},
-                2: {2: -1000, 1: -1000},
-                3: {2: -1000},
-                4: {2: 0, 0: -1000}
+                0: {2: 100},
+                1: {2: -10},
+                2: {2: -10, 1: -10},
+                3: {2: -10},
+                4: {2: 0, 0: -10}
             };
 
             /* build the grid world */
             rlQLearning.buildGridWorld(width, height, R);
 
-            var Q = rlQLearning.calculateQ(discountRate, {iterations: 100000, useSeededRandom: true, useOptimizedRandom: true});
+            var Q = rlQLearning.calculateQ(discountRate, {
+                iterations: 100000,
+                useSeededRandom: true,
+                useOptimizedRandom: true,
+                splitAction: true
+            });
 
             rlQLearning.printTableGridWorld(Q, width, R);
             rlQLearning.printTableResult(Q);

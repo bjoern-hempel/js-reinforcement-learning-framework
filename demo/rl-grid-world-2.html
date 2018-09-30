@@ -9,7 +9,7 @@
     <script>
 
         var discountRate = 0.9;
-        var rl = new ReinforcementLearning.qLearning();
+        var rl = new ReinforcementLearning.qLearning({splitAction: true});
 
         var width = 10;
         var height = 5;
@@ -24,7 +24,12 @@
         /* build the grid world */
         rl.buildGridWorld(width, height, R);
 
-        var Q = rl.calculateQ(discountRate, {iterations: 1000000, useSeededRandom: true});
+        var Q = rl.calculateQ(discountRate, {
+            iterations: 100000,
+            useSeededRandom: true,
+            useOptimizedRandom: true,
+            splitAction: true
+        });
 
         rl.printTableGridWorld(Q, width, R);
 
