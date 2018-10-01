@@ -27,8 +27,7 @@
         var Q = rl.calculateQ(discountRate, {
             iterations: 100000,
             useSeededRandom: true,
-            useOptimizedRandom: true,
-            splitAction: true
+            useOptimizedRandom: true
         });
 
         rl.printTableGridWorld(Q, width, R);

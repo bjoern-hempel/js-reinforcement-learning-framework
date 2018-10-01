@@ -1553,7 +1553,7 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
      * Creates a new environment.
      *
      */
-    constructor() {
+    constructor(config) {
         super();
 
         this.name = 'ReinforcementLearningMDP';
@@ -1567,6 +1567,11 @@ class ReinforcementLearningMDP extends ReinforcementLearningBase {
             useSeededRandom: false,
             useOptimizedRandom: false,
             splitAction: false,
+        }
+
+        /* add own config */
+        if (config) {
+            this.adoptConfig(config);
         }
     }
 
@@ -1687,6 +1692,8 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
         if (config) {
             this.adoptConfig(config);
         }
+
+        this.config.splitAction = this.config.splitT > 0 ? true : false;
     }
 
     /**

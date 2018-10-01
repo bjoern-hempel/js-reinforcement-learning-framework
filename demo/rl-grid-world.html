@@ -6,49 +6,100 @@
     <script src="../sources/js/rl.js"></script>
 </head>
 <body>
-    <select id="discountRate" onchange="calculateQ();" style="width: 100px; height: 50px;">
-        <option value="0.1">0.1</option>
-        <option value="0.5">0.5</option>
-        <option value="0.9">0.9</option>
-        <option value="0.95">0.95</option>
-    </select>
+    <table>
+        <tr>
+            <td><label for="discountRate">discount rate</label></td>
+            <td>
+                <select id="discountRate" onchange="calculateQ();" style="width: 100px; height: 35px;">
+                    <option value="0.1">0.1</option>
+                    <option value="0.5">0.5</option>
+                    <option value="0.9">0.9</option>
+                    <option value="0.95">0.95</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="splitT">split T</label></td>
+            <td>
+                <select id="splitT" onchange="calculateQ();" style="width: 100px; height: 35px;">
+                    <option value="0">0</option>
+                    <option value="0.025">0.025</option>
+                    <option value="0.05">0.05</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td><label for="record">record</label></td>
+            <td>
+                <select id="record" onchange="calculateQ();" style="width: 100px; height: 35px;">
+                    <option value="0">5x3</option>
+                    <option value="1">10x5</option>
+                </select>
+            </td>
+        </tr>
+    </table>
 
     <br /><br />
 
     <script>
 
-        var rlQLearning = new ReinforcementLearning.qLearning({splitAction: true, splitT: 0.025});
+        var rlQLearning = new ReinforcementLearning.qLearning();
+
+        var data = {
+            0: {
+                width: 5,
+                height: 3,
+                R: {
+                    0: {2: 100},
+                    1: {2: -10},
+                    2: {2: -10, 1: -10},
+                    3: {2: -10},
+                    4: {2: 0, 0: -10}
+                }
+            },
+            1: {
+                width: 10,
+                height: 5,
+                R: {
+                    0: {4: 100},
+                    2: {4: -10},
+                    3: {4: -10, 3: -10},
+                    4: {4: -10},
+                    5: {4: 0, 0: -10}
+                }
+            }
+        };
 
         /**
          * Calculate Q function.
          */
         function calculateQ() {
+            /* get all settings */
             var discountRate = parseFloat(document.getElementById('discountRate').value);
+            var splitT       = parseFloat(document.getElementById('splitT').value);
+            var record       = parseInt(document.getElementById('record').value);
 
+            /* set config */
             rlQLearning.reset();
+            rlQLearning.adoptConfig({splitT: splitT});
 
-            var width = 5;
-            var height = 3;
-            var R = {
-                0: {2: 100},
-                1: {2: -10},
-                2: {2: -10, 1: -10},
-                3: {2: -10},
-                4: {2: 0, 0: -10}
-            };
+            /* get settings */
+            var width  = data[record].width;
+            var height = data[record].height;
+            var R      = data[record].R;
 
             /* build the grid world */
             rlQLearning.buildGridWorld(width, height, R);
 
+            /* calculate Q */
             var Q = rlQLearning.calculateQ(discountRate, {
                 iterations: 100000,
                 useSeededRandom: true,
-                useOptimizedRandom: true,
-                splitAction: true
+                useOptimizedRandom: true
             });
 
+            /* print result */
             rlQLearning.printTableGridWorld(Q, width, R);
-            rlQLearning.printTableResult(Q);
         }
 
         calculateQ();
