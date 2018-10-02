@@ -1684,8 +1684,7 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             hyperParameter: 0,
             useSeededRandom: false,
             useOptimizedRandom: false,
-            splitAction: false,
-            splitT: 0.05
+            splitT: 0
         };
 
         /* add own config */
