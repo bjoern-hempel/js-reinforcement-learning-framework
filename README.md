@@ -314,7 +314,7 @@ rlQLearning.printTableGridWorld(Q, width, R);
 
 **It returns:**
 
-In progress.
+<img src="/images/GridWorldCalculatedSmall.png" width="460" alt="grid world calculated small">
 
 ##### 3.2.2.2 Watch at the [demo](demo/rl-grid-world.html)
 
