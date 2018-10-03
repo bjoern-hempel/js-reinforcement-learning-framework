@@ -273,7 +273,7 @@ In Progress.
 
 #### 3.2.2 Simple Grid World
 
-In progress.
+<img src="/images/GridWorldRawSmall.png" width="460" alt="grid world raw small">
 
 ##### 3.2.2.1 Code
 
