@@ -320,7 +320,21 @@ In progress.
 
 #### 3.2.3 Extended Grid World
 
-As in the example 3.2.2 but just bigger. That's easy:
+As in the example 3.2.2 but just bigger:
+
+```javascript
+var width  = 10;
+var height = 5;
+var R      = {
+    0: {4: 100},
+    2: {4: -10},
+    3: {4: -10, 3: -10},
+    4: {4: -10},
+    5: {4: 0, 0: -10}
+};
+```
+
+That's easy:
 
 <img src="/images/GridWorldCalculatedWide.png" width="682" alt="grid world raw wide">
 
