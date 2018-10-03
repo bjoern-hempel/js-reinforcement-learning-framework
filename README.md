@@ -320,7 +320,7 @@ In progress.
 
 #### 3.2.3 Extended Grid World
 
-As in the example 3.2.2 but just bigger:
+As in the example 3.2.2 but just bigger grid world:
 
 ```javascript
 var width  = 10;
