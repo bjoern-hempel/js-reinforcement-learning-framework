@@ -275,7 +275,7 @@ In Progress.
 
 Imagine we have a person who is on the field x=5 and y=3. The goal is the safe way to x=0 and y=3. On the red fields there is an abyss to avoid. Which way should the person go?
 
-<img src="/images/GridWorldRawSmall.png" width="230" alt="grid world raw small">
+<img src="/images/GridWorldRawSmall.png" width="345" alt="grid world raw small">
 
 Let's calculate that:
 
@@ -283,11 +283,6 @@ Let's calculate that:
 
 ```javascript
 var discountRate = 0.95;
-
-/* create the q-learning instance */
-var rlQLearning = new ReinforcementLearning.qLearning();
-
-/* get settings */
 var width  = 5;
 var height = 3;
 var R      = {
@@ -298,6 +293,9 @@ var R      = {
     4: {2: 0, 0: -10}
 };
 
+/* create the q-learning instance */
+var rlQLearning = new ReinforcementLearning.qLearning();
+
 /* build the grid world */
 rlQLearning.buildGridWorld(width, height, R);
 
@@ -314,7 +312,7 @@ rlQLearning.printTableGridWorld(Q, width, R);
 
 **It returns:**
 
-<img src="/images/GridWorldCalculatedSmall.png" width="230" alt="grid world calculated small">
+<img src="/images/GridWorldCalculatedSmall.png" width="345" alt="grid world calculated small">
 
 ##### 3.2.2.2 Watch at the [demo](demo/rl-grid-world.html)
 
@@ -322,9 +320,11 @@ In progress.
 
 #### 3.2.3 Extended Grid World
 
-As in the example 3.2.2 but just bigger:
+As in the example 3.2.2 but just bigger. That's easy:
 
-<img src="/images/GridWorldCalculatedWide.png" width="455" alt="grid world raw wide">
+<img src="/images/GridWorldCalculatedWide.png" width="682" alt="grid world raw wide">
+
+Now imagine that person is drunk. That means with a certain probability it can be that she runs to the right or left, although she wanted to run straight out. What is the safest way now?
 
 Let's calculate that:
 
@@ -332,11 +332,6 @@ Let's calculate that:
 
 ```javascript
 var discountRate = 0.95;
-
-/* create the q-learning instance */
-var rlQLearning = new ReinforcementLearning.qLearning();
-
-/* get settings */
 var width  = 10;
 var height = 5;
 var R      = {
@@ -346,6 +341,11 @@ var R      = {
     4: {4: -10},
     5: {4: 0, 0: -10}
 };
+var splitT = 0.025;
+
+/* create the q-learning instance */
+var rlQLearning = new ReinforcementLearning.qLearning();
+rlQLearning.adoptConfig({splitT: splitT});
 
 /* build the grid world */
 rlQLearning.buildGridWorld(width, height, R);
@@ -363,7 +363,7 @@ rlQLearning.printTableGridWorld(Q, width, R);
 
 **It returns:**
 
-<img src="/images/GridWorldCalculatedWideDrunk.png" width="455" alt="grid world calculated small drunk">
+<img src="/images/GridWorldCalculatedWideDrunk.png" width="682" alt="grid world calculated small drunk">
 
 ##### 3.2.3.2 Watch at the [demo](demo/rl-grid-world.html)
 
