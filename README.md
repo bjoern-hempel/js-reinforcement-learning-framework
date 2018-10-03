@@ -338,7 +338,7 @@ That's easy:
 
 <img src="/images/GridWorldCalculatedWide.png" width="682" alt="grid world raw wide">
 
-Now imagine that person is drunk. That means with a certain probability it can be that she runs to the right or left, although she wanted to run straight out. What is the safest way now?
+Now imagine that person is drunk. That means with a certain probability it can be that he goes to the right or left, although he wanted to run straight out. Depending on how drunk the person is we choose a probability of 2.5% to go left and a probability of 2.5% to go right. What is the safest way now? 
 
 Let's calculate that:
 
