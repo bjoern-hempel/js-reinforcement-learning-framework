@@ -259,7 +259,62 @@ In progress..
 
 ## 3. Temporal Difference Learning and Q-Learning
 
-In progress..
+### 3.1 Theory
+
+#### 3.1.1 Formula
+
+In Progress
+
+### 3.2 Usage
+
+#### 3.2.1 Super basic example
+
+In Progress.
+
+#### 3.2.2 Simple Grid World
+
+In progress.
+
+##### 3.2.2.1 Code
+
+```javascript
+var discountRate = 0.95;
+
+/* set config */
+rlQLearning.reset();
+
+/* get settings */
+var width  = 5;
+var height = 3;
+var R      = {
+    0: {2: 100},
+    1: {2: -10},
+    2: {2: -10, 1: -10},
+    3: {2: -10},
+    4: {2: 0, 0: -10}
+};
+
+/* build the grid world */
+rlQLearning.buildGridWorld(width, height, R);
+
+/* calculate Q */
+var Q = rlQLearning.calculateQ(discountRate, {
+    iterations: 100000,
+    useSeededRandom: true,
+    useOptimizedRandom: true
+});
+
+/* print result */
+rlQLearning.printTableGridWorld(Q, width, R);
+```
+
+**It returns:**
+
+In progress.
+
+##### 3.2.2.2 Watch at the [demo](demo/rl-grid-world.html)
+
+In progress.
 
 ## A. Tools
 
