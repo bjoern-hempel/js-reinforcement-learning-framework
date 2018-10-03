@@ -320,6 +320,55 @@ rlQLearning.printTableGridWorld(Q, width, R);
 
 In progress.
 
+#### 3.2.3 Extended Grid World
+
+As in the example 3.2.2 just bigger:
+
+<img src="/images/GridWorldCalculatedWide.png" width="910" alt="grid world raw wide">
+
+Let's calculate that:
+
+##### 3.2.3.1 Code
+
+```javascript
+var discountRate = 0.95;
+
+/* create the q-learning instance */
+var rlQLearning = new ReinforcementLearning.qLearning();
+
+/* get settings */
+var width  = 10;
+var height = 5;
+var R      = {
+    0: {4: 100},
+    2: {4: -10},
+    3: {4: -10, 3: -10},
+    4: {4: -10},
+    5: {4: 0, 0: -10}
+};
+
+/* build the grid world */
+rlQLearning.buildGridWorld(width, height, R);
+
+/* calculate Q */
+var Q = rlQLearning.calculateQ(discountRate, {
+    iterations: 100000,
+    useSeededRandom: true,
+    useOptimizedRandom: true
+});
+
+/* print result */
+rlQLearning.printTableGridWorld(Q, width, R);
+```
+
+**It returns:**
+
+<img src="/images/GridWorldCalculatedSmall.png" width="460" alt="grid world calculated small">
+
+##### 3.2.3.2 Watch at the [demo](demo/rl-grid-world.html)
+
+In progress.
+
 ## A. Tools
 
 * All flowcharts were gratefully created with [Google Drive](https://www.google.com/drive/)
