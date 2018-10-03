@@ -324,7 +324,7 @@ In progress.
 
 As in the example 3.2.2 but just bigger:
 
-<img src="/images/GridWorldCalculatedBig.png" width="910" alt="grid world raw wide">
+<img src="/images/GridWorldCalculatedWide.png" width="910" alt="grid world raw wide">
 
 Let's calculate that:
 
@@ -363,7 +363,7 @@ rlQLearning.printTableGridWorld(Q, width, R);
 
 **It returns:**
 
-<img src="/images/GridWorldCalculatedSmall.png" width="460" alt="grid world calculated small">
+<img src="/images/GridWorldCalculatedWide.png" width="910" alt="grid world calculated small">
 
 ##### 3.2.3.2 Watch at the [demo](demo/rl-grid-world.html)
 
