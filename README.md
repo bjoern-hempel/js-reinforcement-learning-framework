@@ -322,9 +322,9 @@ In progress.
 
 #### 3.2.3 Extended Grid World
 
-As in the example 3.2.2 just bigger:
+As in the example 3.2.2 but just bigger:
 
-<img src="/images/GridWorldRawBig.png" width="910" alt="grid world raw wide">
+<img src="/images/GridWorldCalculatedBig.png" width="910" alt="grid world raw wide">
 
 Let's calculate that:
 
