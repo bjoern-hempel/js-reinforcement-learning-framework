@@ -280,8 +280,8 @@ In progress.
 ```javascript
 var discountRate = 0.95;
 
-/* set config */
-rlQLearning.reset();
+/* create the q-learning instance */
+var rlQLearning = new ReinforcementLearning.qLearning();
 
 /* get settings */
 var width  = 5;
