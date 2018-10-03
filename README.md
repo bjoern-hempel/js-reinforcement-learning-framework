@@ -267,9 +267,15 @@ In Progress
 
 ### 3.2 Usage
 
-#### 3.2.1 Super basic example
+#### 3.2.1 Real example
 
-In Progress.
+##### 3.2.1.1 Code
+
+In progress..
+
+##### 3.2.1.2 Watch at the [demo](demo/rl-real-q-learning.html)
+
+In progress..
 
 #### 3.2.2 Simple Grid World
 
