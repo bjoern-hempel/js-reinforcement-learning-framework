@@ -324,7 +324,7 @@ In progress.
 
 As in the example 3.2.2 just bigger:
 
-<img src="/images/GridWorldCalculatedWide.png" width="910" alt="grid world raw wide">
+<img src="/images/GridWorldRawBig.png" width="910" alt="grid world raw wide">
 
 Let's calculate that:
 
