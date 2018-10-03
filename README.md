@@ -275,7 +275,7 @@ In Progress.
 
 Imagine we have a person who is on the field x=5 and y=3. The goal is the safe way to x=0 and y=3. On the red fields there is an abyss to avoid. Which way should the person go?
 
-<img src="/images/GridWorldRawSmall.png" width="460" alt="grid world raw small">
+<img src="/images/GridWorldRawSmall.png" width="230" alt="grid world raw small">
 
 Let's calculate that:
 
@@ -314,7 +314,7 @@ rlQLearning.printTableGridWorld(Q, width, R);
 
 **It returns:**
 
-<img src="/images/GridWorldCalculatedSmall.png" width="460" alt="grid world calculated small">
+<img src="/images/GridWorldCalculatedSmall.png" width="230" alt="grid world calculated small">
 
 ##### 3.2.2.2 Watch at the [demo](demo/rl-grid-world.html)
 
@@ -324,7 +324,7 @@ In progress.
 
 As in the example 3.2.2 but just bigger:
 
-<img src="/images/GridWorldCalculatedWide.png" width="910" alt="grid world raw wide">
+<img src="/images/GridWorldCalculatedWide.png" width="455" alt="grid world raw wide">
 
 Let's calculate that:
 
@@ -363,7 +363,7 @@ rlQLearning.printTableGridWorld(Q, width, R);
 
 **It returns:**
 
-<img src="/images/GridWorldCalculatedWide.png" width="910" alt="grid world calculated small">
+<img src="/images/GridWorldCalculatedWideDrunk.png" width="455" alt="grid world calculated small drunk">
 
 ##### 3.2.3.2 Watch at the [demo](demo/rl-grid-world.html)
 
