@@ -344,7 +344,7 @@ That's easy:
 
 <img src="/images/GridWorldCalculatedWide.png" width="682" alt="grid world raw wide">
 
-Now imagine that person is drunk. That means with a certain probability the person goes to the right or left, although he wanted to go straight out. Depending on how drunk the person is we choose a probability of 2.5% to go left and a probability of 2.5% to go right. What is the safest way now? **Preliminary consideration:** Moving away from the chasms first and staying away from them might now be better than taking the shortest route.
+Now imagine that the person is drunk. That means with a certain probability the person goes to the right or left, although he wanted to go straight out. Depending on how drunk the person is we choose a probability of 2.5% to go left and a probability of 2.5% to go right. What is the safest way now? **Preliminary consideration:** Moving away from the chasms first and staying away from them might now be better than taking the shortest route.
 
 Let's calculate that:
 
