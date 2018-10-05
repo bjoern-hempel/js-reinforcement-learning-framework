@@ -144,14 +144,14 @@ console.log(JSON.stringify(Q));
 
 **It returns:**
 
-As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> with the reward of Q<sub>(s=0,a=0)</sub>:
-
 ```json
 [
     [21.044799074176453, 20.93957918978874],
     [28.93957918978874]
 ]
 ```
+
+As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> with the reward of Q<sub>(s=0,a=0)</sub>.
 
 ##### 2.2.2.2 Watch at the [demo](demo/rl-basic.html)
 
