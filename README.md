@@ -279,7 +279,7 @@ In progress..
 
 #### 3.2.2 Simple Grid World
 
-Imagine we have a person who is currently on the field x=5 and y=3. The goal is the safe way to x=1 and y=3. On the red fields there are chasms to avoid. Which way should the person go?
+Imagine we have a person who is currently on the field x=5 and y=3. The goal is the safe way to x=1 and y=3. The red fields must be avoided. They are chasms that endanger the person (negative rewards or punishments). Which way should the person go?
 
 <img src="/images/GridWorldRawSmall.png" width="345" alt="grid world raw small">
 
