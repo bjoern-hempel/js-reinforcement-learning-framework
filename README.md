@@ -340,7 +340,7 @@ var R      = {
 };
 ```
 
-That's easy:
+That's easy now:
 
 <img src="/images/GridWorldCalculatedWide.png" width="682" alt="grid world raw wide">
 
