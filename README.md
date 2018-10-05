@@ -218,6 +218,8 @@ console.log(JSON.stringify(Q));
 ]
 ```
 
+Looking at the example far-sightedly (`discountRate = 0.9`) it is a good idea to take action a<sub>1</sub> in status s<sub>0</sub>, take action a<sub>1</sub> in status s<sub>1</sub> and action a<sub>0</sub> in status s<sub>2</sub>. 
+
 ##### 2.2.3.2 Watch at the [demo](demo/rl-more-complex.html)
 
 Discount rate 0,9:
