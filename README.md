@@ -324,7 +324,7 @@ rlQLearning.printTableGridWorld(Q, width, R);
 
 ##### 3.2.2.2 Watch at the [demo](demo/rl-grid-world.html)
 
-In progress..
+In progress.
 
 #### 3.2.3 Extended Grid World
 
