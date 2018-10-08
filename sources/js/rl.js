@@ -403,6 +403,8 @@ class ReinforcementLearningBase {
         for (var name in config) {
             this.config[name] = config[name];
         }
+
+        this.config.splitAction = this.config.splitT > 0 ? true : false;
     }
 
     /**
@@ -568,19 +570,22 @@ class ReinforcementLearningBase {
 
         var tr = null;
 
+        var self = this;
+
         for (var state in QSign) {
 
             var R           = stateReward[state] ? stateReward[state] : 0;
             var QMaxCurrent = Q[state][QMax[state]];
 
-            var color = '#f0f0f0';
+            var stateType = 'normal';
+
 
             if (R < 0) {
-                color = '#ff8080';
+                stateType = 'punishment';
             }
 
             if (R > 0) {
-                color = '#80ff80';
+                stateType = 'reward';
             }
 
             if (state % width === 0) {
@@ -592,54 +597,18 @@ class ReinforcementLearningBase {
                 this.createHtmlElement(
                     'div',
                     [
-                        this.createHtmlElement(
-                            'div',
-                            R > 0 ? '↻' : QSign[state]
-                        ),
-                        this.createHtmlElement(
-                            'div',
-                            String(R),
-                            {
-                                style: {
-                                    position: 'absolute',
-                                    right: '5px',
-                                    bottom: '5px',
-                                    lineHeight: 'normal',
-                                    fontSize: '12px',
-                                    color: '#404040',
-                                    fontStyle: 'italic'
-                                }
-                            }
-                        ),
+                        this.createHtmlElement('div', R > 0 ? '↻' : QSign[state]),
+                        this.createHtmlElement('div', String(R), {class: 'state-R'}),
                         this.createHtmlElement(
                             'div',
                             String(this.roundToAtLeastNumberView(QMaxCurrent, 2)),
                             {
-                                style: {
-                                    position: 'absolute',
-                                    right: '5px',
-                                    top: '5px',
-                                    lineHeight: 'normal',
-                                    fontSize: '12px',
-                                    color: '#404040',
-                                    fontStyle: 'italic'
-                                }
+                                class: 'state-Q'
                             }
                         )
                     ],
                     {
-                        style: {
-                            margin: '5px',
-                            border: '2px solid #000',
-                            backgroundColor: color,
-                            width: '75px',
-                            height: '75px',
-                            lineHeight: '75px',
-                            borderRadius: '15px',
-                            boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                            textAlign: 'center',
-                            position: 'relative'
-                        },
+                        class: 'state state-' + stateType,
                         id: 'rl-state-' + state,
                         onmouseover: function (e) {
                             var id = e.target.id;
@@ -653,6 +622,12 @@ class ReinforcementLearningBase {
                             }
 
                             id = parseInt(id.replace('rl-state-', ''));
+
+                            var state = document.getElementById('rl-state-' + id);
+
+                            console.log(self);
+
+                            console.log(state);
 
                             console.log(id);
                         }
@@ -1684,15 +1659,12 @@ class ReinforcementLearningQLearning extends ReinforcementLearningBase {
             hyperParameter: 0,
             useSeededRandom: false,
             useOptimizedRandom: false,
+            splitAction: false,
             splitT: 0
         };
 
         /* add own config */
-        if (config) {
-            this.adoptConfig(config);
-        }
-
-        this.config.splitAction = this.config.splitT > 0 ? true : false;
+        this.adoptConfig(config ? config : {});
     }
 
     /**

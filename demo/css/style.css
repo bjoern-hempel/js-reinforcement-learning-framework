@@ -1,0 +1,40 @@
+.state {
+    margin: 5px;
+    border: 2px solid #000;
+    background-color: #f0f0f0;
+    width: 75px;
+    height: 75px;
+    line-height: 75px;
+    border-radius: 15px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
+    text-align: center;
+    position: relative;
+}
+
+.state.state-punishment {
+    background-color: #ff8080;
+}
+
+.state.state-reward {
+    background-color: #80ff80;
+}
+
+.state .state-Q {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    line-height: normal;
+    font-size: 12px;
+    color: #404040;
+    font-style: italic;
+}
+
+.state .state-R {
+    position: absolute;
+    right: 5px;
+    bottom: 5px;
+    line-height: normal;
+    font-size: 12px;
+    color: #404040;
+    font-style: italic;
+}
