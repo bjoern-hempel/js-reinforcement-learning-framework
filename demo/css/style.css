@@ -1,4 +1,4 @@
-.state {
+.state-grid-world {
     margin: 5px;
     border: 2px solid #000;
     background-color: #f0f0f0;
@@ -11,15 +11,15 @@
     position: relative;
 }
 
-.state.state-punishment {
+.state-grid-world.state-grid-world-punishment {
     background-color: #ff8080;
 }
 
-.state.state-reward {
+.state-grid-world.state-grid-world-reward {
     background-color: #80ff80;
 }
 
-.state .state-Q {
+.state-grid-world .state-grid-world-Q {
     position: absolute;
     right: 5px;
     top: 5px;
@@ -29,7 +29,7 @@
     font-style: italic;
 }
 
-.state .state-R {
+.state-grid-world .state-grid-world-R {
     position: absolute;
     right: 5px;
     bottom: 5px;
@@ -37,4 +37,8 @@
     font-size: 12px;
     color: #404040;
     font-style: italic;
+}
+
+.state-big {
+
 }

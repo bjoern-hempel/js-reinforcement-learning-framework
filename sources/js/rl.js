@@ -598,17 +598,17 @@ class ReinforcementLearningBase {
                     'div',
                     [
                         this.createHtmlElement('div', R > 0 ? '↻' : QSign[state]),
-                        this.createHtmlElement('div', String(R), {class: 'state-R'}),
+                        this.createHtmlElement('div', String(R), {class: 'state-grid-world-R'}),
                         this.createHtmlElement(
                             'div',
                             String(this.roundToAtLeastNumberView(QMaxCurrent, 2)),
                             {
-                                class: 'state-Q'
+                                class: 'state-grid-world-Q'
                             }
                         )
                     ],
                     {
-                        class: 'state state-' + stateType,
+                        class: 'state-grid-world state-grid-world-' + stateType,
                         id: 'rl-state-' + state,
                         onmouseover: function (e) {
                             var id = e.target.id;
