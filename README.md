@@ -144,14 +144,14 @@ console.log(JSON.stringify(Q));
 
 **It returns:**
 
-As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> with the reward of Q<sub>(s=0,a=0)</sub>:
-
 ```json
 [
     [21.044799074176453, 20.93957918978874],
     [28.93957918978874]
 ]
 ```
+
+As we expected, far-sighted it is better to choose s<sub>0</sub>.a<sub>0</sub> with the reward of Q<sub>(s=0,a=0)</sub>.
 
 ##### 2.2.2.2 Watch at the [demo](demo/rl-basic.html)
 
@@ -218,6 +218,8 @@ console.log(JSON.stringify(Q));
 ]
 ```
 
+Looking at the example far-sightedly (`discountRate = 0.9`) it is a good idea to take action a<sub>1</sub> in status s<sub>0</sub>, take action a<sub>1</sub> in status s<sub>1</sub> and take action a<sub>0</sub> in status s<sub>2</sub>. 
+
 ##### 2.2.3.2 Watch at the [demo](demo/rl-more-complex.html)
 
 Discount rate 0,9:
@@ -259,7 +261,135 @@ In progress..
 
 ## 3. Temporal Difference Learning and Q-Learning
 
+### 3.1 Theory
+
+#### 3.1.1 Formula
+
+In Progress
+
+### 3.2 Usage
+
+#### 3.2.1 Real example
+
+##### 3.2.1.1 Code
+
 In progress..
+
+##### 3.2.1.2 Watch at the [demo](demo/rl-real-q-learning.html)
+
+In progress..
+
+#### 3.2.2 Simple Grid World
+
+Imagine we have a person who is currently on the field x=5 and y=3. The goal is the safe way to x=1 and y=3. The red fields must be avoided. They are chasms that endanger the person (negative rewards or punishments). Which way should the person go?
+
+<img src="/images/GridWorldRawSmall.png" width="345" alt="grid world raw small">
+
+Let's calculate that:
+
+##### 3.2.2.1 Code
+
+```javascript
+var discountRate = 0.95;
+var width  = 5;
+var height = 3;
+var R      = {
+    0: {2: 100},
+    1: {2: -10},
+    2: {2: -10, 1: -10},
+    3: {2: -10},
+    4: {2: 0, 0: -10}
+};
+
+/* create the q-learning instance */
+var rlQLearning = new ReinforcementLearning.qLearning();
+
+/* build the grid world */
+rlQLearning.buildGridWorld(width, height, R);
+
+/* calculate Q */
+var Q = rlQLearning.calculateQ(discountRate, {
+    iterations: 100000,
+    useSeededRandom: true,
+    useOptimizedRandom: true
+});
+
+/* print result */
+rlQLearning.printTableGridWorld(Q, width, R);
+```
+
+**It returns:**
+
+<img src="/images/GridWorldCalculatedSmall.png" width="345" alt="grid world calculated small">
+
+##### 3.2.2.2 Watch at the [demo](demo/rl-grid-world.html)
+
+In progress.
+
+#### 3.2.3 Extended Grid World
+
+As in the example 3.2.2 but just a bigger grid world:
+
+```javascript
+var width  = 10;
+var height = 5;
+var R      = {
+    0: {4: 100},
+    2: {4: -10},
+    3: {4: -10, 3: -10},
+    4: {4: -10},
+    5: {4: 0, 0: -10}
+};
+```
+
+That's easy now:
+
+<img src="/images/GridWorldCalculatedWide.png" width="682" alt="grid world raw wide">
+
+Now imagine that the person is drunk. That means with a certain probability the person goes to the right or left, although he wanted to go straight out. Depending on how drunk the person is we choose a probability of 2.5% to go left and a probability of 2.5% to go right (`splitT = 0.025`). What is the safest way now? **Preliminary consideration:** Moving away from the chasms first and staying away from them might now be better than taking the shortest route.
+
+Let's calculate that:
+
+##### 3.2.3.1 Code
+
+```javascript
+var discountRate = 0.95;
+var width  = 10;
+var height = 5;
+var R      = {
+    0: {4: 100},
+    2: {4: -10},
+    3: {4: -10, 3: -10},
+    4: {4: -10},
+    5: {4: 0, 0: -10}
+};
+var splitT = 0.025;
+
+/* create the q-learning instance */
+var rlQLearning = new ReinforcementLearning.qLearning();
+rlQLearning.adoptConfig({splitT: splitT});
+
+/* build the grid world */
+rlQLearning.buildGridWorld(width, height, R);
+
+/* calculate Q */
+var Q = rlQLearning.calculateQ(discountRate, {
+    iterations: 100000,
+    useSeededRandom: true,
+    useOptimizedRandom: true
+});
+
+/* print result */
+rlQLearning.printTableGridWorld(Q, width, R);
+```
+
+**It returns:**
+
+<img src="/images/GridWorldCalculatedWideDrunk.png" width="682" alt="grid world calculated small drunk">
+
+##### 3.2.3.2 Watch at the [demo](demo/rl-grid-world.html)
+
+In progress.
 
 ## A. Tools
 
