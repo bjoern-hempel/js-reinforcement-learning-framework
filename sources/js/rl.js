@@ -690,23 +690,14 @@ class ReinforcementLearningBase {
                     'div',
                     String('S<sub>%s</sub>').replace(/%s/, s),
                     {
+                        class: 'state-big',
                         style: {
-                            margin: '5px',
-                            border: '2px solid #000',
-                            backgroundColor: '#fff',
-                            width: '100px',
-                            height: '100px',
-                            lineHeight: '100px',
-                            borderRadius: '52px',
-                            boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                            textAlign: 'center',
                             backgroundColor: config.state[s].color
                         }
                     }
                 ),
                 {
-                    rowspan: config.state[s].rows,
-                    style: {fontWeight: 'bold', fontSize: '20px'}
+                    rowspan: config.state[s].rows
                 }
             );
 
@@ -716,30 +707,21 @@ class ReinforcementLearningBase {
 
                 tr = a > 0 ? this.addTr(table) : tr;
 
-                this.addTd(tr, this.getArrow(a, actionsStatesTR.length), {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
+                this.addTd(tr, this.getArrow(a, actionsStatesTR.length), {rowspan: config.action[s][a].rows});
                 this.addTd(
                     tr,
                     this.createHtmlElement(
                         'div',
                         String('a<sub>%s</sub>').replace(/%s/, a),
                         {
+                            class: 'action',
                             style: {
-                                margin: '5px',
-                                border: '2px solid #000',
-                                backgroundColor: '#fff',
-                                width: '50px',
-                                height: '50px',
-                                lineHeight: '50px',
-                                borderRadius: '10px',
-                                boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                                backgroundColor: (QMax[s].indexOf(a) !== -1 ? '#80ff80' : '#ff8080'),
-                                textAlign: 'center'
+                                backgroundColor: (QMax[s].indexOf(a) !== -1 ? '#80ff80' : '#ff8080')
                             }
                         }
                     ),
                     {
-                        rowspan: config.action[s][a].rows,
-                        style: {fontWeight: 'bold', fontSize: '14px'}
+                        rowspan: config.action[s][a].rows
                     }
                 );
 
@@ -751,65 +733,41 @@ class ReinforcementLearningBase {
 
                     tr = spCounter > 0 ? this.addTr(table) : tr;
 
-                    this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length), {style: {fontSize: '30px'}});
+                    this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length));
                     this.addTd(
                         tr,
                         this.createHtmlElement(
                             'div',
                             String('S<sub>%s</sub>').replace(/%s/, sp),
                             {
+                                class: 'state-small',
                                 style: {
-                                    margin: '5px',
-                                    border: '2px solid #000',
-                                    backgroundColor: '#fff',
-                                    width: '50px',
-                                    height: '50px',
-                                    lineHeight: '50px',
-                                    borderRadius: '27px',
-                                    boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                                    backgroundColor: config.state[sp].color,
-                                    textAlign: 'center'
+                                    backgroundColor: config.state[sp].color
                                 }
                             }
-                        ),
-                        {
-                            style: {fontWeight: 'bold', fontSize: '14px'}
-                        }
+                        )
                     );
 
                     if (this.name === 'ReinforcementLearningMDP') {
-                        this.addTd(tr, String('T = %s').replace('%s', String(T)), {style: {textAlign: 'left', padding: '0 15px'}});
+                        this.addTd(tr, String('T = %s').replace('%s', String(T)), {class: 'T'});
                     }
 
-                    this.addTd(tr, String('R = %s').replace('%s', String(R)), {style: {textAlign: 'left', padding: '0 15px'}});
+                    this.addTd(tr, String('R = %s').replace('%s', String(R)), {class: 'R'});
 
-                    this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length, true), {style: {fontSize: '30px'}});
+                    this.addTd(tr, this.getArrow(spCounter, Object.keys(statesTR).length, true));
                     if (spCounter === 0) {
-                        var style = {
-                            color: QMax[s].indexOf(a) !== -1 ? 'green' : 'red',
-                            textAlign: 'left',
-                            padding: '0 15px'
-                        };
-
-                        if (QMax[s].indexOf(a) !== -1) {
-                            style['textDecoration'] = 'underline';
-                            style['fontWeight'] = 'bold';
-                        } else {
-                            style['fontStyle'] = 'italic';
-                        }
-
                         this.addTd(
                             tr,
                             String('Q = %s').replace('%s', String(this.roundToAtLeastNumberView(Q[s][a], 2))),
                             {
                                 rowspan: config.action[s][a].rows,
-                                style: style
+                                class: 'Q ' + (QMax[s].indexOf(a) !== -1 ? 'Q-yes' : 'Q-no')
                             }
                         );
                     }
 
                     if (spCounter === 0) {
-                        this.addTd(tr, this.getArrow(a, actionsStatesTR.length, true), {rowspan: config.action[s][a].rows, style: {fontSize: '30px'}});
+                        this.addTd(tr, this.getArrow(a, actionsStatesTR.length, true), {rowspan: config.action[s][a].rows});
                     }
 
                     /* optimal action */
@@ -822,23 +780,11 @@ class ReinforcementLearningBase {
                                     replace(/%s/, s).
                                     replace(/%s/, QMax[s].length === 1 ? QMax[s][0] : '[' + QMax[s].join(';') + ']'),
                                 {
-                                    style: {
-                                        margin: '5px',
-                                        padding: '5px',
-                                        border: '2px solid #000',
-                                        boxShadow: '2px 2px 5px 0px rgba(0,0,0,0.5)',
-                                        backgroundColor: '#fff',
-                                        width: '80px',
-                                        height: '80px',
-                                        lineHeight: '80px',
-                                        backgroundColor: '#f0f0f0',
-                                        textAlign: 'center'
-                                    }
+                                    class: 'state-result'
                                 }
                             ),
                             {
-                                rowspan: config.state[s].rows,
-                                style: {fontWeight: 'bold', padding: '0 15px'}
+                                rowspan: config.state[s].rows
                             }
                         );
                     }
@@ -849,7 +795,7 @@ class ReinforcementLearningBase {
             }
 
             tr = this.addTr(table);
-            this.addTd(tr, '&nbsp;', {style: {fontSize: '40px'}});
+            this.addTd(tr, '&nbsp;', {class: 'padding'});
         }
 
         this.ouputs['tableResult'] = table;
@@ -1196,7 +1142,7 @@ class ReinforcementLearningBase {
      * @returns {string}
      */
     getArrow(number, elements, back) {
-        var template = '<div style="margin: 0 10px; transform: rotate(%sdeg); text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">→</div>';
+        var template = '<div class="arrow" style="margin: 0 10px; transform: rotate(%sdeg); text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">→</div>';
 
         number *= 2;
         elements -= 1;

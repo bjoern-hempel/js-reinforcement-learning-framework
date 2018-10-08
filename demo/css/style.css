@@ -40,5 +40,81 @@
 }
 
 .state-big {
+    margin: 5px;
+    border: 2px solid #000;
+    background-color: #d0d0d0;
+    width: 100px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 52px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
+    text-align: center;
+    font-weight: bold;
+    font-size: 20px;
+}
 
+.state-small {
+    margin: 5px;
+    border: 2px solid #000;
+    background-color: #d0d0d0;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 27px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.state-result {
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid #000;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
+    background-color: #f0f0f0;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    text-align: center;
+    font-weight: bold;
+    padding: 0 0px;
+}
+
+.arrow {
+    font-size: 30px;
+}
+
+.action {
+    margin: 5px;
+    border: 2px solid #000;
+    background-color: #d0d0d0;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.5);
+    text-align: center;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.Q, .R, .T {
+    text-align: left;
+    padding: 0 15px;
+}
+
+.Q.Q-yes {
+    color: green;
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.Q.Q-no {
+    color: red;
+    font-style: italic;
+}
+
+.padding {
+    font-size: 40px;
 }
